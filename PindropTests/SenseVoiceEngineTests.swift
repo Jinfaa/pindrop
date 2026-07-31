@@ -462,8 +462,8 @@ struct SenseVoiceEngineTests {
                 switch provider {
                 case .senseVoice:
                     return SenseVoiceEngine()
-                case .whisperKit:
-                    return WhisperKitEngine()
+                case .mlxWhisper:
+                    return MLXWhisperEngine()
                 case .parakeet:
                     return ParakeetEngine()
                 case .appleSpeech:
@@ -483,14 +483,14 @@ struct SenseVoiceEngineTests {
     }
 
     @Test func onboardingProviderRoutingDoesNotUsePathAPIForSenseVoice() {
-        func usesWhisperKitPathAPI(_ provider: ModelManager.ModelProvider) -> Bool {
+        func usesMLXWhisperPathAPI(_ provider: ModelManager.ModelProvider) -> Bool {
             switch provider {
-            case .whisperKit: return true
+            case .mlxWhisper: return true
             default: return false
             }
         }
-        #expect(usesWhisperKitPathAPI(.senseVoice) == false)
-        #expect(usesWhisperKitPathAPI(.parakeet) == false)
-        #expect(usesWhisperKitPathAPI(.whisperKit) == true)
+        #expect(usesMLXWhisperPathAPI(.senseVoice) == false)
+        #expect(usesMLXWhisperPathAPI(.parakeet) == false)
+        #expect(usesMLXWhisperPathAPI(.mlxWhisper) == true)
     }
 }

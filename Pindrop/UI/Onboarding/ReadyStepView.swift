@@ -88,7 +88,7 @@ struct ReadyStepView_Previews: PreviewProvider {
         ReadyStepView(
             settings: SettingsStore(),
             modelManager: PreviewModelManagerReady(),
-            selectedModelName: "openai_whisper-base.en",
+            selectedModelName: "mlx-community/whisper-base.en-mlx",
             onComplete: {}
         )
         .frame(width: 760, height: 500)

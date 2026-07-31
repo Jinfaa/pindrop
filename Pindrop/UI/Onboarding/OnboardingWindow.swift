@@ -118,7 +118,7 @@ struct OnboardingWindow: View {
     @State private var currentStep: OnboardingStep = .welcome
     @Environment(\.layoutDirection) private var layoutDirection
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var selectedModelName: String = "openai_whisper-base"
+    @State private var selectedModelName: String = "mlx-community/whisper-base-mlx"
     @State private var direction: Int = 1
     
     private var canGoBack: Bool {

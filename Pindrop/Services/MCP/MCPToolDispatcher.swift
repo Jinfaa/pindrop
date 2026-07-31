@@ -38,7 +38,7 @@ enum MCPToolDispatcher {
                 "path": MCPPropertySchema(type: "string", description: "(submit_file) Absolute path to local audio or video file"),
                 "url": MCPPropertySchema(type: "string", description: "(submit_url) Web URL to download and transcribe; requires yt-dlp + ffmpeg"),
                 "job_id": MCPPropertySchema(type: "string", description: "(status | result | cancel) Job ID returned by submit_file or submit_url"),
-                "model": MCPPropertySchema(type: "string", description: "(submit_*) Whisper model name, e.g. openai_whisper-base. Defaults to current setting."),
+                "model": MCPPropertySchema(type: "string", description: "(submit_*) Whisper model name, e.g. mlx-community/whisper-base-mlx. Defaults to current setting."),
                 "language": MCPPropertySchema(type: "string", description: "(submit_*) Language code, e.g. en, auto, fr, de, zh-Hans. Defaults to current setting."),
                 "diarization": MCPPropertySchema(type: "boolean", description: "(submit_*) Enable speaker diarization (requires diarization model to be downloaded). Defaults to true."),
                 "expected_speakers": MCPPropertySchema(type: "integer", description: "(submit_*) Optional exact speaker count hint for diarization (1–20). Requires diarization to be enabled."),

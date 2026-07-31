@@ -34,12 +34,12 @@ struct MediaTranscriptionFeatureStateTests {
 
     @Test func mediaImportOptionsHonorDisabledDiarizationSelection() {
         let options = HistoryView.makeJobOptions(
-            modelName: "openai_whisper-large-v3_turbo",
+            modelName: "mlx-community/whisper-large-v3-turbo",
             language: .automatic,
             diarizationEnabled: false
         )
 
-        #expect(options.modelName == "openai_whisper-large-v3_turbo")
+        #expect(options.modelName == "mlx-community/whisper-large-v3-turbo")
         #expect(options.language == .automatic)
         #expect(options.outputFormat == .plainText)
         #expect(options.diarizationEnabled == false)
@@ -62,15 +62,15 @@ struct MediaTranscriptionFeatureStateTests {
         )
         #expect(
             AppCoordinator.mediaTranscriptionProvider(
-                named: "openai_whisper-base",
+                named: "mlx-community/whisper-base-mlx",
                 availableModels: models
-            ) == .whisperKit
+            ) == .mlxWhisper
         )
         #expect(
             AppCoordinator.mediaTranscriptionProvider(
                 named: "unknown-model",
                 availableModels: models
-            ) == .whisperKit
+            ) == .mlxWhisper
         )
     }
 

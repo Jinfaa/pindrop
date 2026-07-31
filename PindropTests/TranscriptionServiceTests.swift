@@ -266,7 +266,7 @@ struct TranscriptionServiceTests {
             diarizerFactory: { mockDiarizer }
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         let output = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 3.0),
             diarizationEnabled: false
@@ -288,7 +288,7 @@ struct TranscriptionServiceTests {
             diarizerFactory: { mockDiarizer }
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         // One float sample is enough for the no-diarization path; sample conversion
         // and diarizer loading are reserved for the diarized branch.
         var sample: Float = 0.25
@@ -350,7 +350,7 @@ struct TranscriptionServiceTests {
             diarizerFactory: { mockDiarizer }
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         let options = TranscriptionOptions(language: .simplifiedChinese)
         _ = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 2.0),
@@ -384,7 +384,7 @@ struct TranscriptionServiceTests {
             diarizerFactory: { mockDiarizer }
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         _ = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 3.0),
             diarizationEnabled: true,
@@ -409,7 +409,7 @@ struct TranscriptionServiceTests {
             diarizerFactory: { mockDiarizer }
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         _ = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 2.0),
             diarizationEnabled: false,
@@ -442,7 +442,7 @@ struct TranscriptionServiceTests {
             diarizerFactory: { mockDiarizer }
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         let output = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 4.0),
             diarizationEnabled: true
@@ -481,7 +481,7 @@ struct TranscriptionServiceTests {
             speakerIdentityService: identityService
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         _ = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 2.0),
             diarizationEnabled: true
@@ -520,7 +520,7 @@ struct TranscriptionServiceTests {
             speakerIdentityService: identityService
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         let output = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 2.0),
             diarizationEnabled: true
@@ -560,7 +560,7 @@ struct TranscriptionServiceTests {
             speakerIdentityService: identityService
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         let output = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 2.0),
             diarizationEnabled: true
@@ -622,7 +622,7 @@ struct TranscriptionServiceTests {
             speakerIdentityService: identityService
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         let output = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 12.0),
             diarizationEnabled: true
@@ -705,7 +705,7 @@ struct TranscriptionServiceTests {
             speakerIdentityService: identityService
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         _ = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 23.0),
             diarizationEnabled: true
@@ -748,7 +748,7 @@ struct TranscriptionServiceTests {
             diarizerFactory: { mockDiarizer }
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         let output = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 2.0),
             diarizationEnabled: true
@@ -778,7 +778,7 @@ struct TranscriptionServiceTests {
             diarizerFactory: { mockDiarizer }
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         let output = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 2.0),
             diarizationEnabled: true
@@ -803,7 +803,7 @@ struct TranscriptionServiceTests {
             diarizerFactory: { mockDiarizer }
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         let output = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 2.0),
             diarizationEnabled: true
@@ -827,7 +827,7 @@ struct TranscriptionServiceTests {
             diarizationTimeoutSeconds: 0.01
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         let output = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 2.0),
             diarizationEnabled: true
@@ -850,7 +850,7 @@ struct TranscriptionServiceTests {
             diarizationTimeoutSeconds: 0.02
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         let started = ContinuousClock.now
         let output = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 2.0),
@@ -876,7 +876,7 @@ struct TranscriptionServiceTests {
             }
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         let audioData = makeFloatAudioData(seconds: 1.0)
         do {
             _ = try await StreamingSessionController.withFinalizeTimeout(nanoseconds: 20_000_000) {
@@ -910,7 +910,7 @@ struct TranscriptionServiceTests {
         })
         let audioData = makeFloatAudioData(seconds: 1.0)
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         do {
             _ = try await StreamingSessionController.withFinalizeTimeout(nanoseconds: 20_000_000) {
                 try await service.transcribe(audioData: audioData)
@@ -969,7 +969,7 @@ struct TranscriptionServiceTests {
             diarizerFactory: { mockDiarizer }
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         do {
             _ = try await service.transcribe(
                 audioData: makeFloatAudioData(seconds: 1.0),
@@ -1001,7 +1001,7 @@ struct TranscriptionServiceTests {
             diarizationTimeoutSeconds: 10
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         let task = Task {
             try await service.transcribe(
                 audioData: makeFloatAudioData(seconds: 2.0),
@@ -1051,7 +1051,7 @@ struct TranscriptionServiceTests {
             diarizerFactory: { mockDiarizer }
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         let output = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 5.0),
             diarizationEnabled: true
@@ -1097,7 +1097,7 @@ struct TranscriptionServiceTests {
             diarizerFactory: { mockDiarizer }
         )
 
-        try await service.loadModel(modelName: "tiny", provider: .whisperKit)
+        try await service.loadModel(modelName: "tiny", provider: .mlxWhisper)
         let output = try await service.transcribe(
             audioData: makeFloatAudioData(seconds: 50.0),
             diarizationEnabled: true

@@ -169,7 +169,7 @@ struct ModelCard: View {
 
 #if DEBUG
 struct ModelSelectionStepView_Previews: PreviewProvider {
-    @State private static var selectedModelName = "openai_whisper-base.en"
+    @State private static var selectedModelName = "mlx-community/whisper-base.en-mlx"
 
     static var previews: some View {
         ModelSelectionStepView(

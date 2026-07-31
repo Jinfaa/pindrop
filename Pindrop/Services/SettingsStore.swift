@@ -271,7 +271,7 @@ final class SettingsStore: ObservableObject {
    // MARK: - Default Values (Single Source of Truth)
 
     enum Defaults {
-       static let selectedModel = "openai_whisper-base"
+       static let selectedModel = "mlx-community/whisper-base-mlx"
         // "directInsert" (paste at cursor) has been the observed behavior of BOTH
         // modes since character-typing was removed; the default flipped from
         // "clipboard" when clipboard mode became truly copy-only (see

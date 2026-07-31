@@ -276,7 +276,7 @@ class TranscriptionService {
         return value
     }
 
-    func loadModel(modelName: String = "tiny", provider: ModelManager.ModelProvider = .whisperKit) async throws {
+    func loadModel(modelName: String = "tiny", provider: ModelManager.ModelProvider = .mlxWhisper) async throws {
         try await loadBatchModel(.named(modelName: modelName, provider: provider))
     }
 
@@ -359,9 +359,9 @@ class TranscriptionService {
         Log.boot.info("TranscriptionService.loadModel(path) begin")
 
         do {
-            let newEngine = WhisperKitEngine()
+            let newEngine = MLXWhisperEngine()
             let modelLoadTimeoutSeconds = self.modelLoadTimeoutSeconds
-            Log.boot.info("TranscriptionService.loadModel(path) WhisperKitEngine created elapsed=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - loadStarted))")
+            Log.boot.info("TranscriptionService.loadModel(path) MLXWhisperEngine created elapsed=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - loadStarted))")
 
             try await withAsyncWatchdog(
                 timeoutSeconds: modelLoadTimeoutSeconds,
@@ -373,7 +373,7 @@ class TranscriptionService {
             }
 
             engine = newEngine
-            currentProvider = .whisperKit
+            currentProvider = .mlxWhisper
             batchModelIdentity = .path(modelPath)
             Log.transcription.info("Model loaded and prewarmed successfully")
             Log.boot.info("TranscriptionService.loadModel(path) success totalElapsed=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - loadStarted))")
@@ -2000,8 +2000,8 @@ class TranscriptionService {
         provider: ModelManager.ModelProvider
     ) throws -> any TranscriptionEngine {
         switch provider {
-        case .whisperKit:
-            return WhisperKitEngine()
+        case .mlxWhisper:
+            return MLXWhisperEngine()
         case .parakeet:
             return ParakeetEngine()
         case .senseVoice:

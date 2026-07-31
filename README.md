@@ -19,7 +19,7 @@
 
 ### Dictation
 
-- Pick from several local transcription engines: WhisperKit (OpenAI Whisper on Core ML, in sizes from tiny to large-v3), Parakeet, SenseVoice, or Apple's on-device speech stack. The model browser recommends options for your Mac.
+- Pick from several local transcription engines: MLX Whisper (OpenAI Whisper on Apple Silicon via MLX, in sizes from tiny to large-v3), Parakeet, SenseVoice, or Apple's on-device speech stack. The model browser recommends options for your Mac.
 - Optional OpenAI GPT-4o Transcribe and GPT-4o Mini Transcribe models provide cloud transcription for users who prefer a hosted service. API credentials stay in the macOS Keychain.
 - Streaming dictation shows words as you say them, powered by the Nemotron streaming engine (English only for now; Apple SpeechTranscriber is another option on macOS 26).
 - Dictate in 16 languages. The interface is localized into 31 languages with RTL support.
@@ -44,7 +44,8 @@
 ## Built with
 
 - [Swift](https://swift.org/) and [SwiftUI](https://developer.apple.com/swiftui/), with [SwiftData](https://developer.apple.com/documentation/swiftdata) for persistence
-- [WhisperKit](https://github.com/argmaxinc/WhisperKit) by Argmax for Core ML Whisper inference
+- [mlx-audio-swift](https://github.com/Blaizzy/mlx-audio-swift) for MLX Whisper inference on Apple Silicon
+- [mlx-community Whisper models](https://huggingface.co/collections/mlx-community/whisper-663256f9964fbb1177db93dc)
 - [FluidAudio](https://github.com/FluidInference/FluidAudio) for Parakeet, SenseVoice, Nemotron streaming, and diarization
 - [Sparkle](https://sparkle-project.org/) for updates
 
@@ -144,6 +145,6 @@ MIT. See [LICENSE](LICENSE).
 
 ## Acknowledgments
 
-- [WhisperKit](https://github.com/argmaxinc/WhisperKit) and [OpenAI Whisper](https://github.com/openai/whisper)
+- [mlx-audio-swift](https://github.com/Blaizzy/mlx-audio-swift) and [OpenAI Whisper](https://github.com/openai/whisper)
 - [FluidAudio](https://github.com/FluidInference/FluidAudio) by Fluid Inference
 - [Sparkle](https://sparkle-project.org/)

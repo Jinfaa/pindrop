@@ -25,7 +25,7 @@ body:
         Pindrop: 1.1.0 (42)
         macOS: Version 15.1 (Build 24B83)
         Chip: Apple Silicon
-        Model: openai_whisper-small
+        Model: mlx-community/whisper-small-mlx
     validations:
       required: true
 

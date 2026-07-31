@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to Pindrop! Whether you're fixing a bug, adding a feature, or improving documentation, your help is welcome and appreciated.
 
-Pindrop is a macOS menu bar dictation app that uses [WhisperKit](https://github.com/argmaxinc/WhisperKit) for fully local, on-device speech-to-text. It's built with Swift and SwiftUI, targets macOS 14+, and is developed through Xcode + SwiftPM only.
+Pindrop is a macOS menu bar dictation app that uses [mlx-audio-swift](https://github.com/Blaizzy/mlx-audio-swift) (MLX Whisper) for fully local, on-device speech-to-text. It's built with Swift and SwiftUI, targets macOS 14+, and is developed through Xcode + SwiftPM only.
 
 ## Table of Contents
 
@@ -23,7 +23,7 @@ Pindrop is a macOS menu bar dictation app that uses [WhisperKit](https://github.
 | ------------- | ------------ | ---------------------------------------- |
 | macOS         | 14+ (Sonoma) | Uses SwiftData, @Observable              |
 | Xcode         | 15+          | With Command Line Tools                  |
-| Apple Silicon | Required     | WhisperKit uses Core ML on Apple Silicon |
+| Apple Silicon | Required     | MLX Whisper runs on Apple Silicon |
 | `just`        | Any          | Command runner: `brew install just`      |
 
 Optional tools for code quality:
@@ -141,7 +141,7 @@ import Foundation              // 1. Foundation always first
 import SwiftUI                 // 2. Apple frameworks
 import AVFoundation
 import AppKit
-import WhisperKit              // 3. External packages
+import MLXAudioSTT             // 3. External packages
 import os.log                  // 4. Logging last
 ```
 
@@ -297,7 +297,7 @@ All business logic lives in `Services/`. Each service is a single-responsibility
 ```
 AppCoordinator.handleToggleRecording()
     → AudioRecorder (capture audio)
-    → TranscriptionService (run WhisperKit)
+    → TranscriptionService (run MLX Whisper)
     → OutputManager (clipboard / direct insert)
 ```
 

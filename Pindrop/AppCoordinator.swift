@@ -1359,9 +1359,9 @@ final class AppCoordinator {
         provider: ModelManager.ModelProvider
     ) async throws {
         do {
-            if provider == .whisperKit,
+            if provider == .mlxWhisper,
                let localModelPath = modelManager.existingLocalModelPath(for: modelName) {
-                Log.model.info("Loading WhisperKit model \(modelName) from local folder: \(localModelPath.path)")
+                Log.model.info("Loading MLX Whisper model \(modelName) from local folder: \(localModelPath.path)")
                 try await transcriptionService.loadModel(modelPath: localModelPath.path)
             } else {
                 try await transcriptionService.loadModel(modelName: modelName, provider: provider)
@@ -1427,7 +1427,7 @@ final class AppCoordinator {
         }
 
         splashController.setLoading("Loading \(displayName)...")
-        try await loadAndActivateModel(named: modelName, provider: .whisperKit)
+        try await loadAndActivateModel(named: modelName, provider: .mlxWhisper)
         Log.boot.info("attemptWhisperModelRepairAndReload finished OK model=\(modelName)")
     }
 
@@ -1465,6 +1465,13 @@ final class AppCoordinator {
 
         var modelName = settingsStore.selectedModel
 
+        if let migrated = ModelManager.migratedMLXModelName(from: modelName), migrated != modelName {
+            Log.model.info("Migrating selected model \(modelName) -> \(migrated)")
+            modelName = migrated
+            settingsStore.selectedModel = migrated
+            modelManager.removeLegacyWhisperKitCacheIfPresent()
+        }
+
         if !modelManager.availableModels.contains(where: { $0.name == modelName }) {
             Log.model.warning("Selected model \(modelName) is not recognized, resetting to default")
             modelName = SettingsStore.Defaults.selectedModel
@@ -1472,7 +1479,7 @@ final class AppCoordinator {
         }
 
         let selectedModel = modelManager.availableModels.first(where: { $0.name == modelName })
-        let selectedProvider = selectedModel?.provider ?? .whisperKit
+        let selectedProvider = selectedModel?.provider ?? .mlxWhisper
         let selectedDisplayName = selectedModel?.displayName ?? modelName
         
         await modelManager.refreshDownloadedModels()
@@ -1485,7 +1492,7 @@ final class AppCoordinator {
                 try await loadAndActivateModel(named: modelName, provider: selectedProvider)
                 Log.model.info("Model loaded successfully")
             } catch {
-                if selectedProvider == .whisperKit {
+                if selectedProvider == .mlxWhisper {
                     do {
                         try await attemptWhisperModelRepairAndReload(
                             modelName: modelName,
@@ -5186,7 +5193,7 @@ final class AppCoordinator {
         named modelName: String,
         availableModels: [ModelManager.WhisperModel]
     ) -> ModelManager.ModelProvider {
-        availableModels.first(where: { $0.name == modelName })?.provider ?? .whisperKit
+        availableModels.first(where: { $0.name == modelName })?.provider ?? .mlxWhisper
     }
 
     private func handleImportMediaFiles(_ urls: [URL], options: TranscriptionJobOptions) {
@@ -6122,7 +6129,7 @@ final class AppCoordinator {
             statusBarController.updateDynamicItems()
             Log.model.info("Switched to model \(modelName) successfully")
         } catch {
-            if model.provider == .whisperKit {
+            if model.provider == .mlxWhisper {
                 do {
                     try await attemptWhisperModelRepairAndReload(
                         modelName: modelName,

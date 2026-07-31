@@ -36,6 +36,7 @@ _build configuration sign="yes":
         -scheme {{scheme}} \
         -configuration {{configuration}} \
         -derivedDataPath DerivedData \
+        -skipPackagePluginValidation \
         {{ if sign == "no" { signing_disabled } else { "" } }} \
         build
 
@@ -47,6 +48,7 @@ _test testplan sign="yes" coverage="no":
         -scheme {{scheme}} \
         -testPlan {{testplan}} \
         -destination 'platform=macOS' \
+        -skipPackagePluginValidation \
         {{ if coverage == "yes" { "-enableCodeCoverage YES" } else { "" } }} \
         {{ if sign == "no" { signing_disabled } else { "" } }}
 
@@ -55,6 +57,14 @@ build:
     @echo "🔨 Building {{app_name}} (Debug)..."
     @just _build Debug
     @echo "✅ Debug build complete"
+
+# Build Debug .app and copy it into /Applications (unsigned local install)
+install:
+    @./scripts/install-to-applications.sh Debug /Applications
+
+# Build Release .app and copy it into /Applications (unsigned local install)
+install-release:
+    @./scripts/install-to-applications.sh Release /Applications
 
 # Build for release (Xcode-managed signing)
 build-release:

@@ -280,19 +280,19 @@ struct ModelDownloadStepView: View {
 
     /// Load the selected catalog model with the correct engine. WhisperKit may
     /// use a local path; SenseVoice / Parakeet / Apple Speech always use the
-    /// named + provider entry point so they never route through WhisperKitEngine.
+    /// named + provider entry point so they never route through MLXWhisperEngine.
     private func loadSelectedModel() async throws {
         let provider = modelManager.availableModels.first(where: { $0.name == modelName })?.provider
-            ?? .whisperKit
+            ?? .mlxWhisper
 
         switch provider {
-        case .whisperKit:
+        case .mlxWhisper:
             if let localModelPath = modelManager.existingLocalModelPath(for: modelName) {
-                Log.boot.info("Onboarding loadModel(path) starting name=\(modelName) provider=WhisperKit")
+                Log.boot.info("Onboarding loadModel(path) starting name=\(modelName) provider=MLXWhisper")
                 try await transcriptionService.loadModel(modelPath: localModelPath.path)
             } else {
-                Log.boot.info("Onboarding loadModel(name) starting name=\(modelName) provider=WhisperKit")
-                try await transcriptionService.loadModel(modelName: modelName, provider: .whisperKit)
+                Log.boot.info("Onboarding loadModel(name) starting name=\(modelName) provider=MLXWhisper")
+                try await transcriptionService.loadModel(modelName: modelName, provider: .mlxWhisper)
             }
         default:
             Log.boot.info("Onboarding loadModel(name) starting name=\(modelName) provider=\(provider.rawValue)")
@@ -308,7 +308,7 @@ struct ModelDownloadStepView_Previews: PreviewProvider {
         ModelDownloadStepView(
             modelManager: PreviewModelManagerDownload(),
             transcriptionService: TranscriptionService(),
-            modelName: "openai_whisper-base.en",
+            modelName: "mlx-community/whisper-base.en-mlx",
             onComplete: {},
             onCancel: {}
         )

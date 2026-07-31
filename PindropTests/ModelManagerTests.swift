@@ -19,14 +19,13 @@ struct ModelManagerTests {
         let models = modelManager.availableModels
 
         #expect(!models.isEmpty)
-        #expect(models.contains { $0.name == "openai_whisper-tiny" })
-        #expect(models.contains { $0.name == "openai_whisper-base" })
-        #expect(models.contains { $0.name == "openai_whisper-small" })
-        #expect(models.contains { $0.name == "openai_whisper-large-v3" })
-        #expect(models.contains { $0.name == "openai_whisper-large-v3_turbo" })
-        #expect(models.contains { $0.name == "openai_whisper-medium" })
-        #expect(models.contains { $0.name == "openai_whisper-large-v2" })
-        #expect(models.contains { $0.name == "distil-whisper_distil-large-v3" })
+        #expect(models.contains { $0.name == "mlx-community/whisper-tiny" })
+        #expect(models.contains { $0.name == "mlx-community/whisper-base-mlx" })
+        #expect(models.contains { $0.name == "mlx-community/whisper-small-mlx" })
+        #expect(models.contains { $0.name == "mlx-community/whisper-large-v3-mlx" })
+        #expect(models.contains { $0.name == "mlx-community/whisper-large-v3-turbo" })
+        #expect(models.contains { $0.name == "mlx-community/whisper-medium-mlx" })
+        #expect(models.contains { $0.name == "mlx-community/whisper-base.en-mlx" })
         #expect(models.contains { $0.name == "parakeet-tdt-0.6b-v2" })
         #expect(models.contains { $0.name == "openai_gpt-4o-transcribe" && $0.provider == .openAI })
         #expect(models.contains { $0.name == "openai_gpt-4o-mini-transcribe" && $0.provider == .openAI })
@@ -51,9 +50,9 @@ struct ModelManagerTests {
             #expect(model.sizeInMB > 0)
         }
 
-        let tiny = models.first { $0.name == "openai_whisper-tiny" }
-        let base = models.first { $0.name == "openai_whisper-base" }
-        let small = models.first { $0.name == "openai_whisper-small" }
+        let tiny = models.first { $0.name == "mlx-community/whisper-tiny" }
+        let base = models.first { $0.name == "mlx-community/whisper-base-mlx" }
+        let small = models.first { $0.name == "mlx-community/whisper-small-mlx" }
 
         #expect(tiny != nil)
         #expect(base != nil)
@@ -71,7 +70,7 @@ struct ModelManagerTests {
     }
 
     @Test func isModelDownloaded() {
-        let isDownloaded = modelManager.isModelDownloaded("openai_whisper-tiny")
+        let isDownloaded = modelManager.isModelDownloaded("mlx-community/whisper-tiny")
         #expect(isDownloaded == true || isDownloaded == false)
     }
 
@@ -81,9 +80,9 @@ struct ModelManagerTests {
     }
 
     @Test func modelLookup() {
-        let model = modelManager.availableModels.first { $0.name == "openai_whisper-tiny" }
+        let model = modelManager.availableModels.first { $0.name == "mlx-community/whisper-tiny" }
         #expect(model != nil)
-        #expect(model?.provider == .whisperKit)
+        #expect(model?.provider == .mlxWhisper)
     }
 
     @Test func invalidModelLookup() {
@@ -97,7 +96,7 @@ struct ModelManagerTests {
     }
 
     @Test func englishOnlyModelsWarnForNonEnglishSelection() throws {
-        let model = try #require(modelManager.availableModels.first { $0.name == "openai_whisper-base.en" })
+        let model = try #require(modelManager.availableModels.first { $0.name == "mlx-community/whisper-base.en-mlx" })
         #expect(model.supports(language: .english) == true)
         #expect(model.supports(language: .simplifiedChinese) == false)
 
@@ -128,19 +127,19 @@ struct ModelManagerTests {
 
         for language in [AppLanguage.hindi, .malayalam] {
             let names = modelManager.recommendedModels(for: language).map(\.name)
-            #expect(names.contains("openai_whisper-base"))
-            #expect(names.contains("openai_whisper-small"))
-            #expect(names.contains("openai_whisper-medium"))
-            #expect(names.contains("openai_whisper-large-v3_turbo"))
-            #expect(!names.contains("openai_whisper-base.en"))
+            #expect(names.contains("mlx-community/whisper-base-mlx"))
+            #expect(names.contains("mlx-community/whisper-small-mlx"))
+            #expect(names.contains("mlx-community/whisper-medium-mlx"))
+            #expect(names.contains("mlx-community/whisper-large-v3-turbo"))
+            #expect(!names.contains("mlx-community/whisper-base.en-mlx"))
             #expect(!names.contains("parakeet-tdt-0.6b-v3"))
             #expect(!names.contains("parakeet-tdt-0.6b-v2"))
         }
     }
 
     @Test func hindiAndMalayalamSupportedByMultilingualWhisperButNotEnglishOnlyOrParakeet() throws {
-        let multilingual = try #require(modelManager.availableModels.first { $0.name == "openai_whisper-base" })
-        let englishOnly = try #require(modelManager.availableModels.first { $0.name == "openai_whisper-base.en" })
+        let multilingual = try #require(modelManager.availableModels.first { $0.name == "mlx-community/whisper-base-mlx" })
+        let englishOnly = try #require(modelManager.availableModels.first { $0.name == "mlx-community/whisper-base.en-mlx" })
         let parakeet = try #require(modelManager.availableModels.first { $0.name == "parakeet-tdt-0.6b-v3" })
 
         for language in [AppLanguage.hindi, .malayalam] {
@@ -161,7 +160,7 @@ struct ModelManagerTests {
     @Test func polishDictationUsesMultilingualRecommendations() throws {
         let recommendedModelNames = modelManager.recommendedModels(for: .polish).map(\.name)
         #expect(recommendedModelNames == ModelManager.multilingualRecommendedModelNames)
-        let whisper = try #require(modelManager.availableModels.first { $0.name == "openai_whisper-base" })
+        let whisper = try #require(modelManager.availableModels.first { $0.name == "mlx-community/whisper-base-mlx" })
         #expect(whisper.supports(language: .polish))
     }
 
@@ -229,7 +228,7 @@ struct ModelManagerTests {
 
     @Test func whisperKitPreparationPhase_setsPreparingSnapshot() {
         let snapshot = ModelManager.preparingDownloadSnapshot(
-            modelName: "openai_whisper-base"
+            modelName: "mlx-community/whisper-base-mlx"
         )
 
         #expect(snapshot.progress == 0.85)
@@ -237,7 +236,7 @@ struct ModelManagerTests {
     }
 
     @Test func downloadSnapshotClearsWhenRequested() {
-        let snapshot = ModelManager.completedDownloadSnapshot(modelName: "openai_whisper-base")
+        let snapshot = ModelManager.completedDownloadSnapshot(modelName: "mlx-community/whisper-base-mlx")
 
         modelManager.updateDownloadSnapshot(snapshot)
         #expect(modelManager.downloadSnapshot == snapshot)

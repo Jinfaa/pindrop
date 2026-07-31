@@ -56,7 +56,7 @@ extension SettingsStore: SettingsStoreProtocol {}
 
 @MainActor
 final class PreviewSettingsStore: SettingsStoreProtocol {
-    @Published var selectedModel = "openai_whisper-base"
+    @Published var selectedModel = "mlx-community/whisper-base-mlx"
 
     @Published var toggleHotkey = "⌥Space"
     @Published var toggleHotkeyCode = 49
@@ -173,7 +173,7 @@ final class PreviewModelManager: ModelManagerProtocol {
     var availableModels: [ModelManager.WhisperModel] {
         [
             ModelManager.WhisperModel(
-                name: "openai_whisper-tiny",
+                name: "mlx-community/whisper-tiny",
                 displayName: "Whisper Tiny",
                 sizeInMB: 75,
                 description: "Fastest model",
@@ -182,7 +182,7 @@ final class PreviewModelManager: ModelManagerProtocol {
                 language: .multilingual
             ),
             ModelManager.WhisperModel(
-                name: "openai_whisper-base",
+                name: "mlx-community/whisper-base-mlx",
                 displayName: "Whisper Base",
                 sizeInMB: 145,
                 description: "Good balance",
@@ -191,7 +191,7 @@ final class PreviewModelManager: ModelManagerProtocol {
                 language: .multilingual
             ),
             ModelManager.WhisperModel(
-                name: "openai_whisper-small",
+                name: "mlx-community/whisper-small-mlx",
                 displayName: "Whisper Small",
                 sizeInMB: 483,
                 description: "Higher accuracy",
@@ -206,7 +206,7 @@ final class PreviewModelManager: ModelManagerProtocol {
     private(set) var isDownloading: Bool = false
     private(set) var currentDownloadModel: String? = nil
     private(set) var downloadSnapshot: ModelManager.DownloadSnapshot? = nil
-    private(set) var downloadedModelNames: Set<String> = ["openai_whisper-base"]
+    private(set) var downloadedModelNames: Set<String> = ["mlx-community/whisper-base-mlx"]
     
     func refreshDownloadedModels() async {}
     

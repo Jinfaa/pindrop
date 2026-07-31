@@ -7,7 +7,7 @@
 ```
 Services/
 ├── AudioRecorder.swift        # AVAudioEngine, 16kHz mono PCM
-├── TranscriptionService.swift # WhisperKit integration
+├── TranscriptionService.swift # MLX Whisper / Parakeet / SenseVoice orchestration
 ├── ModelManager.swift         # Model download/storage
 ├── HotkeyManager.swift        # Carbon Events (NOT @MainActor)
 ├── OutputManager.swift        # Clipboard + Accessibility
@@ -35,7 +35,7 @@ Services/
 
 ### AudioRecorder
 
-- **Input**: 16kHz mono PCM (WhisperKit requirement)
+- **Input**: 16kHz mono PCM (Whisper requirement)
 - **Engine**: AVAudioEngine with converter tap
 - **Output**: `Data` (Float32 samples)
 - **Error**: `AudioRecorderError`
@@ -43,7 +43,7 @@ Services/
 ### TranscriptionService (@Observable)
 
 - **States**: `.unloaded` → `.loading` → `.ready` ⇄ `.transcribing`
-- **Model loading**: `WhisperKitConfig` with prewarm
+- **Model loading**: `MLXWhisperEngine` via mlx-audio-swift `WhisperModel.fromPretrained`
 - **Concurrency**: Rejects concurrent transcriptions
 - **Error**: `TranscriptionError`
 
