@@ -19,7 +19,7 @@
 
 ### Dictation
 
-- Pick from several local transcription engines: MLX Whisper and MLX Parakeet (Apple Silicon via MLX), SenseVoice, or Apple's on-device speech stack. The model browser recommends options for your Mac.
+- Pick from several local transcription engines: MLX Whisper / MLX Parakeet on Apple Silicon (toggle to CoreML WhisperKit + Parakeet), SenseVoice, or Apple's on-device speech stack. Intel Macs use the CoreML stack only.
 - Optional OpenAI GPT-4o Transcribe and GPT-4o Mini Transcribe models provide cloud transcription for users who prefer a hosted service. API credentials stay in the macOS Keychain.
 - Streaming dictation shows words as you say them, powered by the Nemotron streaming engine (English only for now; Apple SpeechTranscriber is another option on macOS 26).
 - Dictate in 16 languages. The interface is localized into 31 languages with RTL support.
@@ -53,7 +53,7 @@
 ## Requirements
 
 - macOS 14.0 (Sonoma) or later. A few features need newer releases: Apple SpeechTranscriber streaming and Apple Intelligence enhancement require macOS 26.
-- Apple Silicon recommended. Intel Macs work, but transcription is slower.
+- Apple Silicon recommended. On Intel Macs, local Whisper/Parakeet use CoreML (WhisperKit / FluidAudio); MLX engines require Apple Silicon.
 - Microphone permission, required to record.
 - Accessibility permission, optional. It enables direct text insertion and the context engine; clipboard output works without it.
 

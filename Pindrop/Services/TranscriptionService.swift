@@ -2002,6 +2002,10 @@ class TranscriptionService {
         switch provider {
         case .mlxWhisper:
             return MLXWhisperEngine()
+        case .whisperKit:
+            return WhisperKitEngine()
+        case .mlxParakeet:
+            return MLXParakeetEngine()
         case .parakeet:
             return ParakeetEngine()
         case .senseVoice:

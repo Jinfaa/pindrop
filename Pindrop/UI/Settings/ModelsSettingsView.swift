@@ -21,7 +21,11 @@ struct ModelsSettingsView: View {
 
     /// Speech-to-text models shown on the page: recommended for language + any downloaded + active.
     private var speechModels: [ModelManager.WhisperModel] {
-        let recommended = modelManager.recommendedModels(for: settings.selectedAppLanguage)
+        let preferMLX = settings.effectivePreferMLXLocalASR
+        let recommended = modelManager.recommendedModels(
+            for: settings.selectedAppLanguage,
+            preferMLX: preferMLX
+        )
         var seen = Set(recommended.map(\.name))
         var result = recommended
 
@@ -31,6 +35,7 @@ struct ModelsSettingsView: View {
             result.append(model)
         }
         for model in modelManager.availableModels where model.availability == .available {
+            guard ModelManager.isModelVisible(model, preferMLX: preferMLX) else { continue }
             let isDownloaded = modelManager.isModelDownloaded(model.name)
             let isActive = (activeModelName ?? settings.selectedModel) == model.name
             let isSelected = settings.selectedModel == model.name
@@ -40,8 +45,8 @@ struct ModelsSettingsView: View {
             }
         }
 
-        // Always surface the current default even if not recommended.
         if let selected = modelManager.availableModels.first(where: { $0.name == settings.selectedModel }),
+           ModelManager.isModelVisible(selected, preferMLX: preferMLX),
            !seen.contains(selected.name) {
             result.insert(selected, at: 0)
         }
@@ -77,6 +82,11 @@ struct ModelsSettingsView: View {
 
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(alignment: .leading, spacing: 0) {
+                    if DeviceArchitecture.isAppleSilicon {
+                        localBackendPicker
+                            .padding(.horizontal, 20)
+                            .padding(.bottom, 12)
+                    }
                     speechToTextSection
                     helpersSection
                     privacyFootnote
@@ -137,6 +147,50 @@ struct ModelsSettingsView: View {
     }
 
     // MARK: - SPEECH TO TEXT
+
+    private var localBackendPicker: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(localized("Local engine", locale: locale))
+                .font(AppTypography.sectionHeader)
+                .foregroundStyle(AppColors.textTertiary)
+            Picker("", selection: Binding(
+                get: { settings.preferMLXLocalASR },
+                set: { newValue in
+                    guard settings.preferMLXLocalASR != newValue else { return }
+                    settings.preferMLXLocalASR = newValue
+                    remapSelectedModel(preferMLX: newValue)
+                }
+            )) {
+                Text("MLX").tag(true)
+                Text("CoreML").tag(false)
+            }
+            .pickerStyle(.segmented)
+            .labelsHidden()
+        }
+    }
+
+    private func remapSelectedModel(preferMLX: Bool) {
+        let current = settings.selectedModel
+        let mapped: String?
+        if preferMLX {
+            mapped = ModelManager.migratedMLXModelName(from: current)
+        } else {
+            mapped = ModelManager.migratedLegacyModelName(from: current)
+        }
+        if let mapped,
+           modelManager.availableModels.contains(where: {
+               $0.name == mapped && ModelManager.isModelVisible($0, preferMLX: preferMLX)
+           }) {
+            settings.selectedModel = mapped
+            return
+        }
+        if let fallback = modelManager.recommendedModels(
+            for: settings.selectedAppLanguage,
+            preferMLX: preferMLX
+        ).first {
+            settings.selectedModel = fallback.name
+        }
+    }
 
     private var speechToTextSection: some View {
         VStack(alignment: .leading, spacing: 10) {

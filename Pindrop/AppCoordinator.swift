@@ -1465,17 +1465,33 @@ final class AppCoordinator {
 
         var modelName = settingsStore.selectedModel
 
-        if let migrated = ModelManager.migratedMLXModelName(from: modelName), migrated != modelName {
+        if !DeviceArchitecture.isAppleSilicon {
+            settingsStore.preferMLXLocalASR = false
+        }
+
+        let preferMLX = settingsStore.effectivePreferMLXLocalASR
+        if preferMLX {
+            if let migrated = ModelManager.migratedMLXModelName(from: modelName), migrated != modelName {
+                Log.model.info("Migrating selected model \(modelName) -> \(migrated)")
+                modelName = migrated
+                settingsStore.selectedModel = migrated
+            }
+        } else if let migrated = ModelManager.migratedLegacyModelName(from: modelName), migrated != modelName {
             Log.model.info("Migrating selected model \(modelName) -> \(migrated)")
             modelName = migrated
             settingsStore.selectedModel = migrated
-            modelManager.removeLegacyWhisperKitCacheIfPresent()
-            modelManager.removeLegacyParakeetCoreMLCacheIfPresent()
         }
 
-        if !modelManager.availableModels.contains(where: { $0.name == modelName }) {
-            Log.model.warning("Selected model \(modelName) is not recognized, resetting to default")
-            modelName = SettingsStore.Defaults.selectedModel
+        if !modelManager.availableModels.contains(where: {
+            $0.name == modelName && ModelManager.isModelVisible($0, preferMLX: preferMLX)
+        }) {
+            Log.model.warning("Selected model \(modelName) is not available for current backend, resetting to default")
+            let fallback = modelManager.recommendedModels(
+                for: settingsStore.selectedAppLanguage,
+                preferMLX: preferMLX
+            ).first?.name
+            modelName = fallback
+                ?? (preferMLX ? SettingsStore.Defaults.selectedModel : "openai_whisper-base")
             settingsStore.selectedModel = modelName
         }
 

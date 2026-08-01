@@ -8,6 +8,7 @@
 import Foundation
 import FluidAudio
 import MLXAudioSTT
+import WhisperKit
 
 @MainActor
 @Observable
@@ -16,7 +17,7 @@ class ModelManager {
     /// Download start/failure signals are dropped entirely when nil or opted out.
     @ObservationIgnored var telemetryService: TelemetryService?
 
-    nonisolated static let englishRecommendedModelNames = [
+    nonisolated static let englishRecommendedMLXModelNames = [
         "apple_speech_on_device",
         "mlx-community/whisper-base.en-mlx",
         "mlx-community/whisper-small.en-mlx",
@@ -25,7 +26,7 @@ class ModelManager {
         "mlx-community/parakeet-tdt-0.6b-v2"
     ]
 
-    nonisolated static let multilingualRecommendedModelNames = [
+    nonisolated static let multilingualRecommendedMLXModelNames = [
         "apple_speech_on_device",
         "mlx-community/whisper-base-mlx",
         "mlx-community/whisper-small-mlx",
@@ -34,12 +35,34 @@ class ModelManager {
         "mlx-community/parakeet-tdt-0.6b-v3"
     ]
 
+    nonisolated static let englishRecommendedLegacyModelNames = [
+        "apple_speech_on_device",
+        "openai_whisper-base.en",
+        "openai_whisper-small.en",
+        "openai_whisper-medium",
+        "openai_whisper-large-v3_turbo",
+        "parakeet-tdt-0.6b-v2"
+    ]
+
+    nonisolated static let multilingualRecommendedLegacyModelNames = [
+        "apple_speech_on_device",
+        "openai_whisper-base",
+        "openai_whisper-small",
+        "openai_whisper-medium",
+        "openai_whisper-large-v3_turbo",
+        "parakeet-tdt-0.6b-v3"
+    ]
+
+    nonisolated static let englishRecommendedModelNames = englishRecommendedMLXModelNames
+    nonisolated static let multilingualRecommendedModelNames = multilingualRecommendedMLXModelNames
     nonisolated static let recommendedModelNames = englishRecommendedModelNames
     nonisolated static let recommendedModelNameSet: Set<String> = Set(englishRecommendedModelNames)
 
     
     enum ModelProvider: String, CaseIterable, Sendable {
         case mlxWhisper = "MLX Whisper"
+        case whisperKit = "WhisperKit"
+        case mlxParakeet = "MLX Parakeet"
         case parakeet = "Parakeet"
         case senseVoice = "SenseVoice"
         case appleSpeech = "Apple Speech"
@@ -49,15 +72,15 @@ class ModelManager {
 
         var isLocal: Bool {
             switch self {
-            case .mlxWhisper, .parakeet, .senseVoice, .appleSpeech: return true
+            case .mlxWhisper, .whisperKit, .mlxParakeet, .parakeet, .senseVoice, .appleSpeech: return true
             case .openAI, .elevenLabs, .groq: return false
             }
         }
 
         var iconName: String {
             switch self {
-            case .mlxWhisper: return "waveform"
-            case .parakeet: return "bird"
+            case .mlxWhisper, .whisperKit: return "waveform"
+            case .mlxParakeet, .parakeet: return "bird"
             case .senseVoice: return "globe.asia.australia"
             case .appleSpeech: return "apple.logo"
             case .openAI: return "sparkles"
@@ -71,7 +94,7 @@ class ModelManager {
             case .openAI: return "openai"
             case .elevenLabs: return "elevenlabs"
             case .groq: return "groq"
-            case .mlxWhisper, .parakeet, .senseVoice, .appleSpeech:
+            case .mlxWhisper, .whisperKit, .mlxParakeet, .parakeet, .senseVoice, .appleSpeech:
                 return rawValue.lowercased().replacingOccurrences(of: " ", with: "-")
             }
         }
@@ -256,7 +279,281 @@ class ModelManager {
             availability: .available
         ),
 
-        // MLX Whisper (mlx-community)
+        // WhisperKit Local Models
+        WhisperModel(
+            name: "openai_whisper-tiny",
+            displayName: "Whisper Tiny",
+            sizeInMB: 75,
+            description: "Fastest model, ideal for quick dictation with acceptable accuracy",
+            speedRating: 10.0,
+            accuracyRating: 6.0,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-tiny.en",
+            displayName: "Whisper Tiny (English)",
+            sizeInMB: 75,
+            description: "English-optimized tiny model with slightly better accuracy",
+            speedRating: 10.0,
+            accuracyRating: 6.5,
+            language: .english,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-base",
+            displayName: "Whisper Base",
+            sizeInMB: 145,
+            description: "Good balance between speed and accuracy for everyday use",
+            speedRating: 9.0,
+            accuracyRating: 7.0,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-base.en",
+            displayName: "Whisper Base (English)",
+            sizeInMB: 145,
+            description: "English-optimized base model, recommended for most users",
+            speedRating: 9.0,
+            accuracyRating: 7.5,
+            language: .english,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-small",
+            displayName: "Whisper Small",
+            sizeInMB: 483,
+            description: "Higher accuracy for complex vocabulary and technical terms",
+            speedRating: 7.5,
+            accuracyRating: 8.0,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-small_216MB",
+            displayName: "Whisper Small (Quantized)",
+            sizeInMB: 216,
+            description: "Quantized small model — half the size with similar accuracy",
+            speedRating: 8.0,
+            accuracyRating: 7.8,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-small.en",
+            displayName: "Whisper Small (English)",
+            sizeInMB: 483,
+            description: "English-optimized with excellent accuracy for professional use",
+            speedRating: 7.5,
+            accuracyRating: 8.5,
+            language: .english,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-small.en_217MB",
+            displayName: "Whisper Small (English, Quantized)",
+            sizeInMB: 217,
+            description: "Quantized English small model — compact and fast",
+            speedRating: 8.0,
+            accuracyRating: 8.3,
+            language: .english,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-medium",
+            displayName: "Whisper Medium",
+            sizeInMB: 1530,
+            description: "Excellent for multilingual and code-switching (e.g. Chinese/English mix)",
+            speedRating: 6.5,
+            accuracyRating: 8.8,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-medium.en",
+            displayName: "Whisper Medium (English)",
+            sizeInMB: 1530,
+            description: "English-optimized medium model with high accuracy",
+            speedRating: 6.5,
+            accuracyRating: 9.0,
+            language: .english,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-large-v2",
+            displayName: "Whisper Large v2",
+            sizeInMB: 3100,
+            description: "Previous generation large model, still very capable",
+            speedRating: 5.0,
+            accuracyRating: 9.3,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-large-v2_949MB",
+            displayName: "Whisper Large v2 (Quantized)",
+            sizeInMB: 949,
+            description: "Quantized large v2 — much smaller with minimal accuracy loss",
+            speedRating: 6.0,
+            accuracyRating: 9.1,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-large-v2_turbo",
+            displayName: "Whisper Large v2 Turbo",
+            sizeInMB: 3100,
+            description: "Turbo-optimized large v2 for faster inference",
+            speedRating: 6.5,
+            accuracyRating: 9.3,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-large-v2_turbo_955MB",
+            displayName: "Whisper Large v2 Turbo (Quantized)",
+            sizeInMB: 955,
+            description: "Quantized turbo large v2 — fast and compact",
+            speedRating: 7.0,
+            accuracyRating: 9.1,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-large-v3",
+            displayName: "Whisper Large v3",
+            sizeInMB: 3100,
+            description: "Maximum accuracy for demanding transcription tasks",
+            speedRating: 5.0,
+            accuracyRating: 9.7,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-large-v3_947MB",
+            displayName: "Whisper Large v3 (Quantized)",
+            sizeInMB: 947,
+            description: "Quantized large v3 — great accuracy in a smaller package",
+            speedRating: 6.0,
+            accuracyRating: 9.5,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-large-v3_turbo",
+            displayName: "Whisper Large v3 Turbo",
+            sizeInMB: 809,
+            description: "Near large-model accuracy with significantly faster processing",
+            speedRating: 7.5,
+            accuracyRating: 9.5,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-large-v3_turbo_954MB",
+            displayName: "Whisper Large v3 Turbo (Quantized)",
+            sizeInMB: 954,
+            description: "Quantized turbo v3 — balanced speed and accuracy",
+            speedRating: 7.5,
+            accuracyRating: 9.3,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-large-v3-v20240930",
+            displayName: "Whisper Large v3 (Sep 2024)",
+            sizeInMB: 3100,
+            description: "Updated large v3 with improved multilingual performance",
+            speedRating: 5.0,
+            accuracyRating: 9.8,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-large-v3-v20240930_547MB",
+            displayName: "Whisper Large v3 Sep 2024 (Q 547MB)",
+            sizeInMB: 547,
+            description: "Heavily quantized — smallest large v3 variant",
+            speedRating: 7.0,
+            accuracyRating: 9.3,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-large-v3-v20240930_626MB",
+            displayName: "Whisper Large v3 Sep 2024 (Q 626MB)",
+            sizeInMB: 626,
+            description: "Quantized Sep 2024 large v3 — compact with great accuracy",
+            speedRating: 6.5,
+            accuracyRating: 9.5,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-large-v3-v20240930_turbo",
+            displayName: "Whisper Large v3 Sep 2024 Turbo",
+            sizeInMB: 3100,
+            description: "Latest turbo-optimized large v3 — best overall performance",
+            speedRating: 6.5,
+            accuracyRating: 9.8,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "openai_whisper-large-v3-v20240930_turbo_632MB",
+            displayName: "Whisper Large v3 Sep 2024 Turbo (Quantized)",
+            sizeInMB: 632,
+            description: "Quantized latest turbo — excellent accuracy in ~600MB",
+            speedRating: 7.5,
+            accuracyRating: 9.5,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        
+        // Distil-Whisper Models (distilled from large v3)
+        WhisperModel(
+            name: "distil-whisper_distil-large-v3",
+            displayName: "Distil Large v3",
+            sizeInMB: 1510,
+            description: "Distilled large v3 — faster with minimal accuracy loss",
+            speedRating: 7.5,
+            accuracyRating: 9.3,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "distil-whisper_distil-large-v3_594MB",
+            displayName: "Distil Large v3 (Quantized)",
+            sizeInMB: 594,
+            description: "Quantized distilled model — great speed/accuracy tradeoff",
+            speedRating: 8.0,
+            accuracyRating: 9.0,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "distil-whisper_distil-large-v3_turbo",
+            displayName: "Distil Large v3 Turbo",
+            sizeInMB: 1510,
+            description: "Turbo-optimized distilled model for fastest large-class inference",
+            speedRating: 8.0,
+            accuracyRating: 9.3,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+        WhisperModel(
+            name: "distil-whisper_distil-large-v3_turbo_600MB",
+            displayName: "Distil Large v3 Turbo (Quantized)",
+            sizeInMB: 600,
+            description: "Quantized turbo distilled — fastest large-class model at ~600MB",
+            speedRating: 8.5,
+            accuracyRating: 9.0,
+            language: .multilingual,
+            provider: .whisperKit
+        ),
+
+                // MLX Whisper (mlx-community)
         WhisperModel(
             name: "mlx-community/whisper-tiny",
             displayName: "Whisper Tiny",
@@ -349,10 +646,10 @@ class ModelManager {
         ),
         
         WhisperModel(
-            name: "mlx-community/parakeet-tdt-0.6b-v2",
+            name: "parakeet-tdt-0.6b-v2",
             displayName: "Parakeet TDT 0.6B V2",
-            sizeInMB: 2470,
-            description: "NVIDIA Parakeet TDT via MLX — English-only",
+            sizeInMB: 2580,
+            description: "NVIDIA Parakeet via CoreML — English-only",
             speedRating: 8.5,
             accuracyRating: 9.8,
             language: .english,
@@ -360,10 +657,10 @@ class ModelManager {
             availability: .available
         ),
         WhisperModel(
-            name: "mlx-community/parakeet-tdt-0.6b-v3",
+            name: "parakeet-tdt-0.6b-v3",
             displayName: "Parakeet TDT 0.6B V3",
-            sizeInMB: 2470,
-            description: "NVIDIA Parakeet TDT via MLX — 25 European languages",
+            sizeInMB: 2670,
+            description: "NVIDIA Parakeet via CoreML — 25 European languages",
             speedRating: 8.0,
             accuracyRating: 9.9,
             language: .multilingual,
@@ -372,14 +669,48 @@ class ModelManager {
             availability: .available
         ),
         WhisperModel(
-            name: "mlx-community/parakeet-tdt-1.1b",
+            name: "parakeet-tdt-1.1b",
             displayName: "Parakeet TDT 1.1B",
+            sizeInMB: 4400,
+            description: "Larger Parakeet CoreML model",
+            speedRating: 7.0,
+            accuracyRating: 9.95,
+            language: .english,
+            provider: .parakeet,
+            availability: .comingSoon
+        ),
+        WhisperModel(
+            name: "mlx-community/parakeet-tdt-0.6b-v2",
+            displayName: "Parakeet TDT 0.6B V2 (MLX)",
+            sizeInMB: 2470,
+            description: "NVIDIA Parakeet TDT via MLX — English-only",
+            speedRating: 8.5,
+            accuracyRating: 9.8,
+            language: .english,
+            provider: .mlxParakeet,
+            availability: .available
+        ),
+        WhisperModel(
+            name: "mlx-community/parakeet-tdt-0.6b-v3",
+            displayName: "Parakeet TDT 0.6B V3 (MLX)",
+            sizeInMB: 2470,
+            description: "NVIDIA Parakeet TDT via MLX — 25 European languages",
+            speedRating: 8.0,
+            accuracyRating: 9.9,
+            language: .multilingual,
+            languageSupport: .parakeetV3European,
+            provider: .mlxParakeet,
+            availability: .available
+        ),
+        WhisperModel(
+            name: "mlx-community/parakeet-tdt-1.1b",
+            displayName: "Parakeet TDT 1.1B (MLX)",
             sizeInMB: 4400,
             description: "Larger NVIDIA Parakeet TDT via MLX — English-only",
             speedRating: 7.0,
             accuracyRating: 9.95,
             language: .english,
-            provider: .parakeet,
+            provider: .mlxParakeet,
             availability: .available
         ),
 
@@ -444,13 +775,30 @@ class ModelManager {
         )
     ]
 
-    func recommendedModels(for language: AppLanguage) -> [WhisperModel] {
+    nonisolated static func usesMLXBackend(_ preferMLX: Bool) -> Bool {
+        DeviceArchitecture.isAppleSilicon && preferMLX
+    }
+
+    nonisolated static func isModelVisible(_ model: WhisperModel, preferMLX: Bool) -> Bool {
+        let useMLX = usesMLXBackend(preferMLX)
+        switch model.provider {
+        case .mlxWhisper, .mlxParakeet:
+            return useMLX
+        case .whisperKit, .parakeet:
+            return !useMLX
+        case .senseVoice, .appleSpeech, .openAI, .elevenLabs, .groq:
+            return true
+        }
+    }
+
+    func recommendedModels(for language: AppLanguage, preferMLX: Bool = true) -> [WhisperModel] {
+        let useMLX = Self.usesMLXBackend(preferMLX)
         let recommendedModelNames: [String]
         switch language {
         case .english:
-            recommendedModelNames = Self.englishRecommendedModelNames
+            recommendedModelNames = useMLX ? Self.englishRecommendedMLXModelNames : Self.englishRecommendedLegacyModelNames
         case .automatic, .russian, .ukrainian, .simplifiedChinese, .spanish, .french, .german, .turkish, .japanese, .portugueseBrazil, .italian, .dutch, .korean, .hindi, .malayalam, .polish:
-            recommendedModelNames = Self.multilingualRecommendedModelNames
+            recommendedModelNames = useMLX ? Self.multilingualRecommendedMLXModelNames : Self.multilingualRecommendedLegacyModelNames
         }
 
         let recommendationRanks = Dictionary(
@@ -461,6 +809,7 @@ class ModelManager {
 
         return availableModels
             .filter { recommendedModelNames.contains($0.name) }
+            .filter { Self.isModelVisible($0, preferMLX: preferMLX) }
             .filter { $0.supports(language: language) }
             .sorted {
                 recommendationRanks[$0.name, default: .max] < recommendationRanks[$1.name, default: .max]
@@ -468,7 +817,7 @@ class ModelManager {
     }
 
     var recommendedModels: [WhisperModel] {
-        recommendedModels(for: .english)
+        recommendedModels(for: .english, preferMLX: DeviceArchitecture.isAppleSilicon)
     }
     
     private(set) var downloadProgress: Double = 0.0
@@ -484,22 +833,22 @@ class ModelManager {
     
     private let fileManager = FileManager.default
     
-    /// Last decile (0...10) logged for MLX Whisper/Parakeet file download progress to avoid log spam.
     private var mlxAudioDownloadLastLoggedDecile: Int = -1
+    private var whisperKitDownloadLastLoggedDecile: Int = -1
     
     private var modelsBaseURL: URL {
         fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
             .appendingPathComponent("Pindrop", isDirectory: true)
     }
 
-    private var legacyWhisperKitModelsURL: URL {
+    private var whisperKitModelsURL: URL {
         modelsBaseURL
             .appendingPathComponent("models", isDirectory: true)
             .appendingPathComponent("argmaxinc", isDirectory: true)
             .appendingPathComponent("whisperkit-coreml", isDirectory: true)
     }
     
-    private var legacyParakeetCoreMLModelsURL: URL {
+    private var parakeetModelsURL: URL {
         modelsBaseURL.appendingPathComponent("FluidInference", isDirectory: true)
                      .appendingPathComponent("parakeet-coreml", isDirectory: true)
     }
@@ -520,8 +869,13 @@ class ModelManager {
 
     private func localModelPath(for model: WhisperModel) -> URL? {
         switch model.provider {
-        case .mlxWhisper, .parakeet:
+        case .mlxWhisper, .mlxParakeet:
             return MLXWhisperModelStore.modelDirectory(for: model.name)
+        case .whisperKit:
+            return whisperKitModelsURL.appendingPathComponent(model.name, isDirectory: true)
+        case .parakeet:
+            let folderName = model.name.hasSuffix("-coreml") ? model.name : "\(model.name)-coreml"
+            return parakeetModelsURL.appendingPathComponent(folderName, isDirectory: true)
         case .senseVoice:
             // Only advertise a local path when the catalog int8 set is complete.
             guard SenseVoiceModels.modelsExist(
@@ -545,7 +899,7 @@ class ModelManager {
             return nil
         }
 
-        if model.provider == .mlxWhisper || model.provider == .parakeet {
+        if model.provider == .mlxWhisper || model.provider == .mlxParakeet {
             guard MLXWhisperModelStore.isModelPresent(at: modelPath) else {
                 return nil
             }
@@ -572,15 +926,38 @@ class ModelManager {
     func refreshDownloadedModels() async {
         var downloaded: Set<String> = []
 
-        for model in availableModels where model.provider == .mlxWhisper || model.provider == .parakeet {
+        for model in availableModels where model.provider == .mlxWhisper || model.provider == .mlxParakeet {
             if let path = localModelPath(for: model),
                MLXWhisperModelStore.isModelPresent(at: path) {
                 downloaded.insert(model.name)
             }
         }
 
-        // SenseVoice catalog entry is int8-only: discovery and load share the
-        // same precision decision so a fp16/fp32-only cache is never shown as ready.
+        if fileManager.fileExists(atPath: whisperKitModelsURL.path) {
+            if let contents = try? fileManager.contentsOfDirectory(atPath: whisperKitModelsURL.path) {
+                for folder in contents where !folder.hasPrefix(".") {
+                    let folderPath = whisperKitModelsURL.appendingPathComponent(folder).path
+                    var isDirectory: ObjCBool = false
+                    if fileManager.fileExists(atPath: folderPath, isDirectory: &isDirectory), isDirectory.boolValue {
+                        downloaded.insert(folder)
+                    }
+                }
+            }
+        }
+
+        if fileManager.fileExists(atPath: parakeetModelsURL.path) {
+            if let contents = try? fileManager.contentsOfDirectory(atPath: parakeetModelsURL.path) {
+                for folder in contents where !folder.hasPrefix(".") {
+                    let folderPath = parakeetModelsURL.appendingPathComponent(folder).path
+                    var isDirectory: ObjCBool = false
+                    if fileManager.fileExists(atPath: folderPath, isDirectory: &isDirectory), isDirectory.boolValue {
+                        let normalizedName = folder.hasSuffix("-coreml") ? String(folder.dropLast(7)) : folder
+                        downloaded.insert(normalizedName)
+                    }
+                }
+            }
+        }
+
         if SenseVoiceModels.modelsExist(
             at: senseVoiceModelsURL,
             precision: SenseVoiceEngine.catalogPrecision
@@ -709,12 +1086,16 @@ class ModelManager {
             parameters: [TelemetryParameter.model: modelName]
         )
         do {
-            if model.provider == .parakeet {
+            if model.provider == .mlxParakeet {
                 try await downloadMLXParakeetModel(named: modelName, onProgress: onProgress)
+            } else if model.provider == .parakeet {
+                try await downloadParakeetModel(named: modelName, onProgress: onProgress)
             } else if model.provider == .senseVoice {
                 try await downloadSenseVoiceModel(named: modelName, onProgress: onProgress)
             } else if model.provider == .mlxWhisper {
                 try await downloadMLXWhisperModel(named: modelName, onProgress: onProgress)
+            } else if model.provider == .whisperKit {
+                try await downloadWhisperKitModel(named: modelName, onProgress: onProgress)
             } else if model.provider == .appleSpeech {
                 await refreshDownloadedModels()
             } else {
@@ -733,7 +1114,144 @@ class ModelManager {
         Log.boot.info("ModelManager.downloadModel finished OK name=\(modelName) wallClock=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - downloadWallClock))")
     }
     
-    private func downloadMLXWhisperModel(
+    private func downloadWhisperKitModel(
+        named modelName: String,
+        onProgress: ((DownloadSnapshot) -> Void)? = nil
+    ) async throws {
+        whisperKitDownloadLastLoggedDecile = -1
+        let pipelineStart = CFAbsoluteTimeGetCurrent()
+        do {
+            Log.model.info("Downloading WhisperKit model: \(modelName) to \(self.modelsBaseURL.path)")
+            Log.boot.info(
+                "WhisperKit pipeline begin variant=\(modelName) storageLeaf=Pindrop/models/argmaxinc/whisperkit-coreml (under Application Support) uiProgressNote=0-80pct is file download 85-100pct is prewarm"
+            )
+            
+            let mkdirStart = CFAbsoluteTimeGetCurrent()
+            try fileManager.createDirectory(at: self.modelsBaseURL, withIntermediateDirectories: true)
+            Log.boot.info("WhisperKit storage directories ensured elapsed=\(String(format: "%.3fs", CFAbsoluteTimeGetCurrent() - mkdirStart))")
+            
+            let fileDownloadStart = CFAbsoluteTimeGetCurrent()
+            Log.boot.info("WhisperKit.download starting")
+            _ = try await WhisperKit.download(
+                variant: modelName,
+                downloadBase: self.modelsBaseURL,
+                progressCallback: { [weak self] progress in
+                    Task { @MainActor in
+                        guard let self else { return }
+                        let fraction = progress.fractionCompleted
+                        let decile = min(10, Int(fraction * 10.0001))
+                        if decile > self.whisperKitDownloadLastLoggedDecile || fraction >= 1.0 {
+                            self.whisperKitDownloadLastLoggedDecile = max(self.whisperKitDownloadLastLoggedDecile, decile)
+                            Log.boot.info("WhisperKit.download progress fraction=\(String(format: "%.3f", fraction)) uiMapped=\(String(format: "%.3f", fraction * 0.8))")
+                        }
+                        self.updateDownloadSnapshot(
+                            Self.whisperDownloadSnapshot(
+                                modelName: modelName,
+                                fileDownloadFraction: fraction
+                            ),
+                            onProgress: onProgress
+                        )
+                    }
+                }
+            )
+            Log.boot.info("WhisperKit.download finished elapsed=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - fileDownloadStart))")
+            
+            Log.model.info("Download complete, prewarming model...")
+            updateDownloadSnapshot(Self.preparingDownloadSnapshot(modelName: modelName), onProgress: onProgress)
+            Log.boot.info("Entering prewarm phase (WhisperKitConfig prewarm=true load=false) — UI shows ~85% \"Preparing Model\"")
+            
+            let prewarmStart = CFAbsoluteTimeGetCurrent()
+            let config = WhisperKitConfig(
+                model: modelName,
+                downloadBase: self.modelsBaseURL,
+                verbose: false,
+                logLevel: .none,
+                prewarm: true,
+                load: false
+            )
+            _ = try await WhisperKit(config)
+            Log.boot.info("WhisperKit prewarm (init) completed elapsed=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - prewarmStart))")
+            
+            Log.model.info("Model prewarmed successfully")
+            updateDownloadSnapshot(Self.completedDownloadSnapshot(modelName: modelName), onProgress: onProgress)
+            await refreshDownloadedModels()
+            Log.boot.info("WhisperKit pipeline success totalElapsed=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - pipelineStart)) downloadedModelsCount=\(downloadedModelNames.count)")
+        } catch {
+            clearDownloadState(resetProgress: true)
+            let nsError = error as NSError
+            Log.boot.error(
+                "WhisperKit pipeline failed after \(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - pipelineStart)) domain=\(nsError.domain) code=\(nsError.code) description=\(error.localizedDescription)"
+            )
+            throw ModelError.downloadFailed(error.localizedDescription)
+        }
+    }
+    
+    private func downloadParakeetModel(
+        named modelName: String,
+        onProgress: ((DownloadSnapshot) -> Void)? = nil
+    ) async throws {
+        let pipelineStart = CFAbsoluteTimeGetCurrent()
+        Log.model.info("Parakeet model download requested: \(modelName)")
+        Log.model.info("Parakeet models path: \(self.parakeetModelsURL.path)")
+        Log.boot.info("Parakeet pipeline begin name=\(modelName)")
+        
+        let version: AsrModelVersion
+        if modelName.contains("v3") {
+            version = .v3
+        } else if modelName.contains("v2") {
+            version = .v2
+        } else {
+            throw ModelError.downloadFailed("Unknown Parakeet model version: \(modelName)")
+        }
+        
+        do {
+            try fileManager.createDirectory(at: parakeetModelsURL, withIntermediateDirectories: true)
+            Log.boot.info("Parakeet storage directory ready")
+        } catch {
+            Log.boot.error("Parakeet mkdir failed: \(error.localizedDescription)")
+            throw ModelError.downloadFailed("Failed to create Parakeet models directory: \(error.localizedDescription)")
+        }
+        
+        Log.model.info("Starting Parakeet model download (version: \(version == .v3 ? "v3" : "v2"))")
+        Log.boot.info("Parakeet AsrModels.downloadAndLoad starting version=\(version == .v3 ? "v3" : "v2")")
+        
+        do {
+            let targetDir = parakeetModelsURL.appendingPathComponent(
+                version == .v3 ? "parakeet-tdt-0.6b-v3-coreml" : "parakeet-tdt-0.6b-v2-coreml",
+                isDirectory: true
+            )
+            
+            let fetchStart = CFAbsoluteTimeGetCurrent()
+            _ = try await AsrModels.downloadAndLoad(
+                to: targetDir,
+                version: version,
+                progressHandler: { [weak self] progress in
+                    Task { @MainActor in
+                        guard let self else { return }
+                        self.updateDownloadSnapshot(
+                            Self.parakeetDownloadSnapshot(modelName: modelName, progress: progress),
+                            onProgress: onProgress
+                        )
+                    }
+                }
+            )
+            Log.boot.info("Parakeet AsrModels.downloadAndLoad finished elapsed=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - fetchStart))")
+            
+            Log.model.info("Parakeet model download complete")
+            updateDownloadSnapshot(Self.completedDownloadSnapshot(modelName: modelName), onProgress: onProgress)
+            
+            await refreshDownloadedModels()
+            Log.boot.info("Parakeet pipeline success totalElapsed=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - pipelineStart))")
+        } catch {
+            clearDownloadState(resetProgress: true)
+            let nsError = error as NSError
+            Log.boot.error("Parakeet pipeline failed domain=\(nsError.domain) code=\(nsError.code) description=\(error.localizedDescription)")
+            Log.model.error("Parakeet model download failed: \(error.localizedDescription)")
+            throw ModelError.downloadFailed(error.localizedDescription)
+        }
+    }
+
+        private func downloadMLXWhisperModel(
         named modelName: String,
         onProgress: ((DownloadSnapshot) -> Void)? = nil
     ) async throws {
@@ -863,6 +1381,32 @@ class ModelManager {
         }
     }
 
+
+    nonisolated static func migratedLegacyModelName(from mlxName: String) -> String? {
+        if mlxName.hasPrefix("openai_whisper-") || (mlxName.hasPrefix("parakeet-") && !mlxName.hasPrefix("mlx-community/")) {
+            return mlxName
+        }
+        guard mlxName.hasPrefix("mlx-community/") else { return nil }
+        let leaf = mlxName.replacingOccurrences(of: "mlx-community/", with: "")
+        if leaf.hasPrefix("parakeet-") {
+            if leaf.contains("1.1b") { return "parakeet-tdt-1.1b" }
+            if leaf.contains("v3") { return "parakeet-tdt-0.6b-v3" }
+            if leaf.contains("v2") { return "parakeet-tdt-0.6b-v2" }
+            return "parakeet-tdt-0.6b-v3"
+        }
+        if leaf.contains("turbo") { return "openai_whisper-large-v3_turbo" }
+        if leaf.contains("tiny.en") { return "openai_whisper-tiny.en" }
+        if leaf.contains("tiny") { return "openai_whisper-tiny" }
+        if leaf.contains("base.en") { return "openai_whisper-base.en" }
+        if leaf.contains("base") { return "openai_whisper-base" }
+        if leaf.contains("small.en") { return "openai_whisper-small.en" }
+        if leaf.contains("small") { return "openai_whisper-small" }
+        if leaf.contains("medium.en") { return "openai_whisper-medium.en" }
+        if leaf.contains("medium") { return "openai_whisper-medium" }
+        if leaf.contains("large") { return "openai_whisper-large-v3" }
+        return "openai_whisper-base"
+    }
+
     /// Maps legacy WhisperKit / CoreML Parakeet catalog IDs onto mlx-community repos.
     nonisolated static func migratedMLXModelName(from legacyName: String) -> String? {
         if legacyName.hasPrefix("mlx-community/") {
@@ -921,7 +1465,7 @@ class ModelManager {
     }
 
     func removeLegacyWhisperKitCacheIfPresent() {
-        let legacy = legacyWhisperKitModelsURL
+        let legacy = whisperKitModelsURL
         guard fileManager.fileExists(atPath: legacy.path) else { return }
         do {
             try fileManager.removeItem(at: legacy)
@@ -932,7 +1476,7 @@ class ModelManager {
     }
 
     func removeLegacyParakeetCoreMLCacheIfPresent() {
-        let legacy = legacyParakeetCoreMLModelsURL
+        let legacy = parakeetModelsURL
         guard fileManager.fileExists(atPath: legacy.path) else { return }
         do {
             try fileManager.removeItem(at: legacy)

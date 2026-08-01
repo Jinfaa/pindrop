@@ -272,6 +272,7 @@ final class SettingsStore: ObservableObject {
 
     enum Defaults {
        static let selectedModel = "mlx-community/whisper-base-mlx"
+       static let preferMLXLocalASR = true
         // "directInsert" (paste at cursor) has been the observed behavior of BOTH
         // modes since character-typing was removed; the default flipped from
         // "clipboard" when clipboard mode became truly copy-only (see
@@ -353,6 +354,8 @@ final class SettingsStore: ObservableObject {
 
    @AppStorage("selectedModel", store: SettingsStoreRuntime.appStorageStore) var selectedModel:
       String = Defaults.selectedModel
+   @AppStorage("preferMLXLocalASR", store: SettingsStoreRuntime.appStorageStore)
+   var preferMLXLocalASR: Bool = Defaults.preferMLXLocalASR
    @AppStorage("toggleHotkey", store: SettingsStoreRuntime.appStorageStore) var toggleHotkey:
       String = Defaults.Hotkeys.toggleHotkey
    @AppStorage("toggleHotkeyCode", store: SettingsStoreRuntime.appStorageStore)
@@ -644,6 +647,10 @@ final class SettingsStore: ObservableObject {
             )
             selectedAppLocaleRawValue = newValue.rawValue
          }
+      }
+
+      var effectivePreferMLXLocalASR: Bool {
+         DeviceArchitecture.isAppleSilicon && preferMLXLocalASR
       }
 
       /// Dictation/transcription language.
@@ -1134,6 +1141,7 @@ final class SettingsStore: ObservableObject {
 
    func resetAllSettings() {
       selectedModel = Defaults.selectedModel
+      preferMLXLocalASR = Defaults.preferMLXLocalASR
       themeMode = Defaults.themeMode
       lightThemePresetID = Defaults.lightThemePresetID
       darkThemePresetID = Defaults.darkThemePresetID

@@ -27,6 +27,8 @@ struct ModelManagerTests {
         #expect(models.contains { $0.name == "mlx-community/whisper-medium-mlx" })
         #expect(models.contains { $0.name == "mlx-community/whisper-base.en-mlx" })
         #expect(models.contains { $0.name == "mlx-community/parakeet-tdt-0.6b-v2" })
+        #expect(models.contains { $0.name == "openai_whisper-base" })
+        #expect(models.contains { $0.name == "parakeet-tdt-0.6b-v2" })
         #expect(models.contains { $0.name == "openai_gpt-4o-transcribe" && $0.provider == .openAI })
         #expect(models.contains { $0.name == "openai_gpt-4o-mini-transcribe" && $0.provider == .openAI })
     }
@@ -306,5 +308,14 @@ struct ModelManagerTests {
         let siblingPlda = offlineSibling.appendingPathComponent("plda-parameters.json")
         FileManager.default.createFile(atPath: siblingPlda.path, contents: Data("{}".utf8))
         #expect(modelManager.isOfflineDiarizationModelsReady(at: root))
+    }
+
+    @Test func mlxModelsHiddenWhenPreferringLegacy() throws {
+        let mlx = try #require(modelManager.availableModels.first { $0.name == "mlx-community/whisper-base-mlx" })
+        let legacy = try #require(modelManager.availableModels.first { $0.name == "openai_whisper-base" })
+        #expect(ModelManager.isModelVisible(mlx, preferMLX: true))
+        #expect(!ModelManager.isModelVisible(mlx, preferMLX: false))
+        #expect(ModelManager.isModelVisible(legacy, preferMLX: false))
+        #expect(!ModelManager.isModelVisible(legacy, preferMLX: true))
     }
 }

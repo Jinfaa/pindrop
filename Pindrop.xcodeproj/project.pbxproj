@@ -161,6 +161,7 @@ MODELSPRESENTTESTBUILD01A2 /* ModelsPresentationTests.swift in Sources */ = {isa
 		DICTSTORE2A2B3C4D5E6F70 /* DictionaryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DICTSTORE2A2B3C4D5E6F71 /* DictionaryStore.swift */; };
 		DICTVIEWMAIN1A2B3C4D5E6F70 /* DictionaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DICTVIEWMAIN1A2B3C4D5E6F71 /* DictionaryView.swift */; };
 		E165F5F47804463DB0238E36 /* TranscriptionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31399FF62DAD4C98BBC616B3 /* TranscriptionRecord.swift */; };
+		WHISPERKITBUILD01A2B3C4 /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = WHISPERKITDEP01A2B3C4D5 /* WhisperKit */; };
 		E30EF5B5D83B494BB7B98568 /* MLXAudioSTT in Frameworks */ = {isa = PBXBuildFile; productRef = 563D563B8CE142449E7030FB /* MLXAudioSTT */; };
 		MLXAUDIOCOREBUILD01A2B3C /* MLXAudioCore in Frameworks */ = {isa = PBXBuildFile; productRef = MLXAUDIOCOREDEP01A2B3C /* MLXAudioCore */; };
 		E759D485AF275927D5306AA9 /* AIEnhancementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D120A62260BDECC9467BE609 /* AIEnhancementService.swift */; };
@@ -241,6 +242,7 @@ MODELSPRESENTTESTBUILD01A2 /* ModelsPresentationTests.swift in Sources */ = {isa
 		NOTESW001A2B3C4D5E6 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = NOTESW001A2B3C4D5E6F7 /* Note.swift */; };
 		PARAKEETENG02A2B3C4D5E6F /* ParakeetEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = PARAKEETENG01A2B3C4D5E6F /* ParakeetEngine.swift */; };
 		SENSEVENG02A2B3C4D5E6F /* SenseVoiceEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = SENSEVENG01A2B3C4D5E6F /* SenseVoiceEngine.swift */; };
+		MLXPARAKEETTEST02 /* MLXParakeetEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = MLXPARAKEETTEST01 /* MLXParakeetEngineTests.swift */; };
 		PARAKEETENGTEST02A2B3C4D5E6F /* ParakeetEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = PARAKEETENGTEST01A2B3C4D5E6F /* ParakeetEngineTests.swift */; };
 		SENSEVTEST02A2B3C4D5E6F /* SenseVoiceEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = SENSEVTEST01A2B3C4D5E6F /* SenseVoiceEngineTests.swift */; };
 		PARAKEETSTRM02A2B3C4D5E6F /* NemotronStreamingEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = PARAKEETSTRM01A2B3C4D5E6F /* NemotronStreamingEngine.swift */; };
@@ -286,6 +288,9 @@ MODELSPRESENTTESTBUILD01A2 /* ModelsPresentationTests.swift in Sources */ = {isa
 		UPDATESVC01A2B3C4D5E6F70 /* UpdateServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = UPDATESVC01A2B3C4D5E6F71 /* UpdateServiceTests.swift */; };
 		VADDETECT02A2B3C4D5E6F /* VoiceActivityDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = VADDETECT01A2B3C4D5E6F /* VoiceActivityDetector.swift */; };
 		VOCABWORDA1B2C3D4 /* VocabularyWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = VOCABWORDA1B2C3D4E5 /* VocabularyWord.swift */; };
+		WKENGINEBUILD01A2B3C4 /* WhisperKitEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = WKENGINEFILE01A2B3C4D5 /* WhisperKitEngine.swift */; };
+		MLXPARAKEETBUILD01A2 /* MLXParakeetEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = MLXPARAKEETFILE01A2B3 /* MLXParakeetEngine.swift */; };
+		DEVICEARCHBUILD01A2B /* DeviceArchitecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEVICEARCHFILE01A2B3C /* DeviceArchitecture.swift */; };
 		WHISPERENG02A2B3C4D5E6F /* MLXWhisperEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = WHISPERENG03A2B3C4D5E6F /* MLXWhisperEngine.swift */; };
 		WHISPERENG04A2B3C4D5E6F /* MLXWhisperEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = WHISPERENG01A2B3C4D5E6F /* MLXWhisperEngineTests.swift */; };
 		WKSPIDX02A2B3C4D5E6F /* WorkspaceFileIndexService.swift in Sources */ = {isa = PBXBuildFile; fileRef = WKSPIDX01A2B3C4D5E6F /* WorkspaceFileIndexService.swift */; };
@@ -547,6 +552,7 @@ MODELSPRESENTTESTFILE01A2 /* ModelsPresentationTests.swift */ = {isa = PBXFileRe
 		NOTESW001A2B3C4D5E6F7 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		PARAKEETENG01A2B3C4D5E6F /* ParakeetEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParakeetEngine.swift; sourceTree = "<group>"; };
 		SENSEVENG01A2B3C4D5E6F /* SenseVoiceEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenseVoiceEngine.swift; sourceTree = "<group>"; };
+		MLXPARAKEETTEST01 /* MLXParakeetEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLXParakeetEngineTests.swift; sourceTree = "<group>"; };
 		PARAKEETENGTEST01A2B3C4D5E6F /* ParakeetEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParakeetEngineTests.swift; sourceTree = "<group>"; };
 		SENSEVTEST01A2B3C4D5E6F /* SenseVoiceEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SenseVoiceEngineTests.swift; sourceTree = "<group>"; };
 		PARAKEETSTRM01A2B3C4D5E6F /* NemotronStreamingEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NemotronStreamingEngine.swift; sourceTree = "<group>"; };
@@ -592,6 +598,9 @@ MODELSPRESENTTESTFILE01A2 /* ModelsPresentationTests.swift */ = {isa = PBXFileRe
 		VADDETECT01A2B3C4D5E6F /* VoiceActivityDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceActivityDetector.swift; sourceTree = "<group>"; };
 		VOCABWORDA1B2C3D4E5 /* VocabularyWord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VocabularyWord.swift; sourceTree = "<group>"; };
 		WHISPERENG01A2B3C4D5E6F /* MLXWhisperEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLXWhisperEngineTests.swift; sourceTree = "<group>"; };
+		WKENGINEFILE01A2B3C4D5 /* WhisperKitEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperKitEngine.swift; sourceTree = "<group>"; };
+		MLXPARAKEETFILE01A2B3 /* MLXParakeetEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLXParakeetEngine.swift; sourceTree = "<group>"; };
+		DEVICEARCHFILE01A2B3C /* DeviceArchitecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceArchitecture.swift; sourceTree = "<group>"; };
 		WHISPERENG03A2B3C4D5E6F /* MLXWhisperEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLXWhisperEngine.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6012345678904 /* MCPToolDispatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCPToolDispatcherTests.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6012345678906 /* SchemaV9MigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaV9MigrationTests.swift; sourceTree = "<group>"; };
@@ -614,6 +623,7 @@ MODELSPRESENTTESTFILE01A2 /* ModelsPresentationTests.swift */ = {isa = PBXFileRe
 		37A010B78338464E90A60BD4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				WHISPERKITBUILD01A2B3C4 /* WhisperKit in Frameworks */,
 				E30EF5B5D83B494BB7B98568 /* MLXAudioSTT in Frameworks */,
 				MLXAUDIOCOREBUILD01A2B3C /* MLXAudioCore in Frameworks */,
 				FLUIDAUDIOBUILD01A2B3C4D5E6F /* FluidAudio in Frameworks */,
@@ -940,6 +950,7 @@ MODELSPRESENTTESTFILE01A2 /* ModelsPresentationTests.swift */ = {isa = PBXFileRe
 				TRANSENG03A2B3C4D5E6F /* TranscriptionEngineTests.swift */,
 				WHISPERENG01A2B3C4D5E6F /* MLXWhisperEngineTests.swift */,
 				PARAKEETENGTEST01A2B3C4D5E6F /* ParakeetEngineTests.swift */,
+				MLXPARAKEETTEST01 /* MLXParakeetEngineTests.swift */,
 				SENSEVTEST01A2B3C4D5E6F /* SenseVoiceEngineTests.swift */,
 				UPDATESVC01A2B3C4D5E6F71 /* UpdateServiceTests.swift */,
 				CTXADAPTTEST02A2B3C4D5E6F /* AppContextAdapterRegistryTests.swift */,
@@ -1121,6 +1132,8 @@ MODELSPRESENTTESTFILE01A2 /* ModelsPresentationTests.swift */ = {isa = PBXFileRe
 				FLUIDDIARFILE01A2B3C4D5E6F /* FluidSpeakerDiarizer.swift */,
 				TTSENGINE01A2B3C4D5E6F /* TextToSpeechEngine.swift */,
 				WHISPERENG03A2B3C4D5E6F /* MLXWhisperEngine.swift */,
+				WKENGINEFILE01A2B3C4D5 /* WhisperKitEngine.swift */,
+				MLXPARAKEETFILE01A2B3 /* MLXParakeetEngine.swift */,
 				ABCDEF0123456789ABCDEF01 /* OpenAITranscriptionEngine.swift */,
 				PARAKEETENG01A2B3C4D5E6F /* ParakeetEngine.swift */,
 				SENSEVENG01A2B3C4D5E6F /* SenseVoiceEngine.swift */,
@@ -1135,6 +1148,7 @@ MODELSPRESENTTESTFILE01A2 /* ModelsPresentationTests.swift */ = {isa = PBXFileRe
 			isa = PBXGroup;
 			children = (
 				LOGGER001A2B3C4D5E6F71 /* Logger.swift */,
+				DEVICEARCHFILE01A2B3C /* DeviceArchitecture.swift */,
 				TRAINREDACTFILE01A2B3C4D5E6F /* TrainingTextRedactor.swift */,
 				ALERT001A2B3C4D5E6F71 /* AlertManager.swift */,
 				F0DC71BCB19DB51FA606C373 /* Icons.swift */,
@@ -1167,6 +1181,7 @@ MODELSPRESENTTESTFILE01A2 /* ModelsPresentationTests.swift */ = {isa = PBXFileRe
 			);
 			name = Pindrop;
 			packageProductDependencies = (
+				WHISPERKITDEP01A2B3C4D5 /* WhisperKit */,
 				563D563B8CE142449E7030FB /* MLXAudioSTT */,
 				MLXAUDIOCOREDEP01A2B3C /* MLXAudioCore */,
 				FLUIDAUDIODEP01A2B3C4D5E6F /* FluidAudio */,
@@ -1255,6 +1270,7 @@ MODELSPRESENTTESTFILE01A2 /* ModelsPresentationTests.swift */ = {isa = PBXFileRe
 			);
 			mainGroup = 2AE7116BC5A64F50B5790CC7;
 			packageReferences = (
+				WHISPERKITREF01A2B3C4D5 /* XCRemoteSwiftPackageReference "WhisperKit" */,
 				CFD28D45C1FE4DF09ED8A269 /* XCRemoteSwiftPackageReference "mlx-audio-swift" */,
 				FLUIDAUDIOREF01A2B3C4D5E6F /* XCRemoteSwiftPackageReference "FluidAudio" */,
 				SPARKLEREF01A2B3C4D5E6F /* XCRemoteSwiftPackageReference "Sparkle" */,
@@ -1327,6 +1343,7 @@ MODELSPRESENTTESTFILE01A2 /* ModelsPresentationTests.swift */ = {isa = PBXFileRe
 				TRANSENG04A2B3C4D5E6F /* TranscriptionEngineTests.swift in Sources */,
 				WHISPERENG04A2B3C4D5E6F /* MLXWhisperEngineTests.swift in Sources */,
 				PARAKEETENGTEST02A2B3C4D5E6F /* ParakeetEngineTests.swift in Sources */,
+				MLXPARAKEETTEST02 /* MLXParakeetEngineTests.swift in Sources */,
 				SENSEVTEST02A2B3C4D5E6F /* SenseVoiceEngineTests.swift in Sources */,
 				UPDATESVC01A2B3C4D5E6F70 /* UpdateServiceTests.swift in Sources */,
 				PERMMGRTESTBUILD1A2B3C4D5E6F70 /* PermissionManagerTests.swift in Sources */,
@@ -1532,6 +1549,9 @@ MODELSPRESENTBUILD01A2B3C4 /* ModelsPresentation.swift in Sources */,
 				PREVMOCKS1A2B3C4D5E6F70 /* PreviewMocks.swift in Sources */,
 				TRANSENG02A2B3C4D5E6F /* TranscriptionEngine.swift in Sources */,
 				WHISPERENG02A2B3C4D5E6F /* MLXWhisperEngine.swift in Sources */,
+				WKENGINEBUILD01A2B3C4 /* WhisperKitEngine.swift in Sources */,
+				MLXPARAKEETBUILD01A2 /* MLXParakeetEngine.swift in Sources */,
+				DEVICEARCHBUILD01A2B /* DeviceArchitecture.swift in Sources */,
 				0A1B2C3D4E5F60718293A4B5 /* OpenAITranscriptionEngine.swift in Sources */,
 				PARAKEETENG02A2B3C4D5E6F /* ParakeetEngine.swift in Sources */,
 				SENSEVENG02A2B3C4D5E6F /* SenseVoiceEngine.swift in Sources */,
@@ -1916,6 +1936,14 @@ MODELSPRESENTBUILD01A2B3C4 /* ModelsPresentation.swift in Sources */,
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		WHISPERKITREF01A2B3C4D5 /* XCRemoteSwiftPackageReference "WhisperKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/argmaxinc/WhisperKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.15.0;
+			};
+		};
 		CFD28D45C1FE4DF09ED8A269 /* XCRemoteSwiftPackageReference "mlx-audio-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Blaizzy/mlx-audio-swift.git";
@@ -1951,6 +1979,11 @@ MODELSPRESENTBUILD01A2B3C4 /* ModelsPresentation.swift in Sources */,
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		WHISPERKITDEP01A2B3C4D5 /* WhisperKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = WHISPERKITREF01A2B3C4D5 /* XCRemoteSwiftPackageReference "WhisperKit" */;
+			productName = WhisperKit;
+		};
 		563D563B8CE142449E7030FB /* MLXAudioSTT */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CFD28D45C1FE4DF09ED8A269 /* XCRemoteSwiftPackageReference "mlx-audio-swift" */;
