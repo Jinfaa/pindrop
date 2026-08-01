@@ -261,11 +261,16 @@ struct ModelsSettingsView: View {
                         .foregroundStyle(AppColors.textTertiary)
                 } else if isDownloading {
                     VStack(alignment: .trailing, spacing: 4) {
-                        ProgressView(value: modelManager.downloadProgress)
-                            .frame(width: 88)
-                        Text("\(Int(modelManager.downloadProgress * 100))%")
-                            .font(AppTypography.caption)
-                            .foregroundStyle(AppColors.textTertiary)
+                        if modelManager.downloadProgress > 0.005 {
+                            ProgressView(value: modelManager.downloadProgress)
+                                .frame(width: 88)
+                            Text("\(Int(modelManager.downloadProgress * 100))%")
+                                .font(AppTypography.caption)
+                                .foregroundStyle(AppColors.textTertiary)
+                        } else {
+                            ProgressView()
+                                .controlSize(.small)
+                        }
                     }
                 } else if isSwitching {
                     ProgressView()

@@ -2006,6 +2006,8 @@ class TranscriptionService {
             return WhisperKitEngine()
         case .mlxParakeet:
             return MLXParakeetEngine()
+        case .mlxQwen3:
+            return MLXQwen3ASREngine()
         case .parakeet:
             return ParakeetEngine()
         case .senseVoice:

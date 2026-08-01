@@ -144,6 +144,36 @@ struct MLXWhisperEngineTests {
                 == "mlx-community/parakeet-tdt-0.6b-v3"
         )
     }
+
+    @Test func saneProgressFractionRejectsBrokenCounts() {
+        let progress = Progress(totalUnitCount: 100)
+        progress.completedUnitCount = 0
+        #expect(MLXWhisperModelStore.saneProgressFraction(progress) == 0)
+
+        progress.completedUnitCount = 40
+        #expect(abs(MLXWhisperModelStore.saneProgressFraction(progress) - 0.4) < 0.0001)
+
+        progress.totalUnitCount = 0
+        #expect(MLXWhisperModelStore.saneProgressFraction(progress) == 0)
+    }
+
+    @Test func directoryByteSizeCountsRegularFiles() throws {
+        let tmp = FileManager.default.temporaryDirectory
+            .appendingPathComponent("pindrop-progress-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: tmp, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: tmp) }
+
+        try Data(repeating: 1, count: 250_000).write(to: tmp.appendingPathComponent("chunk.bin"))
+        #expect(MLXWhisperModelStore.directoryByteSize(tmp) == 250_000)
+    }
+
+    @Test func expectedCatalogBytesMatchSizeInMB() {
+        let manager = ModelManager()
+        let bytes = manager.expectedDownloadBytes(
+            forCatalogModelNamed: "mlx-community/Qwen3-ASR-1.7B-4bit"
+        )
+        #expect(bytes == 1_600_000_000)
+    }
 }
 
 @MainActor

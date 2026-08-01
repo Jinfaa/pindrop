@@ -28,6 +28,8 @@ class ModelManager {
 
     nonisolated static let multilingualRecommendedMLXModelNames = [
         "apple_speech_on_device",
+        "mlx-community/Qwen3-ASR-0.6B-4bit",
+        "mlx-community/Qwen3-ASR-1.7B-4bit",
         "mlx-community/whisper-base-mlx",
         "mlx-community/whisper-small-mlx",
         "mlx-community/whisper-medium-mlx",
@@ -63,6 +65,7 @@ class ModelManager {
         case mlxWhisper = "MLX Whisper"
         case whisperKit = "WhisperKit"
         case mlxParakeet = "MLX Parakeet"
+        case mlxQwen3 = "MLX Qwen3"
         case parakeet = "Parakeet"
         case senseVoice = "SenseVoice"
         case appleSpeech = "Apple Speech"
@@ -72,7 +75,7 @@ class ModelManager {
 
         var isLocal: Bool {
             switch self {
-            case .mlxWhisper, .whisperKit, .mlxParakeet, .parakeet, .senseVoice, .appleSpeech: return true
+            case .mlxWhisper, .whisperKit, .mlxParakeet, .mlxQwen3, .parakeet, .senseVoice, .appleSpeech: return true
             case .openAI, .elevenLabs, .groq: return false
             }
         }
@@ -81,6 +84,7 @@ class ModelManager {
             switch self {
             case .mlxWhisper, .whisperKit: return "waveform"
             case .mlxParakeet, .parakeet: return "bird"
+            case .mlxQwen3: return "text.bubble"
             case .senseVoice: return "globe.asia.australia"
             case .appleSpeech: return "apple.logo"
             case .openAI: return "sparkles"
@@ -94,7 +98,7 @@ class ModelManager {
             case .openAI: return "openai"
             case .elevenLabs: return "elevenlabs"
             case .groq: return "groq"
-            case .mlxWhisper, .whisperKit, .mlxParakeet, .parakeet, .senseVoice, .appleSpeech:
+            case .mlxWhisper, .whisperKit, .mlxParakeet, .mlxQwen3, .parakeet, .senseVoice, .appleSpeech:
                 return rawValue.lowercased().replacingOccurrences(of: " ", with: "-")
             }
         }
@@ -714,6 +718,55 @@ class ModelManager {
             availability: .available
         ),
 
+        WhisperModel(
+            name: "mlx-community/Qwen3-ASR-0.6B-4bit",
+            displayName: "Qwen3-ASR 0.6B 4-bit (MLX)",
+            sizeInMB: 710,
+            description: "Qwen3-ASR via MLX — fast multilingual with RU/EN code-switching",
+            speedRating: 7.5,
+            accuracyRating: 9.4,
+            language: .multilingual,
+            languageSupport: .fullMultilingual,
+            provider: .mlxQwen3,
+            availability: .available
+        ),
+        WhisperModel(
+            name: "mlx-community/Qwen3-ASR-0.6B-8bit",
+            displayName: "Qwen3-ASR 0.6B 8-bit (MLX)",
+            sizeInMB: 930,
+            description: "Qwen3-ASR via MLX — higher-fidelity 0.6B multilingual",
+            speedRating: 7.0,
+            accuracyRating: 9.5,
+            language: .multilingual,
+            languageSupport: .fullMultilingual,
+            provider: .mlxQwen3,
+            availability: .available
+        ),
+        WhisperModel(
+            name: "mlx-community/Qwen3-ASR-1.7B-4bit",
+            displayName: "Qwen3-ASR 1.7B 4-bit (MLX)",
+            sizeInMB: 1600,
+            description: "Qwen3-ASR via MLX — stronger multilingual / code-switch accuracy",
+            speedRating: 5.5,
+            accuracyRating: 9.7,
+            language: .multilingual,
+            languageSupport: .fullMultilingual,
+            provider: .mlxQwen3,
+            availability: .available
+        ),
+        WhisperModel(
+            name: "mlx-community/Qwen3-ASR-1.7B-8bit",
+            displayName: "Qwen3-ASR 1.7B 8-bit (MLX)",
+            sizeInMB: 2300,
+            description: "Qwen3-ASR via MLX — highest local Qwen3 ASR quality",
+            speedRating: 5.0,
+            accuracyRating: 9.8,
+            language: .multilingual,
+            languageSupport: .fullMultilingual,
+            provider: .mlxQwen3,
+            availability: .available
+        ),
+
         // SenseVoice (FunASR via FluidAudio CoreML / ANE)
         WhisperModel(
             name: "sensevoice-small",
@@ -782,7 +835,7 @@ class ModelManager {
     nonisolated static func isModelVisible(_ model: WhisperModel, preferMLX: Bool) -> Bool {
         let useMLX = usesMLXBackend(preferMLX)
         switch model.provider {
-        case .mlxWhisper, .mlxParakeet:
+        case .mlxWhisper, .mlxParakeet, .mlxQwen3:
             return useMLX
         case .whisperKit, .parakeet:
             return !useMLX
@@ -869,7 +922,7 @@ class ModelManager {
 
     private func localModelPath(for model: WhisperModel) -> URL? {
         switch model.provider {
-        case .mlxWhisper, .mlxParakeet:
+        case .mlxWhisper, .mlxParakeet, .mlxQwen3:
             return MLXWhisperModelStore.modelDirectory(for: model.name)
         case .whisperKit:
             return whisperKitModelsURL.appendingPathComponent(model.name, isDirectory: true)
@@ -899,7 +952,7 @@ class ModelManager {
             return nil
         }
 
-        if model.provider == .mlxWhisper || model.provider == .mlxParakeet {
+        if model.provider == .mlxWhisper || model.provider == .mlxParakeet || model.provider == .mlxQwen3 {
             guard MLXWhisperModelStore.isModelPresent(at: modelPath) else {
                 return nil
             }
@@ -926,7 +979,7 @@ class ModelManager {
     func refreshDownloadedModels() async {
         var downloaded: Set<String> = []
 
-        for model in availableModels where model.provider == .mlxWhisper || model.provider == .mlxParakeet {
+        for model in availableModels where model.provider == .mlxWhisper || model.provider == .mlxParakeet || model.provider == .mlxQwen3 {
             if let path = localModelPath(for: model),
                MLXWhisperModelStore.isModelPresent(at: path) {
                 downloaded.insert(model.name)
@@ -1020,6 +1073,15 @@ class ModelManager {
         )
     }
 
+    func expectedDownloadBytes(forCatalogModelNamed modelName: String) -> Int64? {
+        guard let model = availableModels.first(where: { $0.name == modelName }),
+              model.sizeInMB > 0
+        else {
+            return nil
+        }
+        return Int64(model.sizeInMB) * 1_000_000
+    }
+
     static func preparingDownloadSnapshot(
         modelName: String,
         progress: Double = 0.85
@@ -1088,6 +1150,8 @@ class ModelManager {
         do {
             if model.provider == .mlxParakeet {
                 try await downloadMLXParakeetModel(named: modelName, onProgress: onProgress)
+            } else if model.provider == .mlxQwen3 {
+                try await downloadMLXQwen3Model(named: modelName, onProgress: onProgress)
             } else if model.provider == .parakeet {
                 try await downloadParakeetModel(named: modelName, onProgress: onProgress)
             } else if model.provider == .senseVoice {
@@ -1271,6 +1335,7 @@ class ModelManager {
             let fileDownloadStart = CFAbsoluteTimeGetCurrent()
             _ = try await MLXWhisperModelStore.download(
                 repoID: modelName,
+                expectedByteCount: expectedDownloadBytes(forCatalogModelNamed: modelName),
                 progressHandler: { [weak self] progress in
                     guard let self else { return }
                     let fraction = progress.fractionCompleted
@@ -1336,6 +1401,7 @@ class ModelManager {
             let fileDownloadStart = CFAbsoluteTimeGetCurrent()
             _ = try await MLXWhisperModelStore.download(
                 repoID: modelName,
+                expectedByteCount: expectedDownloadBytes(forCatalogModelNamed: modelName),
                 progressHandler: { [weak self] progress in
                     guard let self else { return }
                     let fraction = progress.fractionCompleted
@@ -1376,6 +1442,72 @@ class ModelManager {
             let nsError = error as NSError
             Log.boot.error(
                 "MLX Parakeet pipeline failed after \(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - pipelineStart)) domain=\(nsError.domain) code=\(nsError.code) description=\(error.localizedDescription)"
+            )
+            throw ModelError.downloadFailed(error.localizedDescription)
+        }
+    }
+
+    private func downloadMLXQwen3Model(
+        named modelName: String,
+        onProgress: ((DownloadSnapshot) -> Void)? = nil
+    ) async throws {
+        mlxAudioDownloadLastLoggedDecile = -1
+        let pipelineStart = CFAbsoluteTimeGetCurrent()
+        do {
+            Log.model.info("Downloading MLX Qwen3-ASR model: \(modelName)")
+            Log.boot.info(
+                "MLX Qwen3 pipeline begin repo=\(modelName) storageLeaf=Pindrop/models/mlx-audio"
+            )
+
+            try fileManager.createDirectory(
+                at: MLXWhisperModelStore.modelsBaseURL,
+                withIntermediateDirectories: true
+            )
+
+            let fileDownloadStart = CFAbsoluteTimeGetCurrent()
+            _ = try await MLXWhisperModelStore.download(
+                repoID: modelName,
+                expectedByteCount: expectedDownloadBytes(forCatalogModelNamed: modelName),
+                progressHandler: { [weak self] progress in
+                    guard let self else { return }
+                    let fraction = progress.fractionCompleted
+                    let decile = min(10, Int(fraction * 10.0001))
+                    if decile > self.mlxAudioDownloadLastLoggedDecile || fraction >= 1.0 {
+                        self.mlxAudioDownloadLastLoggedDecile = max(self.mlxAudioDownloadLastLoggedDecile, decile)
+                        Log.boot.info(
+                            "MLX Qwen3 download progress fraction=\(String(format: "%.3f", fraction))"
+                        )
+                    }
+                    self.updateDownloadSnapshot(
+                        Self.whisperDownloadSnapshot(
+                            modelName: modelName,
+                            fileDownloadFraction: fraction
+                        ),
+                        onProgress: onProgress
+                    )
+                }
+            )
+            Log.boot.info(
+                "MLX Qwen3 download finished elapsed=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - fileDownloadStart))"
+            )
+
+            updateDownloadSnapshot(Self.preparingDownloadSnapshot(modelName: modelName), onProgress: onProgress)
+            let prewarmStart = CFAbsoluteTimeGetCurrent()
+            _ = try await Qwen3ASRModel.fromPretrained(modelName, cache: MLXWhisperModelStore.hubCache)
+            Log.boot.info(
+                "MLX Qwen3 prewarm completed elapsed=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - prewarmStart))"
+            )
+
+            updateDownloadSnapshot(Self.completedDownloadSnapshot(modelName: modelName), onProgress: onProgress)
+            await refreshDownloadedModels()
+            Log.boot.info(
+                "MLX Qwen3 pipeline success totalElapsed=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - pipelineStart))"
+            )
+        } catch {
+            clearDownloadState(resetProgress: true)
+            let nsError = error as NSError
+            Log.boot.error(
+                "MLX Qwen3 pipeline failed after \(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - pipelineStart)) domain=\(nsError.domain) code=\(nsError.code) description=\(error.localizedDescription)"
             )
             throw ModelError.downloadFailed(error.localizedDescription)
         }

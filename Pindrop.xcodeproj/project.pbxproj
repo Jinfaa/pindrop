@@ -290,6 +290,7 @@ MODELSPRESENTTESTBUILD01A2 /* ModelsPresentationTests.swift in Sources */ = {isa
 		VOCABWORDA1B2C3D4 /* VocabularyWord.swift in Sources */ = {isa = PBXBuildFile; fileRef = VOCABWORDA1B2C3D4E5 /* VocabularyWord.swift */; };
 		WKENGINEBUILD01A2B3C4 /* WhisperKitEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = WKENGINEFILE01A2B3C4D5 /* WhisperKitEngine.swift */; };
 		MLXPARAKEETBUILD01A2 /* MLXParakeetEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = MLXPARAKEETFILE01A2B3 /* MLXParakeetEngine.swift */; };
+		MLXQWEN3ASRBUILD01A2 /* MLXQwen3ASREngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = MLXQWEN3ASRFILE01A2B3 /* MLXQwen3ASREngine.swift */; };
 		DEVICEARCHBUILD01A2B /* DeviceArchitecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEVICEARCHFILE01A2B3C /* DeviceArchitecture.swift */; };
 		WHISPERENG02A2B3C4D5E6F /* MLXWhisperEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = WHISPERENG03A2B3C4D5E6F /* MLXWhisperEngine.swift */; };
 		WHISPERENG04A2B3C4D5E6F /* MLXWhisperEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = WHISPERENG01A2B3C4D5E6F /* MLXWhisperEngineTests.swift */; };
@@ -600,6 +601,7 @@ MODELSPRESENTTESTFILE01A2 /* ModelsPresentationTests.swift */ = {isa = PBXFileRe
 		WHISPERENG01A2B3C4D5E6F /* MLXWhisperEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLXWhisperEngineTests.swift; sourceTree = "<group>"; };
 		WKENGINEFILE01A2B3C4D5 /* WhisperKitEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperKitEngine.swift; sourceTree = "<group>"; };
 		MLXPARAKEETFILE01A2B3 /* MLXParakeetEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLXParakeetEngine.swift; sourceTree = "<group>"; };
+		MLXQWEN3ASRFILE01A2B3 /* MLXQwen3ASREngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLXQwen3ASREngine.swift; sourceTree = "<group>"; };
 		DEVICEARCHFILE01A2B3C /* DeviceArchitecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceArchitecture.swift; sourceTree = "<group>"; };
 		WHISPERENG03A2B3C4D5E6F /* MLXWhisperEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLXWhisperEngine.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6012345678904 /* MCPToolDispatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MCPToolDispatcherTests.swift; sourceTree = "<group>"; };
@@ -1134,6 +1136,7 @@ MODELSPRESENTTESTFILE01A2 /* ModelsPresentationTests.swift */ = {isa = PBXFileRe
 				WHISPERENG03A2B3C4D5E6F /* MLXWhisperEngine.swift */,
 				WKENGINEFILE01A2B3C4D5 /* WhisperKitEngine.swift */,
 				MLXPARAKEETFILE01A2B3 /* MLXParakeetEngine.swift */,
+				MLXQWEN3ASRFILE01A2B3 /* MLXQwen3ASREngine.swift */,
 				ABCDEF0123456789ABCDEF01 /* OpenAITranscriptionEngine.swift */,
 				PARAKEETENG01A2B3C4D5E6F /* ParakeetEngine.swift */,
 				SENSEVENG01A2B3C4D5E6F /* SenseVoiceEngine.swift */,
@@ -1551,6 +1554,7 @@ MODELSPRESENTBUILD01A2B3C4 /* ModelsPresentation.swift in Sources */,
 				WHISPERENG02A2B3C4D5E6F /* MLXWhisperEngine.swift in Sources */,
 				WKENGINEBUILD01A2B3C4 /* WhisperKitEngine.swift in Sources */,
 				MLXPARAKEETBUILD01A2 /* MLXParakeetEngine.swift in Sources */,
+				MLXQWEN3ASRBUILD01A2 /* MLXQwen3ASREngine.swift in Sources */,
 				DEVICEARCHBUILD01A2B /* DeviceArchitecture.swift in Sources */,
 				0A1B2C3D4E5F60718293A4B5 /* OpenAITranscriptionEngine.swift in Sources */,
 				PARAKEETENG02A2B3C4D5E6F /* ParakeetEngine.swift in Sources */,

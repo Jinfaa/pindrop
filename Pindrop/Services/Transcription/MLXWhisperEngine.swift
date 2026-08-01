@@ -264,6 +264,7 @@ enum MLXWhisperModelStore {
 
     static func download(
         repoID: String,
+        expectedByteCount: Int64? = nil,
         progressHandler: (@MainActor @Sendable (Progress) -> Void)? = nil
     ) async throws -> URL {
         guard let id = Repo.ID(rawValue: repoID) else {
@@ -272,15 +273,19 @@ enum MLXWhisperModelStore {
         let cache = hubCache
         let client = HubClient(cache: cache)
         let progressRef = ProgressObservationBox()
+        let report = Progress(totalUnitCount: 1000)
         let poller = Task { @MainActor in
             var lastFraction: Double = -1
             while !Task.isCancelled {
-                if let progress = progressRef.progress {
-                    let fraction = progress.fractionCompleted
-                    if fraction != lastFraction {
-                        lastFraction = fraction
-                        progressHandler?(progress)
-                    }
+                let fraction = resolvedDownloadFraction(
+                    hubProgress: progressRef.progress,
+                    repoID: repoID,
+                    expectedByteCount: expectedByteCount
+                )
+                if abs(fraction - lastFraction) >= 0.002 || (fraction >= 0.99 && lastFraction < 0.99) {
+                    lastFraction = fraction
+                    report.completedUnitCount = Int64((fraction * 1000).rounded(.down))
+                    progressHandler?(report)
                 }
                 try? await Task.sleep(nanoseconds: 250_000_000)
             }
@@ -296,13 +301,10 @@ enum MLXWhisperModelStore {
                 additionalMatchingPatterns: ["*.json", "*.txt", "*.model", "merges.txt", "vocab.json"],
                 progressHandler: { progress in
                     progressRef.progress = progress
-                    progressHandler?(progress)
                 }
             )
-            if let progress = progressRef.progress {
-                progress.completedUnitCount = progress.totalUnitCount
-                await progressHandler?(progress)
-            }
+            report.completedUnitCount = report.totalUnitCount
+            await progressHandler?(report)
             return url
         } catch {
             poller.cancel()
@@ -312,6 +314,93 @@ enum MLXWhisperModelStore {
 
     static func loadPretrained(repoID: String) async throws -> WhisperModel {
         try await WhisperModel.fromPretrained(repoID, cache: hubCache)
+    }
+
+    static func resolvedDownloadFraction(
+        hubProgress: Progress?,
+        repoID: String,
+        expectedByteCount: Int64?
+    ) -> Double {
+        let hubFraction = saneProgressFraction(hubProgress)
+        let diskFraction = diskDownloadFraction(repoID: repoID, expectedByteCount: expectedByteCount)
+        return min(0.99, max(hubFraction, diskFraction))
+    }
+
+    static func saneProgressFraction(_ progress: Progress?) -> Double {
+        guard let progress else { return 0 }
+        let total = progress.totalUnitCount
+        let completed = progress.completedUnitCount
+        guard total > 0, completed >= 0, completed <= total else { return 0 }
+        let fraction = Double(completed) / Double(total)
+        guard fraction.isFinite, fraction >= 0 else { return 0 }
+        return min(1, fraction)
+    }
+
+    static func diskDownloadFraction(repoID: String, expectedByteCount: Int64?) -> Double {
+        guard let expectedByteCount, expectedByteCount > 0 else { return 0 }
+        let observed = observedDownloadBytes(repoID: repoID)
+        guard observed > 0 else { return 0 }
+        return min(1, Double(observed) / Double(expectedByteCount))
+    }
+
+    static func observedDownloadBytes(repoID: String) -> Int64 {
+        let leafBytes = directoryByteSize(modelDirectory(for: repoID))
+        var hubBlobBytes: Int64 = 0
+        if let id = Repo.ID(rawValue: repoID) {
+            let blobs = hubCache.repoDirectory(repo: id, kind: .model)
+                .appendingPathComponent("blobs", isDirectory: true)
+            hubBlobBytes = directoryByteSize(blobs)
+        }
+        return max(leafBytes, hubBlobBytes) + recentCFNetworkTempBytes()
+    }
+
+    static func directoryByteSize(_ directory: URL) -> Int64 {
+        let fm = FileManager.default
+        var isDirectory: ObjCBool = false
+        guard fm.fileExists(atPath: directory.path, isDirectory: &isDirectory),
+              isDirectory.boolValue,
+              let enumerator = fm.enumerator(
+                at: directory,
+                includingPropertiesForKeys: [.isRegularFileKey, .fileSizeKey],
+                options: [.skipsHiddenFiles]
+              )
+        else {
+            return 0
+        }
+
+        var total: Int64 = 0
+        for case let fileURL as URL in enumerator {
+            let values = try? fileURL.resourceValues(forKeys: [.isRegularFileKey, .fileSizeKey])
+            guard values?.isRegularFile == true else { continue }
+            total += Int64(values?.fileSize ?? 0)
+        }
+        return total
+    }
+
+    static func recentCFNetworkTempBytes(now: Date = Date()) -> Int64 {
+        let fm = FileManager.default
+        let tmp = fm.temporaryDirectory
+        guard let files = try? fm.contentsOfDirectory(
+            at: tmp,
+            includingPropertiesForKeys: [.contentModificationDateKey, .fileSizeKey, .isRegularFileKey],
+            options: [.skipsHiddenFiles]
+        ) else {
+            return 0
+        }
+
+        let cutoff = now.addingTimeInterval(-2 * 60 * 60)
+        var total: Int64 = 0
+        for file in files {
+            let name = file.lastPathComponent
+            guard name.hasPrefix("CFNetworkDownload_"), name.hasSuffix(".tmp") else { continue }
+            let values = try? file.resourceValues(forKeys: [
+                .contentModificationDateKey, .fileSizeKey, .isRegularFileKey
+            ])
+            guard values?.isRegularFile == true else { continue }
+            guard let modified = values?.contentModificationDate, modified >= cutoff else { continue }
+            total += Int64(values?.fileSize ?? 0)
+        }
+        return total
     }
 }
 
