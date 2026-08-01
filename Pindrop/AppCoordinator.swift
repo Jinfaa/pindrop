@@ -1470,6 +1470,7 @@ final class AppCoordinator {
             modelName = migrated
             settingsStore.selectedModel = migrated
             modelManager.removeLegacyWhisperKitCacheIfPresent()
+            modelManager.removeLegacyParakeetCoreMLCacheIfPresent()
         }
 
         if !modelManager.availableModels.contains(where: { $0.name == modelName }) {

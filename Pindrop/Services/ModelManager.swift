@@ -7,6 +7,7 @@
 
 import Foundation
 import FluidAudio
+import MLXAudioSTT
 
 @MainActor
 @Observable
@@ -21,7 +22,7 @@ class ModelManager {
         "mlx-community/whisper-small.en-mlx",
         "mlx-community/whisper-medium-mlx",
         "mlx-community/whisper-large-v3-turbo",
-        "parakeet-tdt-0.6b-v2"
+        "mlx-community/parakeet-tdt-0.6b-v2"
     ]
 
     nonisolated static let multilingualRecommendedModelNames = [
@@ -30,7 +31,7 @@ class ModelManager {
         "mlx-community/whisper-small-mlx",
         "mlx-community/whisper-medium-mlx",
         "mlx-community/whisper-large-v3-turbo",
-        "parakeet-tdt-0.6b-v3"
+        "mlx-community/parakeet-tdt-0.6b-v3"
     ]
 
     nonisolated static let recommendedModelNames = englishRecommendedModelNames
@@ -347,12 +348,11 @@ class ModelManager {
             language: .multilingual
         ),
         
-        // Parakeet Models (via FluidInference CoreML ports)
         WhisperModel(
-            name: "parakeet-tdt-0.6b-v2",
+            name: "mlx-community/parakeet-tdt-0.6b-v2",
             displayName: "Parakeet TDT 0.6B V2",
-            sizeInMB: 2580,
-            description: "NVIDIA's state-of-the-art speech recognition model, English-only",
+            sizeInMB: 2470,
+            description: "NVIDIA Parakeet TDT via MLX — English-only",
             speedRating: 8.5,
             accuracyRating: 9.8,
             language: .english,
@@ -360,10 +360,10 @@ class ModelManager {
             availability: .available
         ),
         WhisperModel(
-            name: "parakeet-tdt-0.6b-v3",
+            name: "mlx-community/parakeet-tdt-0.6b-v3",
             displayName: "Parakeet TDT 0.6B V3",
-            sizeInMB: 2670,
-            description: "Latest Parakeet model with multilingual support",
+            sizeInMB: 2470,
+            description: "NVIDIA Parakeet TDT via MLX — 25 European languages",
             speedRating: 8.0,
             accuracyRating: 9.9,
             language: .multilingual,
@@ -372,15 +372,15 @@ class ModelManager {
             availability: .available
         ),
         WhisperModel(
-            name: "parakeet-tdt-1.1b",
+            name: "mlx-community/parakeet-tdt-1.1b",
             displayName: "Parakeet TDT 1.1B",
             sizeInMB: 4400,
-            description: "Larger Parakeet model with exceptional accuracy",
+            description: "Larger NVIDIA Parakeet TDT via MLX — English-only",
             speedRating: 7.0,
             accuracyRating: 9.95,
             language: .english,
             provider: .parakeet,
-            availability: .comingSoon
+            availability: .available
         ),
 
         // SenseVoice (FunASR via FluidAudio CoreML / ANE)
@@ -484,8 +484,8 @@ class ModelManager {
     
     private let fileManager = FileManager.default
     
-    /// Last decile (0...10) logged for MLX Whisper file download progress to avoid log spam.
-    private var mlxWhisperDownloadLastLoggedDecile: Int = -1
+    /// Last decile (0...10) logged for MLX Whisper/Parakeet file download progress to avoid log spam.
+    private var mlxAudioDownloadLastLoggedDecile: Int = -1
     
     private var modelsBaseURL: URL {
         fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
@@ -499,7 +499,7 @@ class ModelManager {
             .appendingPathComponent("whisperkit-coreml", isDirectory: true)
     }
     
-    private var parakeetModelsURL: URL {
+    private var legacyParakeetCoreMLModelsURL: URL {
         modelsBaseURL.appendingPathComponent("FluidInference", isDirectory: true)
                      .appendingPathComponent("parakeet-coreml", isDirectory: true)
     }
@@ -520,11 +520,8 @@ class ModelManager {
 
     private func localModelPath(for model: WhisperModel) -> URL? {
         switch model.provider {
-        case .mlxWhisper:
+        case .mlxWhisper, .parakeet:
             return MLXWhisperModelStore.modelDirectory(for: model.name)
-        case .parakeet:
-            let folderName = model.name.hasSuffix("-coreml") ? model.name : "\(model.name)-coreml"
-            return parakeetModelsURL.appendingPathComponent(folderName, isDirectory: true)
         case .senseVoice:
             // Only advertise a local path when the catalog int8 set is complete.
             guard SenseVoiceModels.modelsExist(
@@ -548,7 +545,7 @@ class ModelManager {
             return nil
         }
 
-        if model.provider == .mlxWhisper {
+        if model.provider == .mlxWhisper || model.provider == .parakeet {
             guard MLXWhisperModelStore.isModelPresent(at: modelPath) else {
                 return nil
             }
@@ -575,31 +572,10 @@ class ModelManager {
     func refreshDownloadedModels() async {
         var downloaded: Set<String> = []
 
-        for model in availableModels where model.provider == .mlxWhisper {
+        for model in availableModels where model.provider == .mlxWhisper || model.provider == .parakeet {
             if let path = localModelPath(for: model),
                MLXWhisperModelStore.isModelPresent(at: path) {
                 downloaded.insert(model.name)
-            }
-        }
-        
-        if fileManager.fileExists(atPath: parakeetModelsURL.path) {
-            do {
-                let contents = try fileManager.contentsOfDirectory(atPath: parakeetModelsURL.path)
-                for folder in contents {
-                    if folder.hasPrefix(".") { continue }
-                    
-                    let folderPath = parakeetModelsURL.appendingPathComponent(folder).path
-                    var isDirectory: ObjCBool = false
-                    if fileManager.fileExists(atPath: folderPath, isDirectory: &isDirectory), isDirectory.boolValue {
-                        // Strip "-coreml" suffix (7 chars) to match model IDs
-                        let normalizedName = folder.hasSuffix("-coreml")
-                            ? String(folder.dropLast(7))
-                            : folder
-                        downloaded.insert(normalizedName)
-                    }
-                }
-            } catch {
-                Log.model.error("Failed to list Parakeet models: \(error)")
             }
         }
 
@@ -734,7 +710,7 @@ class ModelManager {
         )
         do {
             if model.provider == .parakeet {
-                try await downloadParakeetModel(named: modelName, onProgress: onProgress)
+                try await downloadMLXParakeetModel(named: modelName, onProgress: onProgress)
             } else if model.provider == .senseVoice {
                 try await downloadSenseVoiceModel(named: modelName, onProgress: onProgress)
             } else if model.provider == .mlxWhisper {
@@ -761,7 +737,7 @@ class ModelManager {
         named modelName: String,
         onProgress: ((DownloadSnapshot) -> Void)? = nil
     ) async throws {
-        mlxWhisperDownloadLastLoggedDecile = -1
+        mlxAudioDownloadLastLoggedDecile = -1
         let pipelineStart = CFAbsoluteTimeGetCurrent()
         do {
             Log.model.info("Downloading MLX Whisper model: \(modelName)")
@@ -781,8 +757,8 @@ class ModelManager {
                     guard let self else { return }
                     let fraction = progress.fractionCompleted
                     let decile = min(10, Int(fraction * 10.0001))
-                    if decile > self.mlxWhisperDownloadLastLoggedDecile || fraction >= 1.0 {
-                        self.mlxWhisperDownloadLastLoggedDecile = max(self.mlxWhisperDownloadLastLoggedDecile, decile)
+                    if decile > self.mlxAudioDownloadLastLoggedDecile || fraction >= 1.0 {
+                        self.mlxAudioDownloadLastLoggedDecile = max(self.mlxAudioDownloadLastLoggedDecile, decile)
                         Log.boot.info(
                             "MLX Whisper download progress fraction=\(String(format: "%.3f", fraction))"
                         )
@@ -822,13 +798,91 @@ class ModelManager {
         }
     }
 
-    /// Maps legacy WhisperKit CoreML catalog IDs onto mlx-community repos.
+    private func downloadMLXParakeetModel(
+        named modelName: String,
+        onProgress: ((DownloadSnapshot) -> Void)? = nil
+    ) async throws {
+        mlxAudioDownloadLastLoggedDecile = -1
+        let pipelineStart = CFAbsoluteTimeGetCurrent()
+        do {
+            Log.model.info("Downloading MLX Parakeet model: \(modelName)")
+            Log.boot.info(
+                "MLX Parakeet pipeline begin repo=\(modelName) storageLeaf=Pindrop/models/mlx-audio"
+            )
+
+            try fileManager.createDirectory(
+                at: MLXWhisperModelStore.modelsBaseURL,
+                withIntermediateDirectories: true
+            )
+
+            let fileDownloadStart = CFAbsoluteTimeGetCurrent()
+            _ = try await MLXWhisperModelStore.download(
+                repoID: modelName,
+                progressHandler: { [weak self] progress in
+                    guard let self else { return }
+                    let fraction = progress.fractionCompleted
+                    let decile = min(10, Int(fraction * 10.0001))
+                    if decile > self.mlxAudioDownloadLastLoggedDecile || fraction >= 1.0 {
+                        self.mlxAudioDownloadLastLoggedDecile = max(self.mlxAudioDownloadLastLoggedDecile, decile)
+                        Log.boot.info(
+                            "MLX Parakeet download progress fraction=\(String(format: "%.3f", fraction))"
+                        )
+                    }
+                    self.updateDownloadSnapshot(
+                        Self.whisperDownloadSnapshot(
+                            modelName: modelName,
+                            fileDownloadFraction: fraction
+                        ),
+                        onProgress: onProgress
+                    )
+                }
+            )
+            Log.boot.info(
+                "MLX Parakeet download finished elapsed=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - fileDownloadStart))"
+            )
+
+            updateDownloadSnapshot(Self.preparingDownloadSnapshot(modelName: modelName), onProgress: onProgress)
+            let prewarmStart = CFAbsoluteTimeGetCurrent()
+            _ = try await ParakeetModel.fromPretrained(modelName, cache: MLXWhisperModelStore.hubCache)
+            Log.boot.info(
+                "MLX Parakeet prewarm completed elapsed=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - prewarmStart))"
+            )
+
+            updateDownloadSnapshot(Self.completedDownloadSnapshot(modelName: modelName), onProgress: onProgress)
+            await refreshDownloadedModels()
+            Log.boot.info(
+                "MLX Parakeet pipeline success totalElapsed=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - pipelineStart))"
+            )
+        } catch {
+            clearDownloadState(resetProgress: true)
+            let nsError = error as NSError
+            Log.boot.error(
+                "MLX Parakeet pipeline failed after \(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - pipelineStart)) domain=\(nsError.domain) code=\(nsError.code) description=\(error.localizedDescription)"
+            )
+            throw ModelError.downloadFailed(error.localizedDescription)
+        }
+    }
+
+    /// Maps legacy WhisperKit / CoreML Parakeet catalog IDs onto mlx-community repos.
     nonisolated static func migratedMLXModelName(from legacyName: String) -> String? {
         if legacyName.hasPrefix("mlx-community/") {
             return legacyName
         }
 
         let normalized = legacyName.lowercased()
+        if normalized.hasPrefix("parakeet-") {
+            if normalized.contains("1.1b") {
+                return "mlx-community/parakeet-tdt-1.1b"
+            }
+            if normalized.contains("v3") {
+                return "mlx-community/parakeet-tdt-0.6b-v3"
+            }
+            if normalized.contains("v2") {
+                return "mlx-community/parakeet-tdt-0.6b-v2"
+            }
+            return "mlx-community/parakeet-tdt-0.6b-v3"
+        }
+
         guard normalized.hasPrefix("openai_whisper-") || normalized.hasPrefix("distil-whisper_") else {
             return nil
         }
@@ -876,69 +930,15 @@ class ModelManager {
             Log.model.error("Failed to remove legacy WhisperKit cache: \(error.localizedDescription)")
         }
     }
-    
-    private func downloadParakeetModel(
-        named modelName: String,
-        onProgress: ((DownloadSnapshot) -> Void)? = nil
-    ) async throws {
-        let pipelineStart = CFAbsoluteTimeGetCurrent()
-        Log.model.info("Parakeet model download requested: \(modelName)")
-        Log.model.info("Parakeet models path: \(self.parakeetModelsURL.path)")
-        Log.boot.info("Parakeet pipeline begin name=\(modelName)")
-        
-        let version: AsrModelVersion
-        if modelName.contains("v3") {
-            version = .v3
-        } else if modelName.contains("v2") {
-            version = .v2
-        } else {
-            throw ModelError.downloadFailed("Unknown Parakeet model version: \(modelName)")
-        }
-        
+
+    func removeLegacyParakeetCoreMLCacheIfPresent() {
+        let legacy = legacyParakeetCoreMLModelsURL
+        guard fileManager.fileExists(atPath: legacy.path) else { return }
         do {
-            try fileManager.createDirectory(at: parakeetModelsURL, withIntermediateDirectories: true)
-            Log.boot.info("Parakeet storage directory ready")
+            try fileManager.removeItem(at: legacy)
+            Log.model.info("Removed legacy Parakeet CoreML cache at \(legacy.path)")
         } catch {
-            Log.boot.error("Parakeet mkdir failed: \(error.localizedDescription)")
-            throw ModelError.downloadFailed("Failed to create Parakeet models directory: \(error.localizedDescription)")
-        }
-        
-        Log.model.info("Starting Parakeet model download (version: \(version == .v3 ? "v3" : "v2"))")
-        Log.boot.info("Parakeet AsrModels.downloadAndLoad starting version=\(version == .v3 ? "v3" : "v2")")
-        
-        do {
-            let targetDir = parakeetModelsURL.appendingPathComponent(
-                version == .v3 ? "parakeet-tdt-0.6b-v3-coreml" : "parakeet-tdt-0.6b-v2-coreml",
-                isDirectory: true
-            )
-            
-            let fetchStart = CFAbsoluteTimeGetCurrent()
-            _ = try await AsrModels.downloadAndLoad(
-                to: targetDir,
-                version: version,
-                progressHandler: { [weak self] progress in
-                    Task { @MainActor in
-                        guard let self else { return }
-                        self.updateDownloadSnapshot(
-                            Self.parakeetDownloadSnapshot(modelName: modelName, progress: progress),
-                            onProgress: onProgress
-                        )
-                    }
-                }
-            )
-            Log.boot.info("Parakeet AsrModels.downloadAndLoad finished elapsed=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - fetchStart))")
-            
-            Log.model.info("Parakeet model download complete")
-            updateDownloadSnapshot(Self.completedDownloadSnapshot(modelName: modelName), onProgress: onProgress)
-            
-            await refreshDownloadedModels()
-            Log.boot.info("Parakeet pipeline success totalElapsed=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - pipelineStart))")
-        } catch {
-            clearDownloadState(resetProgress: true)
-            let nsError = error as NSError
-            Log.boot.error("Parakeet pipeline failed domain=\(nsError.domain) code=\(nsError.code) description=\(error.localizedDescription)")
-            Log.model.error("Parakeet model download failed: \(error.localizedDescription)")
-            throw ModelError.downloadFailed(error.localizedDescription)
+            Log.model.error("Failed to remove legacy Parakeet CoreML cache: \(error.localizedDescription)")
         }
     }
 

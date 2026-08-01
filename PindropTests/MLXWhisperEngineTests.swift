@@ -139,7 +139,10 @@ struct MLXWhisperEngineTests {
             ModelManager.migratedMLXModelName(from: "mlx-community/whisper-tiny")
                 == "mlx-community/whisper-tiny"
         )
-        #expect(ModelManager.migratedMLXModelName(from: "parakeet-tdt-0.6b-v3") == nil)
+        #expect(
+            ModelManager.migratedMLXModelName(from: "parakeet-tdt-0.6b-v3")
+                == "mlx-community/parakeet-tdt-0.6b-v3"
+        )
     }
 }
 

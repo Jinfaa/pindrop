@@ -56,7 +56,7 @@ struct MediaTranscriptionFeatureStateTests {
         )
         #expect(
             AppCoordinator.mediaTranscriptionProvider(
-                named: "parakeet-tdt-0.6b-v2",
+                named: "mlx-community/parakeet-tdt-0.6b-v2",
                 availableModels: models
             ) == .parakeet
         )

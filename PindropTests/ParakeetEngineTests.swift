@@ -4,230 +4,140 @@
 //
 //  Created on 2026-01-30.
 //
+//  Unit suite is strictly offline: never calls loadModel(name:) with download
+//  enabled / bare model names that would hit Hugging Face.
+//
 
 import Foundation
 import Testing
 @testable import Pindrop
 
 @MainActor
-@Suite
+@Suite("ParakeetEngine (unit, offline)")
 struct ParakeetEngineTests {
     private func makeEngine() -> ParakeetEngine {
         ParakeetEngine()
     }
 
-    private func makeInt16AudioData(sampleCount: Int = 16_000) -> Data {
-        var audioData = Data()
-        for _ in 0..<sampleCount {
-            var sample: Int16 = 0
-            audioData.append(Data(bytes: &sample, count: MemoryLayout<Int16>.size))
-        }
-        return audioData
+    private func makeFloat32AudioData(sampleCount: Int = 16_000) -> Data {
+        var samples = [Float](repeating: 0, count: sampleCount)
+        return samples.withUnsafeMutableBytes { Data($0) }
+    }
+
+    private func makeEmptyDownloadBase() throws -> URL {
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("pindrop-mlx-parakeet-unit-\(UUID().uuidString)", isDirectory: true)
+        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+        return url
+    }
+
+    private func nonexistentModelPath() -> String {
+        "/nonexistent/pindrop/mlx-parakeet/\(UUID().uuidString)"
     }
 
     @Test func initialStateIsUnloaded() {
         let engine = makeEngine()
-        #expect(engine.state == .unloaded, "Initial state should be unloaded")
-        #expect(engine.error == nil, "Initial error should be nil")
+        #expect(engine.state == .unloaded)
+        #expect(engine.error == nil)
     }
 
-    @Test func loadModelSetsStateToReady() async throws {
+    @Test func loadModelWithInvalidPathThrowsError() async throws {
         let engine = makeEngine()
-        #expect(engine.state == .unloaded)
-
         do {
-            try await engine.loadModel(modelName: "parakeet-tdt-0.6b-v2")
+            try await engine.loadModel(modelPath: nonexistentModelPath())
+            Issue.record("Should throw error for invalid model path")
         } catch {
+            #expect(engine.state == .error)
+            #expect(engine.error != nil)
         }
-
-        #expect(engine.state != .unloaded, "State should change from unloaded when loading starts")
     }
 
-    @Test func loadModelTransitionsThroughLoadingState() async throws {
+    @Test func loadModelByNameWithoutDownloadFailsOffline() async throws {
         let engine = makeEngine()
-        #expect(engine.state == .unloaded)
-
-        Task {
-            do {
-                try await engine.loadModel(modelName: "parakeet-tdt-0.6b-v2")
-            } catch {
-            }
-        }
-
-        try await Task.sleep(nanoseconds: 100_000_000)
-
-        #expect(engine.state != .unloaded, "State should transition from unloaded when loading starts")
-    }
-
-    @Test func loadModelWithPathNotSupported() async throws {
-        let engine = makeEngine()
-        #expect(engine.state == .unloaded)
+        let downloadBase = try makeEmptyDownloadBase()
+        defer { try? FileManager.default.removeItem(at: downloadBase) }
 
         do {
-            try await engine.loadModel(modelPath: "/some/path/to/model")
-            Issue.record("Should throw error for path-based loading")
-        } catch ParakeetEngine.EngineError.initializationFailed {
-            #expect(engine.state == .error, "State should be error after failed load")
-            #expect(engine.error != nil, "Error should be set after failed load")
+            try await engine.loadModel(
+                name: "mlx-community/parakeet-tdt-0.6b-v2",
+                downloadBase: downloadBase,
+                download: false
+            )
+            Issue.record("Expected offline name load to fail when model is absent")
         } catch {
-            Issue.record("Unexpected error: \(error)")
+            #expect(engine.state == .error)
+            #expect(engine.error != nil)
         }
     }
 
-    @Test func transcribeRequiresLoadedModel() async throws {
+    @Test func unloadModelResetsState() async throws {
         let engine = makeEngine()
-        #expect(engine.state == .unloaded)
-
         do {
-            _ = try await engine.transcribe(audioData: makeInt16AudioData())
-            Issue.record("Should throw error when model not loaded")
+            try await engine.loadModel(modelPath: nonexistentModelPath())
+        } catch {}
+
+        await engine.unloadModel()
+        #expect(engine.state == .unloaded)
+        #expect(engine.error == nil)
+    }
+
+    @Test func transcribeWithoutModelThrows() async throws {
+        let engine = makeEngine()
+        do {
+            _ = try await engine.transcribe(audioData: makeFloat32AudioData())
+            Issue.record("Should throw when model is not loaded")
         } catch ParakeetEngine.EngineError.modelNotLoaded {
         } catch {
             Issue.record("Unexpected error: \(error)")
         }
     }
 
-    @Test func transcribeWithEmptyAudioDataThrowsError() async throws {
+    @Test func transcribeEmptyAudioThrows() async throws {
         let engine = makeEngine()
-
         do {
-            try await engine.loadModel(modelName: "parakeet-tdt-0.6b-v2")
-        } catch {
-        }
+            try await engine.loadModel(modelPath: nonexistentModelPath())
+        } catch {}
 
         do {
             _ = try await engine.transcribe(audioData: Data())
-            Issue.record("Should throw error for empty audio data")
-        } catch ParakeetEngine.EngineError.invalidAudioData {
+            Issue.record("Should throw for empty audio")
         } catch ParakeetEngine.EngineError.modelNotLoaded {
+        } catch ParakeetEngine.EngineError.invalidAudioData {
         } catch {
             Issue.record("Unexpected error: \(error)")
         }
     }
 
-    @Test func unloadModelSetsStateToUnloaded() async throws {
-        let engine = makeEngine()
-
-        do {
-            try await engine.loadModel(modelName: "parakeet-tdt-0.6b-v2")
-        } catch {
-        }
-
-        await engine.unloadModel()
-
-        #expect(engine.state == .unloaded, "State should be unloaded after unloadModel")
-        #expect(engine.error == nil, "Error should be nil after unloadModel")
+    @Test func engineErrorDescriptions() {
+        #expect(ParakeetEngine.EngineError.modelNotLoaded.errorDescription == "Model is not loaded")
+        #expect(ParakeetEngine.EngineError.invalidAudioData.errorDescription == "Invalid audio data")
+        let message = "boom"
+        #expect(
+            ParakeetEngine.EngineError.transcriptionFailed(message).errorDescription
+                == "Transcription failed: \(message)"
+        )
+        #expect(
+            ParakeetEngine.EngineError.modelNotFound("x").errorDescription?
+                .contains("x") == true
+        )
     }
 
-    @Test func unloadModelClearsError() async throws {
-        let engine = makeEngine()
-
-        do {
-            try await engine.loadModel(modelPath: "/invalid/path")
-        } catch {
-        }
-
-        #expect(engine.error != nil, "Error should be set after failed load")
-
-        await engine.unloadModel()
-
-        #expect(engine.error == nil, "Error should be cleared after unloadModel")
-    }
-
-    @Test func unloadModelFromUnloadedStateIsSafe() async {
-        let engine = makeEngine()
-        #expect(engine.state == .unloaded)
-
-        await engine.unloadModel()
-
-        #expect(engine.state == .unloaded, "State should remain unloaded")
-        #expect(engine.error == nil, "Error should remain nil")
-    }
-
-    @Test func stateTransitions() async throws {
-        let engine = makeEngine()
-        #expect(engine.state == .unloaded)
-
-        Task {
-            do {
-                try await engine.loadModel(modelName: "parakeet-tdt-0.6b-v2")
-            } catch {
-            }
-        }
-
-        try await Task.sleep(nanoseconds: 100_000_000)
-
-        let stateAfterLoadAttempt = engine.state
-        #expect(stateAfterLoadAttempt != .unloaded)
-
-        await engine.unloadModel()
-        #expect(engine.state == .unloaded)
-    }
-
-    @Test func concurrentTranscriptionPrevention() async throws {
-        let engine = makeEngine()
-        let audioData = makeInt16AudioData()
-
-        async let result1 = engine.transcribe(audioData: audioData)
-        async let result2 = engine.transcribe(audioData: audioData)
-
-        do {
-            _ = try await result1
-            _ = try await result2
-        } catch {
-        }
-    }
-
-    @Test func errorDescriptionForModelNotLoaded() {
-        let error = ParakeetEngine.EngineError.modelNotLoaded
-        #expect(error.errorDescription != nil, "Error should have description")
-        #expect(error.errorDescription?.contains("not loaded") ?? false,
-                "Error description should mention model not loaded")
-    }
-
-    @Test func errorDescriptionForInvalidAudioData() {
-        let error = ParakeetEngine.EngineError.invalidAudioData
-        #expect(error.errorDescription != nil, "Error should have description")
-        #expect(error.errorDescription?.contains("Invalid") ?? false,
-                "Error description should mention invalid audio data")
-    }
-
-    @Test func errorDescriptionForTranscriptionFailed() {
-        let message = "Test error message"
-        let error = ParakeetEngine.EngineError.transcriptionFailed(message)
-        #expect(error.errorDescription != nil, "Error should have description")
-        #expect(error.errorDescription?.contains(message) ?? false,
-                "Error description should contain the failure message")
-    }
-
-    @Test func errorDescriptionForDownloadFailed() {
-        let message = "Download error"
-        let error = ParakeetEngine.EngineError.downloadFailed(message)
-        #expect(error.errorDescription != nil, "Error should have description")
-        #expect(error.errorDescription?.contains(message) ?? false,
-                "Error description should contain the failure message")
-    }
-
-    @Test func errorDescriptionForInitializationFailed() {
-        let message = "Init error"
-        let error = ParakeetEngine.EngineError.initializationFailed(message)
-        #expect(error.errorDescription != nil, "Error should have description")
-        #expect(error.errorDescription?.contains(message) ?? false,
-                "Error description should contain the failure message")
-    }
-
-    @Test func v3ModelVersionSelection() async throws {
-        let engine = makeEngine()
-        #expect(engine.state == .unloaded)
-
-        Task {
-            do {
-                try await engine.loadModel(modelName: "parakeet-tdt-0.6b-v3")
-            } catch {
-            }
-        }
-
-        try await Task.sleep(nanoseconds: 100_000_000)
-        #expect(engine.state != .unloaded, "State should transition when loading v3 model")
+    @Test func migratesLegacyParakeetCoreMLNames() {
+        #expect(
+            ModelManager.migratedMLXModelName(from: "parakeet-tdt-0.6b-v2")
+                == "mlx-community/parakeet-tdt-0.6b-v2"
+        )
+        #expect(
+            ModelManager.migratedMLXModelName(from: "parakeet-tdt-0.6b-v3")
+                == "mlx-community/parakeet-tdt-0.6b-v3"
+        )
+        #expect(
+            ModelManager.migratedMLXModelName(from: "parakeet-tdt-1.1b")
+                == "mlx-community/parakeet-tdt-1.1b"
+        )
+        #expect(
+            ModelManager.migratedMLXModelName(from: "mlx-community/parakeet-tdt-0.6b-v3")
+                == "mlx-community/parakeet-tdt-0.6b-v3"
+        )
     }
 }

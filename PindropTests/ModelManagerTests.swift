@@ -26,7 +26,7 @@ struct ModelManagerTests {
         #expect(models.contains { $0.name == "mlx-community/whisper-large-v3-turbo" })
         #expect(models.contains { $0.name == "mlx-community/whisper-medium-mlx" })
         #expect(models.contains { $0.name == "mlx-community/whisper-base.en-mlx" })
-        #expect(models.contains { $0.name == "parakeet-tdt-0.6b-v2" })
+        #expect(models.contains { $0.name == "mlx-community/parakeet-tdt-0.6b-v2" })
         #expect(models.contains { $0.name == "openai_gpt-4o-transcribe" && $0.provider == .openAI })
         #expect(models.contains { $0.name == "openai_gpt-4o-mini-transcribe" && $0.provider == .openAI })
     }
@@ -106,7 +106,7 @@ struct ModelManagerTests {
     }
 
     @Test func parakeetV3SupportsEuropeanLanguagesButNotChinese() throws {
-        let model = try #require(modelManager.availableModels.first { $0.name == "parakeet-tdt-0.6b-v3" })
+        let model = try #require(modelManager.availableModels.first { $0.name == "mlx-community/parakeet-tdt-0.6b-v3" })
         #expect(model.supports(language: .spanish) == true)
         #expect(model.supports(language: .portugueseBrazil) == true)
         #expect(model.supports(language: .russian) == true)
@@ -116,11 +116,8 @@ struct ModelManagerTests {
     }
 
     @Test func hindiAndMalayalamRecommendMultilingualWhisperModels() {
-        // multilingualRecommendedModelNames includes Parakeet v3, but that model is
-        // European-only and is filtered out by supports(language:). Hindi/Malayalam
-        // must still steer to the Whisper multilingual set (and Apple Speech).
         let expected = ModelManager.multilingualRecommendedModelNames.filter { name in
-            name != "parakeet-tdt-0.6b-v3"
+            name != "mlx-community/parakeet-tdt-0.6b-v3"
         }
         #expect(modelManager.recommendedModels(for: .hindi).map(\.name) == expected)
         #expect(modelManager.recommendedModels(for: .malayalam).map(\.name) == expected)
@@ -132,15 +129,15 @@ struct ModelManagerTests {
             #expect(names.contains("mlx-community/whisper-medium-mlx"))
             #expect(names.contains("mlx-community/whisper-large-v3-turbo"))
             #expect(!names.contains("mlx-community/whisper-base.en-mlx"))
-            #expect(!names.contains("parakeet-tdt-0.6b-v3"))
-            #expect(!names.contains("parakeet-tdt-0.6b-v2"))
+            #expect(!names.contains("mlx-community/parakeet-tdt-0.6b-v3"))
+            #expect(!names.contains("mlx-community/parakeet-tdt-0.6b-v2"))
         }
     }
 
     @Test func hindiAndMalayalamSupportedByMultilingualWhisperButNotEnglishOnlyOrParakeet() throws {
         let multilingual = try #require(modelManager.availableModels.first { $0.name == "mlx-community/whisper-base-mlx" })
         let englishOnly = try #require(modelManager.availableModels.first { $0.name == "mlx-community/whisper-base.en-mlx" })
-        let parakeet = try #require(modelManager.availableModels.first { $0.name == "parakeet-tdt-0.6b-v3" })
+        let parakeet = try #require(modelManager.availableModels.first { $0.name == "mlx-community/parakeet-tdt-0.6b-v3" })
 
         for language in [AppLanguage.hindi, .malayalam] {
             #expect(multilingual.supports(language: language))
@@ -188,21 +185,21 @@ struct ModelManagerTests {
 
     @Test func parakeetDownloadProgressMapping_listing_setsListingPhase() {
         let snapshot = ModelManager.parakeetDownloadSnapshot(
-            modelName: "parakeet-tdt-0.6b-v3",
+            modelName: "mlx-community/parakeet-tdt-0.6b-v3",
             progress: DownloadUtils.DownloadProgress(
                 fractionCompleted: 0.12,
                 phase: .listing
             )
         )
 
-        #expect(snapshot.modelName == "parakeet-tdt-0.6b-v3")
+        #expect(snapshot.modelName == "mlx-community/parakeet-tdt-0.6b-v3")
         #expect(snapshot.progress == 0.12)
         #expect(snapshot.phase == .listing)
     }
 
     @Test func parakeetDownloadProgressMapping_downloading_setsFileCounts() {
         let snapshot = ModelManager.parakeetDownloadSnapshot(
-            modelName: "parakeet-tdt-0.6b-v3",
+            modelName: "mlx-community/parakeet-tdt-0.6b-v3",
             progress: DownloadUtils.DownloadProgress(
                 fractionCompleted: 0.42,
                 phase: .downloading(completedFiles: 3, totalFiles: 7)
@@ -215,7 +212,7 @@ struct ModelManagerTests {
 
     @Test func parakeetDownloadProgressMapping_compiling_setsCompilingPhase() {
         let snapshot = ModelManager.parakeetDownloadSnapshot(
-            modelName: "parakeet-tdt-0.6b-v3",
+            modelName: "mlx-community/parakeet-tdt-0.6b-v3",
             progress: DownloadUtils.DownloadProgress(
                 fractionCompleted: 0.76,
                 phase: .compiling(modelName: "Decoder.mlmodelc")
