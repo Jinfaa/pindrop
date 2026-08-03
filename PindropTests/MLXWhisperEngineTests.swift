@@ -174,6 +174,32 @@ struct MLXWhisperEngineTests {
         )
         #expect(bytes == 1_600_000_000)
     }
+
+    @Test func activeCFNetworkTempBytesIgnoresStaleFilesAndCapsToExpected() throws {
+        let fm = FileManager.default
+        let dir = fm.temporaryDirectory.appendingPathComponent(
+            "pindrop-cfnet-\(UUID().uuidString)",
+            isDirectory: true
+        )
+        try fm.createDirectory(at: dir, withIntermediateDirectories: true)
+        defer { try? fm.removeItem(at: dir) }
+
+        let stale = dir.appendingPathComponent("CFNetworkDownload_staleTest.tmp")
+        let fresh = dir.appendingPathComponent("CFNetworkDownload_freshTest.tmp")
+        try Data(repeating: 1, count: 400_000).write(to: stale)
+        try Data(repeating: 2, count: 50_000).write(to: fresh)
+        try fm.setAttributes(
+            [.modificationDate: Date().addingTimeInterval(-3600)],
+            ofItemAtPath: stale.path
+        )
+
+        let bytes = MLXWhisperModelStore.activeCFNetworkTempBytes(
+            now: Date(),
+            expectedByteCount: 40_000,
+            temporaryDirectory: dir
+        )
+        #expect(bytes == 40_000)
+    }
 }
 
 @MainActor

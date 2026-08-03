@@ -338,12 +338,12 @@ enum MLXWhisperModelStore {
 
     static func diskDownloadFraction(repoID: String, expectedByteCount: Int64?) -> Double {
         guard let expectedByteCount, expectedByteCount > 0 else { return 0 }
-        let observed = observedDownloadBytes(repoID: repoID)
+        let observed = observedDownloadBytes(repoID: repoID, expectedByteCount: expectedByteCount)
         guard observed > 0 else { return 0 }
         return min(1, Double(observed) / Double(expectedByteCount))
     }
 
-    static func observedDownloadBytes(repoID: String) -> Int64 {
+    static func observedDownloadBytes(repoID: String, expectedByteCount: Int64? = nil) -> Int64 {
         let leafBytes = directoryByteSize(modelDirectory(for: repoID))
         var hubBlobBytes: Int64 = 0
         if let id = Repo.ID(rawValue: repoID) {
@@ -351,7 +351,13 @@ enum MLXWhisperModelStore {
                 .appendingPathComponent("blobs", isDirectory: true)
             hubBlobBytes = directoryByteSize(blobs)
         }
-        return max(leafBytes, hubBlobBytes) + recentCFNetworkTempBytes()
+        let cachedBytes = max(leafBytes, hubBlobBytes)
+        let activeTempBytes = activeCFNetworkTempBytes(expectedByteCount: expectedByteCount)
+        let total = cachedBytes + activeTempBytes
+        if let expectedByteCount, expectedByteCount > 0 {
+            return min(total, expectedByteCount)
+        }
+        return total
     }
 
     static func directoryByteSize(_ directory: URL) -> Int64 {
@@ -377,9 +383,13 @@ enum MLXWhisperModelStore {
         return total
     }
 
-    static func recentCFNetworkTempBytes(now: Date = Date()) -> Int64 {
+    static func activeCFNetworkTempBytes(
+        now: Date = Date(),
+        expectedByteCount: Int64? = nil,
+        temporaryDirectory: URL? = nil
+    ) -> Int64 {
         let fm = FileManager.default
-        let tmp = fm.temporaryDirectory
+        let tmp = temporaryDirectory ?? fm.temporaryDirectory
         guard let files = try? fm.contentsOfDirectory(
             at: tmp,
             includingPropertiesForKeys: [.contentModificationDateKey, .fileSizeKey, .isRegularFileKey],
@@ -388,8 +398,8 @@ enum MLXWhisperModelStore {
             return 0
         }
 
-        let cutoff = now.addingTimeInterval(-2 * 60 * 60)
-        var total: Int64 = 0
+        let cutoff = now.addingTimeInterval(-90)
+        var largestActive: Int64 = 0
         for file in files {
             let name = file.lastPathComponent
             guard name.hasPrefix("CFNetworkDownload_"), name.hasSuffix(".tmp") else { continue }
@@ -398,9 +408,16 @@ enum MLXWhisperModelStore {
             ])
             guard values?.isRegularFile == true else { continue }
             guard let modified = values?.contentModificationDate, modified >= cutoff else { continue }
-            total += Int64(values?.fileSize ?? 0)
+            let size = Int64(values?.fileSize ?? 0)
+            if size > largestActive {
+                largestActive = size
+            }
         }
-        return total
+
+        if let expectedByteCount, expectedByteCount > 0 {
+            return min(largestActive, expectedByteCount)
+        }
+        return largestActive
     }
 }
 

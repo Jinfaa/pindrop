@@ -1333,6 +1333,10 @@ class ModelManager {
             )
 
             let fileDownloadStart = CFAbsoluteTimeGetCurrent()
+            updateDownloadSnapshot(
+                Self.whisperDownloadSnapshot(modelName: modelName, fileDownloadFraction: 0),
+                onProgress: onProgress
+            )
             _ = try await MLXWhisperModelStore.download(
                 repoID: modelName,
                 expectedByteCount: expectedDownloadBytes(forCatalogModelNamed: modelName),
@@ -1360,6 +1364,7 @@ class ModelManager {
             )
 
             updateDownloadSnapshot(Self.preparingDownloadSnapshot(modelName: modelName), onProgress: onProgress)
+            await Task.yield()
             let prewarmStart = CFAbsoluteTimeGetCurrent()
             _ = try await MLXWhisperModelStore.loadPretrained(repoID: modelName)
             Log.boot.info(
@@ -1399,6 +1404,10 @@ class ModelManager {
             )
 
             let fileDownloadStart = CFAbsoluteTimeGetCurrent()
+            updateDownloadSnapshot(
+                Self.whisperDownloadSnapshot(modelName: modelName, fileDownloadFraction: 0),
+                onProgress: onProgress
+            )
             _ = try await MLXWhisperModelStore.download(
                 repoID: modelName,
                 expectedByteCount: expectedDownloadBytes(forCatalogModelNamed: modelName),
@@ -1426,6 +1435,7 @@ class ModelManager {
             )
 
             updateDownloadSnapshot(Self.preparingDownloadSnapshot(modelName: modelName), onProgress: onProgress)
+            await Task.yield()
             let prewarmStart = CFAbsoluteTimeGetCurrent()
             _ = try await ParakeetModel.fromPretrained(modelName, cache: MLXWhisperModelStore.hubCache)
             Log.boot.info(
@@ -1465,6 +1475,10 @@ class ModelManager {
             )
 
             let fileDownloadStart = CFAbsoluteTimeGetCurrent()
+            updateDownloadSnapshot(
+                Self.whisperDownloadSnapshot(modelName: modelName, fileDownloadFraction: 0),
+                onProgress: onProgress
+            )
             _ = try await MLXWhisperModelStore.download(
                 repoID: modelName,
                 expectedByteCount: expectedDownloadBytes(forCatalogModelNamed: modelName),
@@ -1492,6 +1506,7 @@ class ModelManager {
             )
 
             updateDownloadSnapshot(Self.preparingDownloadSnapshot(modelName: modelName), onProgress: onProgress)
+            await Task.yield()
             let prewarmStart = CFAbsoluteTimeGetCurrent()
             _ = try await Qwen3ASRModel.fromPretrained(modelName, cache: MLXWhisperModelStore.hubCache)
             Log.boot.info(
