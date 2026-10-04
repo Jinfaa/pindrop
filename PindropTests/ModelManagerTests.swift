@@ -72,6 +72,21 @@ struct ModelManagerTests {
         #expect(recommendedModelNames.contains("evilfreelancer/whisper-podlodka-turbo-MLX"))
     }
 
+    @Test func catalogSizesMatchMeasuredDownloads() {
+        // Measured against the real Hugging Face payloads and the FluidAudio int8 set (issue #103).
+        let measured: [String: Int] = [
+            "openai_whisper-tiny.en": 153,
+            "openai_whisper-large-v2_turbo_955MB": 1053,
+            "openai_whisper-large-v3_turbo": 3195,
+            "openai_whisper-large-v3_turbo_954MB": 1053,
+            "openai_whisper-large-v3-v20240930": 1620,
+            "openai_whisper-large-v3-v20240930_turbo": 1639,
+        ]
+        for (name, megabytes) in measured {
+            #expect(modelManager.availableModels.first { $0.name == name }?.sizeInMB == megabytes, "\(name)")
+        }
+    }
+
     @Test func modelSizes() {
         let models = modelManager.availableModels
 
