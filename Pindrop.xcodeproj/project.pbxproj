@@ -1946,10 +1946,10 @@ MODELSPRESENTBUILD01A2B3C4 /* ModelsPresentation.swift in Sources */,
 /* Begin XCRemoteSwiftPackageReference section */
 		WHISPERKITREF01A2B3C4D5 /* XCRemoteSwiftPackageReference "WhisperKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/argmaxinc/WhisperKit.git";
+			repositoryURL = "https://github.com/argmaxinc/argmax-oss-swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.15.0;
+				kind = exactVersion;
+				version = 1.1.0;
 			};
 		};
 		CFD28D45C1FE4DF09ED8A269 /* XCRemoteSwiftPackageReference "mlx-audio-swift" */ = {

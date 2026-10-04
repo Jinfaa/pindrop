@@ -1,6 +1,15 @@
 {
-  "originHash" : "6ad34668e9cd36653f980e799b4f953bbc8aaa0e7989bf4a0d715c8503bf88c0",
+  "originHash" : "670724354f4c2f1c78cbd11b005c1f9549ed4d6b921a2eed2a916b8cfa261503",
   "pins" : [
+    {
+      "identity" : "argmax-oss-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/argmaxinc/argmax-oss-swift",
+      "state" : {
+        "revision" : "1e2a163736dfa5a198e637ae44c114e1c6d5cc2d",
+        "version" : "1.1.0"
+      }
+    },
     {
       "identity" : "eventsource",
       "kind" : "remoteSourceControl",
@@ -170,15 +179,6 @@
       "state" : {
         "revision" : "ad4a03ec7ea7416a4081370f21c86e55b02a5b88",
         "version" : "2.14.1"
-      }
-    },
-    {
-      "identity" : "whisperkit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/argmaxinc/WhisperKit.git",
-      "state" : {
-        "revision" : "e2adabbe7d98dc4d0ab9a5b75424ecc42a9cdbef",
-        "version" : "0.18.0"
       }
     }
   ],
