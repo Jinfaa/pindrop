@@ -528,7 +528,6 @@ final class AppCoordinator {
     let floatingIndicatorFocusTracker: FloatingIndicatorFocusTracker
     let onboardingController: OnboardingWindowController
     let splashController: SplashWindowController
-    let settingsWindowController: SettingsWindowController
     let mainWindowController: MainWindowController
     let noteEditorWindowController: NoteEditorWindowController
     let toastWindowController: ToastWindowController
@@ -781,12 +780,8 @@ final class AppCoordinator {
         self.onboardingController = OnboardingWindowController()
         let splashState = SplashScreenState()
         self.splashController = SplashWindowController(state: splashState)
-        self.settingsWindowController = SettingsWindowController(
-            settings: settingsStore,
-            modelContainer: modelContainer,
-            launchAtLoginManager: launchAtLoginManager
-        )
         self.mainWindowController = MainWindowController()
+        self.mainWindowController.launchAtLoginManager = launchAtLoginManager
         self.mainWindowController.setModelContainer(modelContainer)
         self.noteEditorWindowController = NoteEditorWindowController()
         self.noteEditorWindowController.setModelContainer(modelContainer)
@@ -866,10 +861,7 @@ final class AppCoordinator {
         }
 
         self.statusBarController.onOpenSettings = { [weak self] tab in
-            self?.settingsWindowController.show(tab: tab)
-        }
-        self.mainWindowController.onOpenSettings = { [weak self] tab in
-            self?.settingsWindowController.show(tab: tab)
+            self?.mainWindowController.showSettings(tab: tab)
         }
         
         self.audioRecorder.onAudioLevel = { [weak self] level in

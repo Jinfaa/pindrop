@@ -12,19 +12,12 @@ import Foundation
 // MARK: - Layout metrics (spec §13 — normative)
 
 enum SettingsLayoutMetrics {
-    static let windowWidth: CGFloat = 620
-    static let defaultHeight: CGFloat = 640
-    static let minimumHeight: CGFloat = 420
-
-    /// Titlebar row
-    static let titlebarTrafficLane: CGFloat = 60
-    static let titlebarTopPadding: CGFloat = 14
-    static let titlebarSidePadding: CGFloat = 16
-    static let titlebarBottomPadding: CGFloat = 8
+    /// Settings panes keep their form width inside the wider main window.
+    static let contentMaxWidth: CGFloat = 620
 
     /// Tab strip
     static let tabGap: CGFloat = 4
-    static let tabTopPadding: CGFloat = 4
+    static let tabTopPadding: CGFloat = 20
     static let tabBottomPadding: CGFloat = 10
     static let tabRadius: CGFloat = 8
     static let tabVerticalPadding: CGFloat = 7

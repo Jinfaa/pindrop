@@ -10,11 +10,11 @@
 import AppKit
 import SwiftUI
 
-// MARK: - Root shell (titlebar + tab strip + scrolling pane)
+// MARK: - Root shell (tab strip + scrolling pane), hosted in the main window
 
 struct SettingsShellView: View {
     @ObservedObject var settings: SettingsStore
-    @ObservedObject var model: SettingsWindowModel
+    @Binding var selectedTab: SettingsTab
     let launchAtLoginManager: LaunchAtLoginManager
 
     @Environment(\.locale) private var locale
@@ -22,45 +22,22 @@ struct SettingsShellView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            titlebar
             tabStrip
             ScrollView {
                 SettingsPaneContent(
                     settings: settings,
-                    tab: model.selectedTab,
+                    tab: selectedTab,
                     launchAtLoginManager: launchAtLoginManager
                 )
+                .frame(maxWidth: SettingsLayoutMetrics.contentMaxWidth, alignment: .top)
                 .padding(.top, SettingsLayoutMetrics.contentTopPadding)
                 .padding(.horizontal, SettingsLayoutMetrics.contentSidePadding)
                 .padding(.bottom, SettingsLayoutMetrics.contentBottomPadding)
-                .frame(maxWidth: .infinity, alignment: .top)
+                .frame(maxWidth: .infinity, alignment: .topLeading)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .background(AppColors.windowBackground)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .themeRefresh()
-    }
-
-    private var titlebar: some View {
-        HStack(spacing: 0) {
-            // height: 0 keeps the lane width-only — a bare Color.clear is greedy in
-            // both axes and makes the whole title row expand to half the window.
-            Color.clear
-                .frame(width: SettingsLayoutMetrics.titlebarTrafficLane, height: 0)
-            Spacer(minLength: 0)
-            Text(model.selectedTab.title(locale: locale))
-                .font(AppTypography.labelStrongSelected)
-                .foregroundStyle(AppColors.textPrimary)
-                .lineLimit(1)
-            Spacer(minLength: 0)
-            Color.clear
-                .frame(width: SettingsLayoutMetrics.titlebarTrafficLane, height: 0)
-        }
-        .padding(.top, SettingsLayoutMetrics.titlebarTopPadding)
-        .padding(.horizontal, SettingsLayoutMetrics.titlebarSidePadding)
-        .padding(.bottom, SettingsLayoutMetrics.titlebarBottomPadding)
-        .background(AppColors.windowBackground)
     }
 
     private var tabStrip: some View {
@@ -69,16 +46,17 @@ struct SettingsShellView: View {
                 ForEach(SettingsTab.allCases) { tab in
                     SettingsTabChip(
                         tab: tab,
-                        isSelected: model.selectedTab == tab,
+                        isSelected: selectedTab == tab,
                         locale: locale
                     ) {
-                        model.selectedTab = tab
+                        selectedTab = tab
                     }
                 }
+                Spacer(minLength: 0)
             }
             .padding(.top, SettingsLayoutMetrics.tabTopPadding)
             .padding(.bottom, SettingsLayoutMetrics.tabBottomPadding)
-            .frame(maxWidth: .infinity)
+            .padding(.horizontal, SettingsLayoutMetrics.contentSidePadding - SettingsLayoutMetrics.tabHorizontalPadding)
             .onMoveCommand { direction in
                 moveTabFocus(direction)
             }
@@ -87,12 +65,11 @@ struct SettingsShellView: View {
                 .fill(AppColors.border)
                 .frame(height: 1)
         }
-        .background(AppColors.windowBackground)
     }
 
     private func moveTabFocus(_ direction: MoveCommandDirection) {
         guard direction == .left || direction == .right,
-              let currentIndex = SettingsTab.allCases.firstIndex(of: model.selectedTab)
+              let currentIndex = SettingsTab.allCases.firstIndex(of: selectedTab)
         else { return }
 
         let visualStep: Int
@@ -102,7 +79,7 @@ struct SettingsShellView: View {
         }
         let tabs = SettingsTab.allCases
         let nextIndex = min(max(currentIndex + visualStep, tabs.startIndex), tabs.index(before: tabs.endIndex))
-        model.selectedTab = tabs[nextIndex]
+        selectedTab = tabs[nextIndex]
     }
 }
 
@@ -433,16 +410,5 @@ struct SettingsPaneStack<Content: View>: View {
             content
         }
         .frame(maxWidth: .infinity, alignment: .top)
-    }
-}
-
-// MARK: - Window model
-
-@MainActor
-final class SettingsWindowModel: ObservableObject {
-    @Published var selectedTab: SettingsTab = .general
-
-    func select(_ tab: SettingsTab) {
-        selectedTab = tab
     }
 }

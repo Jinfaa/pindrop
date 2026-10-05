@@ -20,6 +20,8 @@ enum MainNavItem: String, Identifiable {
     case transcribe = "Transcribe"
     case models = "Models"
     case dictionary = "Dictionary"
+    /// Reached via the sidebar Settings button / ⌘,, not the primary list.
+    case settings = "Settings"
 
     /// Primary sidebar destinations after U2 restructure.
     /// Order: Home, Stats, Library, Notes, Dictionary, Models (⌘1–6).
@@ -66,6 +68,7 @@ enum MainNavItem: String, Identifiable {
         case .transcribe: return "waveform"
         case .models: return "cpu"
         case .dictionary: return "text.book.closed"
+        case .settings: return "gearshape"
         }
     }
 
@@ -80,6 +83,11 @@ extension Notification.Name {
     static let sidebarStateChanged = Notification.Name("sidebarStateChanged")
     static let mainNavItemDidChange = Notification.Name("mainNavItemDidChange")
     static let focusHistorySearch = Notification.Name("focusHistorySearch")
+}
+
+enum MainNavUserInfoKey {
+    static let navItem = "navItem"
+    static let settingsTab = "settingsTab"
 }
 
 // MARK: - Window chrome metrics
@@ -97,6 +105,7 @@ struct MainWindow: View {
     @ObservedObject var settingsStore: SettingsStore
     @State private var selectedNav: MainNavItem = .home
     @State private var historyRecordIDToOpen: UUID?
+    @State private var settingsTab: SettingsTab = .general
     let floatingIndicatorState: FloatingIndicatorState?
     let mediaTranscriptionState: MediaTranscriptionFeatureState?
     let recordingState: RecordingFeatureState?
@@ -108,7 +117,7 @@ struct MainWindow: View {
     let onNewTranscription: (() -> Void)?
     let onStartMeetingCapture: ((Int?) -> Void)?
     let onStartNoteCapture: (() -> Void)?
-    let onOpenSettings: (SettingsTab) -> Void
+    let launchAtLoginManager: LaunchAtLoginManager
 
     private func navigateTo(_ item: MainNavItem) {
         let destination = item.resolvedDestination
@@ -121,7 +130,8 @@ struct MainWindow: View {
     }
 
     private func navigateToSettings(_ tab: SettingsTab) {
-        onOpenSettings(tab)
+        settingsTab = tab
+        navigateTo(.settings)
     }
 
     var body: some View {
@@ -152,8 +162,12 @@ struct MainWindow: View {
         .environment(\.layoutDirection, settingsStore.selectedAppLocale.layoutDirection)
         .themeRefresh()
         .onReceive(NotificationCenter.default.publisher(for: .navigateToMainNavItem)) { notification in
-            if let rawValue = notification.userInfo?["navItem"] as? String,
+            if let rawValue = notification.userInfo?[MainNavUserInfoKey.navItem] as? String,
                let navItem = MainNavItem(rawValue: rawValue) {
+                if let tabRawValue = notification.userInfo?[MainNavUserInfoKey.settingsTab] as? String,
+                   let tab = SettingsTab(rawValue: tabRawValue) {
+                    settingsTab = tab
+                }
                 navigateTo(navItem)
             }
         }
@@ -179,7 +193,7 @@ struct MainWindow: View {
             /// Leading sidebar owns top-left → clear traffic lights; trailing does not.
             reservesTrafficLightClearance: isLeadingSidebar,
             onSelect: navigateTo,
-            onOpenSettings: { onOpenSettings(.general) }
+            onOpenSettings: { navigateToSettings(settingsTab) }
         )
         .frame(maxHeight: .infinity, alignment: .top)
     }
@@ -266,6 +280,12 @@ struct MainWindow: View {
             }
         case .dictionary:
             DictionaryView()
+        case .settings:
+            SettingsShellView(
+                settings: settingsStore,
+                selectedTab: $settingsTab,
+                launchAtLoginManager: launchAtLoginManager
+            )
         }
     }
 
@@ -541,6 +561,10 @@ private struct MainSidebar: View {
         }
     }
 
+    private var isSettingsSelected: Bool {
+        selectedNav == .settings
+    }
+
     private var settingsButton: some View {
         Button(action: onOpenSettings) {
             Group {
@@ -548,11 +572,11 @@ private struct MainSidebar: View {
                     HStack(spacing: 10) {
                         Image(systemName: "gearshape")
                             .font(.system(size: 13, weight: .medium))
-                            .foregroundStyle(AppColors.textSecondary)
+                            .foregroundStyle(isSettingsSelected ? AppColors.accent : AppColors.textSecondary)
                             .frame(width: 18, height: 18)
                         Text(localized("Settings", locale: locale))
-                            .font(AppTypography.labelStrong)
-                            .foregroundStyle(AppColors.textSecondary)
+                            .font(isSettingsSelected ? AppTypography.labelStrongSelected : AppTypography.labelStrong)
+                            .foregroundStyle(isSettingsSelected ? AppColors.textPrimary : AppColors.textSecondary)
                             .lineLimit(1)
                         Spacer(minLength: 0)
                         Text("⌘,")
@@ -564,7 +588,7 @@ private struct MainSidebar: View {
                 } else {
                     Image(systemName: "gearshape")
                         .font(.system(size: 13, weight: .medium))
-                        .foregroundStyle(AppColors.textSecondary)
+                        .foregroundStyle(isSettingsSelected ? AppColors.accent : AppColors.textSecondary)
                         .frame(width: 18, height: 18)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 7)
@@ -573,11 +597,20 @@ private struct MainSidebar: View {
             }
             .background(
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
-                    .fill(isSettingsHovered ? AppColors.sidebarItemHover : Color.clear)
+                    .fill(
+                        isSettingsSelected
+                            ? AppColors.contentBackground
+                            : (isSettingsHovered ? AppColors.sidebarItemHover : Color.clear)
+                    )
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .strokeBorder(isSettingsSelected ? AppColors.border : Color.clear, lineWidth: 1)
             )
             .contentShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         }
         .buttonStyle(.plain)
+        .accessibilityAddTraits(isSettingsSelected ? [.isSelected] : [])
         .accessibilityLabel(localized("Settings", locale: locale))
         .help(localized("Settings", locale: locale))
         .onHover { hovering in isSettingsHovered = hovering }
@@ -660,7 +693,7 @@ final class MainWindowController {
     var onNewTranscription: (() -> Void)?
     var onStartMeetingCapture: ((Int?) -> Void)?
     var onStartNoteCapture: (() -> Void)?
-    var onOpenSettings: ((SettingsTab) -> Void)?
+    var launchAtLoginManager = LaunchAtLoginManager()
 
     /// The main app window, if created. Used by list keyboard monitors for identity checks.
     var nsWindow: NSWindow? { window }
@@ -733,12 +766,7 @@ final class MainWindowController {
     }
 
     func showSettings(tab: SettingsTab = .general) {
-        guard let onOpenSettings else {
-            Log.ui.error("Settings presenter not set - cannot show settings")
-            return
-        }
-
-        onOpenSettings(tab)
+        show(navigationItem: .settings, settingsTab: tab)
     }
 
     func focusHistorySearch() {
@@ -751,7 +779,7 @@ final class MainWindowController {
         }
     }
 
-    private func show(navigationItem: MainNavItem?) {
+    private func show(navigationItem: MainNavItem?, settingsTab: SettingsTab? = nil) {
         guard let container = modelContainer else {
             Log.ui.error("ModelContainer not set - cannot show MainWindow")
             return
@@ -775,9 +803,7 @@ final class MainWindowController {
                 onNewTranscription: onNewTranscription,
                 onStartMeetingCapture: onStartMeetingCapture,
                 onStartNoteCapture: onStartNoteCapture,
-                onOpenSettings: onOpenSettings ?? { _ in
-                    Log.ui.error("Settings presenter not set - cannot show settings")
-                }
+                launchAtLoginManager: launchAtLoginManager
             )
                 .modelContainer(container)
             // Standard hosting controller — full-size transparent titlebar provides
@@ -829,7 +855,7 @@ final class MainWindowController {
                 object: nil,
                 queue: .main
             ) { [weak self] notification in
-                guard let rawValue = notification.userInfo?["navItem"] as? String,
+                guard let rawValue = notification.userInfo?[MainNavUserInfoKey.navItem] as? String,
                       let item = MainNavItem(rawValue: rawValue) else { return }
                 self?.currentNavigationItem = item.resolvedDestination
             }
@@ -846,11 +872,15 @@ final class MainWindowController {
         if let item = navigationItem {
             let destination = item.resolvedDestination
             currentNavigationItem = destination
+            var userInfo: [String: String] = [MainNavUserInfoKey.navItem: destination.rawValue]
+            if let settingsTab {
+                userInfo[MainNavUserInfoKey.settingsTab] = settingsTab.rawValue
+            }
             DispatchQueue.main.async {
                 NotificationCenter.default.post(
                     name: .navigateToMainNavItem,
                     object: nil,
-                    userInfo: ["navItem": destination.rawValue]
+                    userInfo: userInfo
                 )
             }
         }
@@ -914,7 +944,7 @@ final class MainWindowController {
         onNewTranscription: nil,
         onStartMeetingCapture: nil,
         onStartNoteCapture: nil,
-        onOpenSettings: { _ in }
+        launchAtLoginManager: LaunchAtLoginManager()
     )
         .modelContainer(PreviewContainer.empty)
         .preferredColorScheme(.light)
@@ -935,7 +965,7 @@ final class MainWindowController {
         onNewTranscription: nil,
         onStartMeetingCapture: nil,
         onStartNoteCapture: nil,
-        onOpenSettings: { _ in }
+        launchAtLoginManager: LaunchAtLoginManager()
     )
         .modelContainer(PreviewContainer.empty)
         .preferredColorScheme(.dark)
