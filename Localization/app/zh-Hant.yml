@@ -1578,3 +1578,13 @@ total:
 tokens:
   in_out: "輸入 %@ / 輸出 %@ 個 Token"
   in_out_thinking: "輸入 %@ / 輸出 %@ / 思考 %@ 個 Token"
+start_sound_cue:
+  volume: "Volume"
+  title: "Start Sound"
+  subtitle: "Plays when dictation starts"
+  output: "Sound Output"
+  preview: "Preview"
+  soft_chime: "Soft Chime"
+  glass: "Glass"
+  breeze: "Breeze"
+  marimba: "Marimba"

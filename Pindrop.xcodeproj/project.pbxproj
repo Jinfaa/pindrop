@@ -78,6 +78,7 @@ MODELSPRESENTTESTBUILD01A2 /* ModelsPresentationTests.swift in Sources */ = {isa
 		MODELPICKERSHEETBUILD01A2B3C4 /* ModelPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = MODELPICKERSHEETFILE01A2B3C4D5 /* ModelPickerSheet.swift */; };
 		A1B2C3D4E5F6789012345679 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A2B3C4D5E6F7890A1B2C3D /* SettingsStore.swift */; };
 		A428D3EC1196D7E8CE77FB0D /* ModelDownloadStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC39B390BEA69DE4C8348EB9 /* ModelDownloadStepView.swift */; };
+		5D0A0D5A1E2B3C4D5E6F7A01 /* StartSoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D0A0D5A1E2B3C4D5E6F7A02 /* StartSoundPlayer.swift */; };
 		A9D8C7B6E5F40123456789AB /* AudioDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A60718293A4B5C /* AudioDeviceManager.swift */; };
 		AD95CE8AF12F494FB66DA5EB /* HotkeysSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCE211FE788482E9E1A68F5 /* HotkeysSettingsView.swift */; };
 		AIENHTEST01A2B3C4D5E6F /* AIEnhancementServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AIENHTEST02A2B3C4D5E6F /* AIEnhancementServiceTests.swift */; };
@@ -441,6 +442,7 @@ MODELSPRESENTTESTFILE01A2 /* ModelsPresentationTests.swift */ = {isa = PBXFileRe
 		FLOATFSTRKTESTFILE01A2B3C4D5E6F /* FloatingIndicatorFocusTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingIndicatorFocusTrackerTests.swift; sourceTree = "<group>"; };
 		FLOATTYPETESTFILE01A2B3C4D5 /* FloatingIndicatorTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingIndicatorTypeTests.swift; sourceTree = "<group>"; };
 		NOTCHLAYTESTFILE01A2B3C4D5 /* NotchPanelLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchPanelLayoutTests.swift; sourceTree = "<group>"; };
+		5D0A0D5A1E2B3C4D5E6F7A02 /* StartSoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartSoundPlayer.swift; sourceTree = "<group>"; };
 		B1C2D3E4F5A60718293A4B5C /* AudioDeviceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDeviceManager.swift; sourceTree = "<group>"; };
 		B534B4EDCDB5E72BC73B626F /* ReadyStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadyStepView.swift; sourceTree = "<group>"; };
 		B8642B83DE9F73D4803DE666 /* HotkeySetupStepView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = HotkeySetupStepView.swift; sourceTree = "<group>"; };
@@ -736,6 +738,7 @@ MODELSPRESENTTESTFILE01A2 /* ModelsPresentationTests.swift */ = {isa = PBXFileRe
 			children = (
 				f5b1372d4c0e4e96a1ed0b59 /* AudioRecorder.swift */,
 				B1C2D3E4F5A60718293A4B5C /* AudioDeviceManager.swift */,
+				5D0A0D5A1E2B3C4D5E6F7A02 /* StartSoundPlayer.swift */,
 				6f62938483ec4a11ad5636be /* TranscriptionService.swift */,
 				TRANSGRP01A2B3C4D5E6F /* Transcription */,
 				a2189a034cf447e08e86f24b /* PermissionManager.swift */,
@@ -1418,6 +1421,7 @@ MODELSPRESENTTESTFILE01A2 /* ModelsPresentationTests.swift */ = {isa = PBXFileRe
 				01E366562FAA4505B9775ACB /* PindropApp.swift in Sources */,
 				068e6590ab3f41c7a2a40bbb /* AudioRecorder.swift in Sources */,
 				A9D8C7B6E5F40123456789AB /* AudioDeviceManager.swift in Sources */,
+				5D0A0D5A1E2B3C4D5E6F7A01 /* StartSoundPlayer.swift in Sources */,
 				299088D708924A1D8ECC138D /* HotkeyManager.swift in Sources */,
 				HKCONFLICTBUILD01A2B3C4D5E6 /* HotkeyConflictChecker.swift in Sources */,
 				LAUNCHLOGINMGR01A2B3C4D5E6F /* LaunchAtLoginManager.swift in Sources */,

@@ -1578,3 +1578,13 @@ total:
 tokens:
   in_out: "%@ إدخال / %@ إخراج من الرموز"
   in_out_thinking: "%@ إدخال / %@ إخراج / %@ تفكير من الرموز"
+start_sound_cue:
+  volume: "Volume"
+  title: "Start Sound"
+  subtitle: "Plays when dictation starts"
+  output: "Sound Output"
+  preview: "Preview"
+  soft_chime: "Soft Chime"
+  glass: "Glass"
+  breeze: "Breeze"
+  marimba: "Marimba"

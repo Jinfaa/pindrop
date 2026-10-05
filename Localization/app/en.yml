@@ -1595,3 +1595,13 @@ total:
 tokens:
   in_out: "%@ in / %@ out tokens"
   in_out_thinking: "%@ in / %@ out / %@ thinking tokens"
+start_sound_cue:
+  volume: "Volume"
+  title: "Start Sound"
+  subtitle: "Plays when dictation starts"
+  output: "Sound Output"
+  preview: "Preview"
+  soft_chime: "Soft Chime"
+  glass: "Glass"
+  breeze: "Breeze"
+  marimba: "Marimba"

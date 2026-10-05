@@ -1578,3 +1578,13 @@ total:
 tokens:
   in_out: "%@ इनपुट / %@ आउटपुट टोकन"
   in_out_thinking: "%@ इनपुट / %@ आउटपुट / %@ चिंतन टोकन"
+start_sound_cue:
+  volume: "Volume"
+  title: "Start Sound"
+  subtitle: "Plays when dictation starts"
+  output: "Sound Output"
+  preview: "Preview"
+  soft_chime: "Soft Chime"
+  glass: "Glass"
+  breeze: "Breeze"
+  marimba: "Marimba"

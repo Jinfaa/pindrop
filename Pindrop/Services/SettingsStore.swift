@@ -424,6 +424,12 @@ final class SettingsStore: ObservableObject {
    var automaticDictionaryLearningEnabled: Bool = Defaults.automaticDictionaryLearningEnabled
    @AppStorage("selectedInputDeviceUID", store: SettingsStoreRuntime.appStorageStore)
    var selectedInputDeviceUID: String = Defaults.selectedInputDeviceUID
+   @AppStorage("startSound", store: SettingsStoreRuntime.appStorageStore)
+   var startSoundRawValue: String = StartSound.none.rawValue
+   @AppStorage("startSoundOutputDeviceUID", store: SettingsStoreRuntime.appStorageStore)
+   var startSoundOutputDeviceUID: String = ""
+   @AppStorage("startSoundVolume", store: SettingsStoreRuntime.appStorageStore)
+   var startSoundVolume: Double = 0.5
    @AppStorage("aiEnhancementEnabled", store: SettingsStoreRuntime.appStorageStore)
    var aiEnhancementEnabled: Bool = false
    @AppStorage("aiProvider", store: SettingsStoreRuntime.appStorageStore)
@@ -1174,6 +1180,9 @@ final class SettingsStore: ObservableObject {
       selectedAppLocaleRawValue = Defaults.selectedAppLocale
       selectedLanguage = Defaults.selectedLanguage
       selectedInputDeviceUID = Defaults.selectedInputDeviceUID
+      startSoundRawValue = StartSound.none.rawValue
+      startSoundOutputDeviceUID = ""
+      startSoundVolume = 0.5
       aiEnhancementEnabled = false
       aiEnhancementPrompt = Defaults.aiEnhancementPrompt
       noteEnhancementPrompt = Defaults.noteEnhancementPrompt

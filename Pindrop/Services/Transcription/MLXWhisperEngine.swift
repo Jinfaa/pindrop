@@ -92,9 +92,9 @@ public final class MLXWhisperEngine: TranscriptionEngine, CapabilityReporting {
         do {
             let cache = MLXWhisperModelStore.hubCache(downloadBase: downloadBase)
             if download {
-                model = try await WhisperModel.fromPretrained(name, cache: cache)
+                model = try await MLXWhisperModelStore.loadPretrained(repoID: name, cache: cache)
             } else {
-                let localURL = MLXWhisperModelStore.modelDirectory(for: name, cache: cache)
+                let localURL = MLXWhisperModelStore.modelAssetDirectory(for: name, cache: cache)
                 guard MLXWhisperModelStore.isModelPresent(at: localURL) else {
                     throw EngineError.modelNotFound(name)
                 }
@@ -216,6 +216,10 @@ public final class MLXWhisperEngine: TranscriptionEngine, CapabilityReporting {
 }
 
 enum MLXWhisperModelStore {
+    private static let modelAssetSubdirectories = [
+        "evilfreelancer/whisper-podlodka-turbo-MLX": "fp16"
+    ]
+
     static var modelsBaseURL: URL {
         HubCache.default.cacheDirectory
     }
@@ -243,6 +247,12 @@ enum MLXWhisperModelStore {
             .appendingPathComponent(leaf, isDirectory: true)
     }
 
+    static func modelAssetDirectory(for repoID: String, cache: HubCache = hubCache) -> URL {
+        let directory = modelDirectory(for: repoID, cache: cache)
+        guard let subdirectory = modelAssetSubdirectories[repoID] else { return directory }
+        return directory.appendingPathComponent(subdirectory, isDirectory: true)
+    }
+
     static func isModelPresent(at directory: URL) -> Bool {
         var isDirectory: ObjCBool = false
         guard FileManager.default.fileExists(atPath: directory.path, isDirectory: &isDirectory),
@@ -265,12 +275,12 @@ enum MLXWhisperModelStore {
     static func download(
         repoID: String,
         expectedByteCount: Int64? = nil,
+        cache: HubCache = hubCache,
         progressHandler: (@MainActor @Sendable (Progress) -> Void)? = nil
     ) async throws -> URL {
         guard let id = Repo.ID(rawValue: repoID) else {
             throw MLXWhisperEngine.EngineError.modelNotFound(repoID)
         }
-        let cache = hubCache
         let client = HubClient(cache: cache)
         let progressRef = ProgressObservationBox()
         let report = Progress(totalUnitCount: 1000)
@@ -293,6 +303,20 @@ enum MLXWhisperModelStore {
         defer { poller.cancel() }
 
         do {
+            if let subdirectory = modelAssetSubdirectories[repoID] {
+                let directory = modelDirectory(for: repoID, cache: cache)
+                try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+                _ = try await client.downloadSnapshot(
+                    of: id,
+                    kind: .model,
+                    to: directory,
+                    matching: ["\(subdirectory)/*.safetensors", "\(subdirectory)/*.json"],
+                    progressHandler: { progress in progressRef.progress = progress }
+                )
+                report.completedUnitCount = report.totalUnitCount
+                await progressHandler?(report)
+                return modelAssetDirectory(for: repoID, cache: cache)
+            }
             let url = try await ModelUtils.resolveOrDownloadModel(
                 client: client,
                 cache: cache,
@@ -312,8 +336,9 @@ enum MLXWhisperModelStore {
         }
     }
 
-    static func loadPretrained(repoID: String) async throws -> WhisperModel {
-        try await WhisperModel.fromPretrained(repoID, cache: hubCache)
+    static func loadPretrained(repoID: String, cache: HubCache = hubCache) async throws -> WhisperModel {
+        let directory = try await download(repoID: repoID, cache: cache)
+        return try await WhisperModel.fromDirectory(directory, cache: cache)
     }
 
     static func resolvedDownloadFraction(

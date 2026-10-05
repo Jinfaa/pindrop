@@ -488,6 +488,7 @@ final class AppCoordinator {
     
     let permissionManager: PermissionManager
     let audioRecorder: AudioRecorder
+    private let startSoundPlayer = StartSoundPlayer()
     let transcriptionService: TranscriptionService
     let modelManager: ModelManager
     let aiEnhancementService: AIEnhancementService
@@ -3297,6 +3298,14 @@ final class AppCoordinator {
         // Retention encodes a native-rate copy so kept audio isn't the 16 kHz ASR feed.
         audioRecorder.retainNativeAudioForSession =
             settingsStore.dictationAudioRetention != .off
+
+        if let sound = StartSound(rawValue: settingsStore.startSoundRawValue) {
+            startSoundPlayer.play(
+                sound,
+                outputDeviceUID: settingsStore.startSoundOutputDeviceUID,
+                volume: settingsStore.startSoundVolume
+            )
+        }
 
         let didStartRecording: Bool
         do {

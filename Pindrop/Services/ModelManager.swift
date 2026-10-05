@@ -37,6 +37,11 @@ class ModelManager {
         "mlx-community/parakeet-tdt-0.6b-v3"
     ]
 
+    nonisolated static let russianRecommendedMLXModelNames = multilingualRecommendedMLXModelNames + [
+        "valtu4a/whisper-large-v3-russian-mlx",
+        "evilfreelancer/whisper-podlodka-turbo-MLX"
+    ]
+
     nonisolated static let englishRecommendedLegacyModelNames = [
         "apple_speech_on_device",
         "openai_whisper-base.en",
@@ -640,6 +645,24 @@ class ModelManager {
             language: .multilingual
         ),
         WhisperModel(
+            name: "valtu4a/whisper-large-v3-russian-mlx",
+            displayName: "Whisper Large v3 (Russian)",
+            sizeInMB: 3080,
+            description: "Russian-optimized Whisper Large v3 for high-accuracy transcription",
+            speedRating: 5.0,
+            accuracyRating: 9.8,
+            language: .multilingual
+        ),
+        WhisperModel(
+            name: "evilfreelancer/whisper-podlodka-turbo-MLX",
+            displayName: "Whisper Podlodka Turbo (Russian)",
+            sizeInMB: 1614,
+            description: "Russian-optimized Whisper Turbo for fast, accurate transcription",
+            speedRating: 8.5,
+            accuracyRating: 9.3,
+            language: .multilingual
+        ),
+        WhisperModel(
             name: "mlx-community/whisper-large-v3-turbo",
             displayName: "Whisper Large v3 Turbo",
             sizeInMB: 1600,
@@ -850,7 +873,9 @@ class ModelManager {
         switch language {
         case .english:
             recommendedModelNames = useMLX ? Self.englishRecommendedMLXModelNames : Self.englishRecommendedLegacyModelNames
-        case .automatic, .russian, .ukrainian, .simplifiedChinese, .spanish, .french, .german, .turkish, .japanese, .portugueseBrazil, .italian, .dutch, .korean, .hindi, .malayalam, .polish:
+        case .russian:
+            recommendedModelNames = useMLX ? Self.russianRecommendedMLXModelNames : Self.multilingualRecommendedLegacyModelNames
+        case .automatic, .ukrainian, .simplifiedChinese, .spanish, .french, .german, .turkish, .japanese, .portugueseBrazil, .italian, .dutch, .korean, .hindi, .malayalam, .polish:
             recommendedModelNames = useMLX ? Self.multilingualRecommendedMLXModelNames : Self.multilingualRecommendedLegacyModelNames
         }
 
@@ -923,7 +948,7 @@ class ModelManager {
     private func localModelPath(for model: WhisperModel) -> URL? {
         switch model.provider {
         case .mlxWhisper, .mlxParakeet, .mlxQwen3:
-            return MLXWhisperModelStore.modelDirectory(for: model.name)
+            return MLXWhisperModelStore.modelAssetDirectory(for: model.name)
         case .whisperKit:
             return whisperKitModelsURL.appendingPathComponent(model.name, isDirectory: true)
         case .parakeet:

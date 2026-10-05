@@ -14,6 +14,8 @@ struct DictationSettingsView: View {
     @Environment(\.locale) private var locale
     @Environment(\.modelContext) private var modelContext
     @State private var availableInputDevices: [AudioInputDevice] = []
+    @State private var availableOutputDevices: [AudioInputDevice] = []
+    @State private var soundPreview = StartSoundPlayer()
     @State private var profiles: [ParticipantProfile] = []
     @State private var diskUsage = DictationAudioDiskUsage(totalBytes: 0, snippetCount: 0)
     @State private var editingProfile: ParticipantProfile?
@@ -72,6 +74,71 @@ struct DictationSettingsView: View {
                             )
                         }
                         .buttonStyle(.plain)
+                    }
+                }
+            }
+
+            // Start sound
+            SettingsGroupCard {
+                SettingsRow(showSeparator: true) {
+                    SettingsRowLabel(
+                        title: localized("Start Sound", locale: locale),
+                        subtitle: localized("Plays when dictation starts", locale: locale)
+                    )
+                } control: {
+                    Menu {
+                        ForEach(StartSound.allCases) { sound in
+                            Button(localized(sound.title, locale: locale)) {
+                                settings.startSoundRawValue = sound.rawValue
+                                previewStartSound(sound)
+                            }
+                        }
+                    } label: {
+                        SettingsMenuButton(title: localized(selectedStartSound.title, locale: locale))
+                    }
+                    .menuStyle(.borderlessButton)
+                    .menuIndicator(.hidden)
+                    .accessibilityIdentifier("settings.picker.startSound")
+                }
+
+                SettingsRow(showSeparator: true) {
+                    SettingsRowLabel(title: localized("Volume", locale: locale))
+                } control: {
+                    Slider(value: $settings.startSoundVolume, in: 0...1) { editing in
+                        if !editing { previewStartSound(selectedStartSound) }
+                    }
+                    .frame(width: 180)
+                    .disabled(selectedStartSound == .none)
+                    .accessibilityIdentifier("settings.slider.startSoundVolume")
+                }
+
+                SettingsRow(showSeparator: false) {
+                    SettingsRowLabel(title: localized("Sound Output", locale: locale))
+                } control: {
+                    HStack(spacing: 8) {
+                        Menu {
+                            Button(localized("System Default", locale: locale)) {
+                                settings.startSoundOutputDeviceUID = ""
+                            }
+                            ForEach(availableOutputDevices) { device in
+                                Button(device.name) {
+                                    settings.startSoundOutputDeviceUID = device.uid
+                                }
+                            }
+                        } label: {
+                            SettingsMenuButton(title: selectedOutputLabel)
+                        }
+                        .menuStyle(.borderlessButton)
+                        .menuIndicator(.hidden)
+                        .accessibilityIdentifier("settings.picker.startSoundOutput")
+
+                        Button {
+                            previewStartSound(selectedStartSound)
+                        } label: {
+                            SettingsMenuButton(title: localized("Preview", locale: locale), showsChevron: false)
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(selectedStartSound == .none)
                     }
                 }
             }
@@ -366,6 +433,26 @@ struct DictationSettingsView: View {
         )
     }
 
+    private func previewStartSound(_ sound: StartSound) {
+        soundPreview.play(
+            sound,
+            outputDeviceUID: settings.startSoundOutputDeviceUID,
+            volume: settings.startSoundVolume
+        )
+    }
+
+    private var selectedStartSound: StartSound {
+        StartSound(rawValue: settings.startSoundRawValue) ?? .none
+    }
+
+    private var selectedOutputLabel: String {
+        if settings.startSoundOutputDeviceUID.isEmpty {
+            return localized("System Default", locale: locale)
+        }
+        return availableOutputDevices.first { $0.uid == settings.startSoundOutputDeviceUID }?.name
+            ?? localized("Unavailable device", locale: locale)
+    }
+
     private var selectedMicrophoneLabel: String {
         if settings.selectedInputDeviceUID.isEmpty {
             return localized("System Default", locale: locale)
@@ -405,6 +492,7 @@ struct DictationSettingsView: View {
 
     private func refreshInputDevices() {
         availableInputDevices = AudioDeviceManager.inputDevices()
+        availableOutputDevices = AudioDeviceManager.outputDevices()
     }
 
     private func normalizeRecordingAudioOptions() {

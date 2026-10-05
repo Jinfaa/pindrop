@@ -23,6 +23,8 @@ struct ModelManagerTests {
         #expect(models.contains { $0.name == "mlx-community/whisper-base-mlx" })
         #expect(models.contains { $0.name == "mlx-community/whisper-small-mlx" })
         #expect(models.contains { $0.name == "mlx-community/whisper-large-v3-mlx" })
+        #expect(models.contains { $0.name == "valtu4a/whisper-large-v3-russian-mlx" })
+        #expect(models.contains { $0.name == "evilfreelancer/whisper-podlodka-turbo-MLX" })
         #expect(models.contains { $0.name == "mlx-community/whisper-large-v3-turbo" })
         #expect(models.contains { $0.name == "mlx-community/whisper-medium-mlx" })
         #expect(models.contains { $0.name == "mlx-community/whisper-base.en-mlx" })
@@ -42,6 +44,12 @@ struct ModelManagerTests {
     @Test func multilingualRecommendationsPreferWhisperMultilingualModels() {
         let recommendedModelNames = modelManager.recommendedModels(for: .spanish).map(\.name)
         #expect(recommendedModelNames == ModelManager.multilingualRecommendedModelNames)
+    }
+
+    @Test func russianRecommendationsIncludeRussianOptimizedWhisperModel() {
+        let recommendedModelNames = modelManager.recommendedModels(for: .russian).map(\.name)
+        #expect(recommendedModelNames.contains("valtu4a/whisper-large-v3-russian-mlx"))
+        #expect(recommendedModelNames.contains("evilfreelancer/whisper-podlodka-turbo-MLX"))
     }
 
     @Test func modelSizes() {

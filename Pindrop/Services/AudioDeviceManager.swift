@@ -51,6 +51,72 @@ enum AudioDeviceManager {
         }
     }
     
+    /// Output devices, reusing `AudioInputDevice` as a generic device descriptor; `isDefault` is always false.
+    static func outputDevices() -> [AudioInputDevice] {
+        deviceIDs()
+            .filter { channelCount($0, scope: kAudioDevicePropertyScopeOutput) > 0 }
+            .compactMap { deviceID in
+                let uid = deviceUID(deviceID)
+                guard !uid.isEmpty else { return nil }
+                let name = deviceName(deviceID)
+                return AudioInputDevice(deviceID: deviceID, uid: uid, name: name.isEmpty ? uid : name, isDefault: false)
+            }
+            .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+    }
+
+    static func outputDeviceID(for uid: String) -> AudioDeviceID? {
+        deviceIDs().first { deviceUID($0) == uid }
+    }
+
+    static func isOutputMuted(_ deviceID: AudioDeviceID) -> Bool {
+        var address = AudioObjectPropertyAddress(
+            mSelector: kAudioDevicePropertyMute,
+            mScope: kAudioDevicePropertyScopeOutput,
+            mElement: kAudioObjectPropertyElementMain
+        )
+        var muted: UInt32 = 0
+        var size = UInt32(MemoryLayout<UInt32>.size)
+        return AudioObjectGetPropertyData(deviceID, &address, 0, nil, &size, &muted) == noErr && muted != 0
+    }
+
+    static func outputVolume(_ deviceID: AudioDeviceID) -> Float? {
+        var address = AudioObjectPropertyAddress(
+            mSelector: kAudioDevicePropertyVolumeScalar,
+            mScope: kAudioDevicePropertyScopeOutput,
+            mElement: kAudioObjectPropertyElementMain
+        )
+        var volume: Float32 = 0
+        var size = UInt32(MemoryLayout<Float32>.size)
+        guard AudioObjectGetPropertyData(deviceID, &address, 0, nil, &size, &volume) == noErr else { return nil }
+        return volume
+    }
+
+    static func setOutputVolume(_ deviceID: AudioDeviceID, _ volume: Float) {
+        var address = AudioObjectPropertyAddress(
+            mSelector: kAudioDevicePropertyVolumeScalar,
+            mScope: kAudioDevicePropertyScopeOutput,
+            mElement: kAudioObjectPropertyElementMain
+        )
+        var value = Float32(volume)
+        let status = AudioObjectSetPropertyData(deviceID, &address, 0, nil, UInt32(MemoryLayout<Float32>.size), &value)
+        if status != noErr {
+            Log.audio.error("Failed to set volume on output device \(deviceID): \(status)")
+        }
+    }
+
+    static func setOutputMuted(_ deviceID: AudioDeviceID, _ muted: Bool) {
+        var address = AudioObjectPropertyAddress(
+            mSelector: kAudioDevicePropertyMute,
+            mScope: kAudioDevicePropertyScopeOutput,
+            mElement: kAudioObjectPropertyElementMain
+        )
+        var value: UInt32 = muted ? 1 : 0
+        let status = AudioObjectSetPropertyData(deviceID, &address, 0, nil, UInt32(MemoryLayout<UInt32>.size), &value)
+        if status != noErr {
+            Log.audio.error("Failed to set mute on output device \(deviceID): \(status)")
+        }
+    }
+
     static func inputDeviceID(for uid: String?) -> AudioDeviceID? {
         guard let uid = uid, !uid.isEmpty else { return nil }
         for deviceID in deviceIDs() {
@@ -180,9 +246,13 @@ enum AudioDeviceManager {
     }
     
     private static func inputChannelCount(_ deviceID: AudioDeviceID) -> Int {
+        channelCount(deviceID, scope: kAudioDevicePropertyScopeInput)
+    }
+
+    private static func channelCount(_ deviceID: AudioDeviceID, scope: AudioObjectPropertyScope) -> Int {
         var address = AudioObjectPropertyAddress(
             mSelector: AudioObjectPropertySelector(kAudioDevicePropertyStreamConfiguration),
-            mScope: AudioObjectPropertyScope(kAudioDevicePropertyScopeInput),
+            mScope: scope,
             mElement: AudioObjectPropertyElement(kAudioObjectPropertyElementMain)
         )
         
