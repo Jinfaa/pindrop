@@ -77,8 +77,6 @@ api:
   key: "Khóa API"
   key_saved: "Đã lưu khóa API"
   key_saved_endpoint: "Đã lưu khóa API • Điểm cuối: %@"
-app:
-  info_acknowledgments_support_and_logs: "Thông tin ứng dụng, xác nhận, hỗ trợ và nhật ký"
 appearance:
   _self: "Giao diện"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "Đầu vào âm thanh"
 automatic:
   follow_system: "Tự động (Theo hệ thống)"
-  updates_and_manual_update_checks: "Cập nhật tự động và kiểm tra cập nhật thủ công"
 automatically:
-  check_for_new_versions_in_the_back: "Tự động kiểm tra các phiên bản mới trong nền."
   start_pindrop_when_you_sign_in: "Tự động khởi động Pindrop khi bạn đăng nhập."
 available:
   models: "Các mẫu có sẵn"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "Thay đổi micrô"
 changes:
   the_language_used_by_pindrop_s_interface: "Changes the language used by Pindrop's interface."
-check:
-  for_updates: "Kiểm tra cập nhật..."
 checking:
   _self: "Đang kiểm tra..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "Sao chép nâng cao"
   last_transcript: "Sao chép bản ghi cuối cùng"
   original: "Sao chép bản gốc"
-  system_info_for_bug_report: "Sao chép thông tin hệ thống để báo cáo lỗi"
-  the_configuration_snippet_into_your_preferr: "Copy the configuration snippet into your preferred AI agent host."
   the_most_recent_transcript_to_the_clipboard: "Sao chép bản ghi gần đây nhất vào bảng nhớ tạm"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Copy the most recent transcript to the clipboard."
   to_clipboard: "Sao chép vào bảng nhớ tạm"
@@ -524,9 +516,6 @@ items:
   _self: "mặt hàng"
 japanese:
   _self: "tiếng Nhật"
-keep:
-  pindrop_current_automatically_or_check_for: "Keep Pindrop current automatically, or check for a new version now."
-  pindrop_current_automatically_or_trigger_a: "Tự động cập nhật Pindrop hoặc kích hoạt kiểm tra thủ công bất cứ khi nào bạn muốn."
 key:
   _self: "#%@"
   a979ef10: "null"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "Manage Presets…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "Kiểm tra thủ công các phiên bản mới ngay bây giờ."
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "Chưa có phiên âm"
   vocabulary_words: "Không có từ vựng"
   transcripts_audio_prompts_file_names_or_perso: "Không có bản phiên âm, âm thanh, lời nhắc, tên tệp hay nội dung cá nhân — không bao giờ."
-  contributions_yet_pairs_are_stored_when_ai_en: "Chưa có đóng góp nào. Các cặp được lưu khi cải thiện bằng AI hoặc chỉnh sửa thủ công thay đổi một bản phiên âm."
 not:
   assigned: "Chưa được chỉ định"
   enough_voice_data_yet: "Not enough voice data yet"
@@ -826,8 +812,6 @@ please:
     Vào Cài đặt → Kiểu máy để tải xuống kiểu máy.
   download_a_whisper_model_in_settings_befo_34e8a33c: "Vui lòng tải xuống mô hình Whisper trong Cài đặt trước khi ghi.nnVào Cài đặt → Mô hình để tải xuống mô hình."
   wait: "Vui lòng chờ..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Port changes take effect the next time the server starts."
 portuguese:
   brazil: "Tiếng Bồ Đào Nha (Brazil)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "Thử lại"
 right:
   _self: "Phải"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Run a local HTTP server so AI agents can submit transcription jobs, search history, and manage speakers."
 runtime:
   _self: "Thời gian chạy: %@"
   status: "Trạng thái runtime"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "Tạm dừng phát lại phương tiện đang hoạt động trong khi đang ghi chính tả."
 tertiary:
   text: "Văn bản cấp ba"
-thanks:
-  to_for_investigating_and_kicking_off_the: "Cảm ơn %@ đã điều tra và khởi đầu bản sửa lỗi (PR #64)."
-  to_for_the_contribution_pr_61: "Cảm ơn %@ vì đóng góp (PR #61)."
 the:
   floating_indicator_is_hidden: "Chỉ báo nổi đang bị ẩn."
   model_failed_to_load_within_60_seconds_this: "\"\" Mô hình không tải được trong vòng 60 giây. Điều này thường có nghĩa là các tệp mô hình bị hỏng hoặc không tương thích.                          Để khắc phục điều này: 1. Mở Cài đặt → Kiểu máy 2. Xóa mô hình có vấn đề 3. Tải lại mô hình xuống Nếu sự cố vẫn tiếp diễn, hãy thử một mô hình nhỏ hơn (Tiny hoặc Base).             \"\""

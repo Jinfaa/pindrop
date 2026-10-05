@@ -77,8 +77,6 @@ api:
   key: "API 키"
   key_saved: "API 키가 저장되었습니다"
   key_saved_endpoint: "API 키가 저장되었습니다. • 엔드포인트: %@"
-app:
-  info_acknowledgments_support_and_logs: "앱 정보, 승인, 지원 및 로그"
 appearance:
   _self: "모양"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "오디오 입력"
 automatic:
   follow_system: "자동(추종 시스템)"
-  updates_and_manual_update_checks: "자동 업데이트 및 수동 업데이트 확인"
 automatically:
-  check_for_new_versions_in_the_back: "백그라운드에서 새 버전을 자동으로 확인합니다."
   start_pindrop_when_you_sign_in: "로그인하면 Pindrop이 자동으로 시작됩니다."
 available:
   models: "사용 가능한 모델"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "마이크 변경"
 changes:
   the_language_used_by_pindrop_s_interface: "Pindrop 인터페이스 언어를 변경합니다."
-check:
-  for_updates: "업데이트 확인..."
 checking:
   _self: "확인 중..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "향상된 복사"
   last_transcript: "마지막 성적표 복사"
   original: "원본 복사"
-  system_info_for_bug_report: "버그 신고를 위한 시스템 정보 복사"
-  the_configuration_snippet_into_your_preferr: "구성 스니펫을 선호하는 AI 에이전트 호스트에 복사하세요."
   the_most_recent_transcript_to_the_clipboard: "가장 최근의 성적표를 클립보드에 복사하세요."
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "가장 최근 전사 내용을 클립보드에 복사합니다."
   to_clipboard: "클립보드에 복사"
@@ -524,9 +516,6 @@ items:
   _self: "아이템"
 japanese:
   _self: "일본어"
-keep:
-  pindrop_current_automatically_or_check_for: "Pindrop을 자동으로 최신 상태로 유지하거나 지금 새 버전을 확인합니다."
-  pindrop_current_automatically_or_trigger_a: "Pindrop을 자동으로 최신 상태로 유지하거나 원할 때마다 수동 검사를 실행하세요."
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "프리셋 관리…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "지금 새 버전을 수동으로 확인하세요."
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "아직 스크립트가 없습니다."
   vocabulary_words: "어휘 없음"
   transcripts_audio_prompts_file_names_or_perso: "전사, 오디오, 프롬프트, 파일 이름, 개인 콘텐츠는 결코 포함되지 않습니다."
-  contributions_yet_pairs_are_stored_when_ai_en: "아직 기여가 없습니다. AI 향상 또는 수동 편집이 전사를 변경하면 쌍이 저장됩니다."
 not:
   assigned: "할당되지 않음"
   enough_voice_data_yet: "아직 음성 데이터가 부족합니다"
@@ -826,8 +812,6 @@ please:
     설정 → 모델로 이동하여 모델을 다운로드하세요.
   download_a_whisper_model_in_settings_befo_34e8a33c: "녹음하기 전에 설정에서 Whisper 모델을 다운로드하세요.nn모델을 다운로드하려면 설정 → 모델로 이동하세요."
   wait: "기다리세요..."
-port:
-  changes_take_effect_the_next_time_the_serve: "포트 변경은 다음 서버 시작 시 적용됩니다."
 portuguese:
   brazil: "포르투갈어(브라질)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "다시 해 보다"
 right:
   _self: "오른쪽"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "AI 에이전트가 전사 작업을 제출하고 기록을 검색하며 화자를 관리할 수 있도록 로컬 HTTP 서버를 실행합니다."
 runtime:
   _self: "런타임: %@"
   status: "런타임 상태"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "받아쓰기가 녹음되는 동안 활성 미디어 재생을 일시적으로 일시 중지합니다."
 tertiary:
   text: "3차 텍스트"
-thanks:
-  to_for_investigating_and_kicking_off_the: "문제를 조사하고 수정의 출발점을 마련해 준 %@님께 감사드립니다 (PR #64)."
-  to_for_the_contribution_pr_61: "기여해 준 %@님께 감사드립니다 (PR #61)."
 the:
   floating_indicator_is_hidden: "플로팅 표시기가 숨겨져 있습니다."
   model_failed_to_load_within_60_seconds_this: "\"\" 60초 이내에 모델을 불러오지 못했습니다. 이는 일반적으로 모델 파일이 손상되었거나 호환되지 않음을 의미합니다.                          이 문제를 해결하려면: 1. 설정 → 모델을 엽니다. 2. 문제가 있는 모델을 삭제합니다. 3. 모델을 다시 다운로드합니다. 문제가 지속되면 더 작은 모델(Tiny 또는 Base)을 사용해 보십시오.             \"\""

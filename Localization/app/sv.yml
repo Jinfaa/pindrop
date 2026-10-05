@@ -77,8 +77,6 @@ api:
   key: "API-nyckel"
   key_saved: "API-nyckel sparad"
   key_saved_endpoint: "API-nyckel sparad • Slutpunkt: %@"
-app:
-  info_acknowledgments_support_and_logs: "Appinformation, bekräftelser, support och loggar"
 appearance:
   _self: "Utseende"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "Ljudingång"
 automatic:
   follow_system: "Automatisk (följ systemet)"
-  updates_and_manual_update_checks: "Automatiska uppdateringar och manuella uppdateringskontroller"
 automatically:
-  check_for_new_versions_in_the_back: "Sök automatiskt efter nya versioner i bakgrunden."
   start_pindrop_when_you_sign_in: "Starta Pindrop automatiskt när du loggar in."
 available:
   models: "Tillgängliga modeller"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "Byt mikrofon"
 changes:
   the_language_used_by_pindrop_s_interface: "Changes the language used by Pindrop's interface."
-check:
-  for_updates: "Sök efter uppdateringar..."
 checking:
   _self: "Kontroll..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "Kopiera förbättrad"
   last_transcript: "Kopiera sista avskriften"
   original: "Kopiera original"
-  system_info_for_bug_report: "Kopiera systeminformation för felrapport"
-  the_configuration_snippet_into_your_preferr: "Copy the configuration snippet into your preferred AI agent host."
   the_most_recent_transcript_to_the_clipboard: "Kopiera den senaste utskriften till urklippet"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Copy the most recent transcript to the clipboard."
   to_clipboard: "Kopiera till urklipp"
@@ -524,9 +516,6 @@ items:
   _self: "föremål"
 japanese:
   _self: "japanska"
-keep:
-  pindrop_current_automatically_or_check_for: "Keep Pindrop current automatically, or check for a new version now."
-  pindrop_current_automatically_or_trigger_a: "Håll Pindrop aktuell automatiskt eller utlös en manuell kontroll när du vill."
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "Manage Presets…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "Kontrollera manuellt efter nya versioner nu."
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "Inga transkriptioner ännu"
   vocabulary_words: "Inga ordförråd"
   transcripts_audio_prompts_file_names_or_perso: "Inga transkriptioner, ljud, prompter, filnamn eller personligt innehåll — aldrig."
-  contributions_yet_pairs_are_stored_when_ai_en: "Inga bidrag ännu. Par lagras när AI-förbättring eller manuella redigeringar ändrar en transkription."
 not:
   assigned: "Ej tilldelad"
   enough_voice_data_yet: "Not enough voice data yet"
@@ -826,8 +812,6 @@ please:
     Gå till Inställningar → Modeller för att ladda ner en modell.
   download_a_whisper_model_in_settings_befo_34e8a33c: "Ladda ner en Whisper-modell i Inställningar före inspelning.nnGå till Inställningar → Modeller för att ladda ner en modell."
   wait: "Vänligen vänta..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Port changes take effect the next time the server starts."
 portuguese:
   brazil: "portugisiska (Brasilien)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "Försöka igen"
 right:
   _self: "Rätt"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Run a local HTTP server so AI agents can submit transcription jobs, search history, and manage speakers."
 runtime:
   _self: "Körtid: %@"
   status: "Körningsstatus"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "Pausa aktiv mediauppspelning tillfälligt medan diktering spelas in."
 tertiary:
   text: "Tertiär text"
-thanks:
-  to_for_investigating_and_kicking_off_the: "Tack till %@ för undersökningen och starten på korrigeringen (PR #64)."
-  to_for_the_contribution_pr_61: "Tack till %@ för bidraget (PR #61)."
 the:
   floating_indicator_is_hidden: "Den flytande indikatorn är dold."
   model_failed_to_load_within_60_seconds_this: "\"\" Modellen kunde inte laddas inom 60 sekunder. Detta betyder vanligtvis att modellfilerna är skadade eller inkompatibla.                          För att åtgärda detta: 1. Öppna Inställningar → Modeller 2. Ta bort den problematiska modellen 3. Ladda ner modellen igen Om problemet kvarstår, prova en mindre modell (Tiny eller Base).             \"\""

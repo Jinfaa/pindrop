@@ -83,8 +83,6 @@ api:
   key: "Klucz API"
   key_saved: "Klucz API został zapisany"
   key_saved_endpoint: "Klucz API został zapisany • Punkt końcowy: %@"
-app:
-  info_acknowledgments_support_and_logs: "Informacje o aplikacji, podziękowania, pomoc i dzienniki"
 appearance:
   _self: "Wygląd"
 append:
@@ -106,9 +104,7 @@ audio:
   input: "Wejście audio"
 automatic:
   follow_system: "Automatyczny (zgodnie z systemem)"
-  updates_and_manual_update_checks: "Automatyczne aktualizacje i ręczne sprawdzanie aktualizacji"
 automatically:
-  check_for_new_versions_in_the_back: "Automatycznie sprawdzaj dostępność nowych wersji w tle."
   start_pindrop_when_you_sign_in: "Automatycznie uruchamiaj Pindrop po zalogowaniu się."
 available:
   models: "Dostępne modele"
@@ -148,8 +144,6 @@ change:
   microphone_ac9970f4: "Zmień mikrofon"
 changes:
   the_language_used_by_pindrop_s_interface: "Zmienia język interfejsu Pindropa."
-check:
-  for_updates: "Sprawdź aktualizacje..."
 checking:
   _self: "Sprawdzanie…"
 choose:
@@ -229,8 +223,6 @@ copy:
   enhanced: "Kopiuj ulepszoną wersję"
   last_transcript: "Skopiuj ostatnią transkrypcję"
   original: "Kopiuj oryginał"
-  system_info_for_bug_report: "Skopiuj informacje o systemie do raportu o błędach"
-  the_configuration_snippet_into_your_preferr: "Skopiuj fragment konfiguracji do wybranego hosta agenta AI."
   the_most_recent_transcript_to_the_clipboard: "Skopiuj najnowszą transkrypcję do schowka"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Kopiuj najnowszą transkrypcję do schowka."
   to_clipboard: "Skopiuj do schowka"
@@ -533,9 +525,6 @@ items:
   _self: "elementy"
 japanese:
   _self: "japoński"
-keep:
-  pindrop_current_automatically_or_check_for: "Utrzymuj Pindrop na bieżąco automatycznie lub sprawdź teraz dostępność nowej wersji."
-  pindrop_current_automatically_or_trigger_a: "Automatycznie aktualizuj Pindrop lub uruchamiaj ręczne sprawdzanie, kiedy tylko chcesz."
 key:
   _self: "#%@"
   a979ef10: "Brak"
@@ -623,8 +612,6 @@ manage:
   presets_d5d4c2c2: "Zarządzaj ustawieniami wstępnymi…"
 manual:
   capture: "Ręczne przechwytywanie"
-manually:
-  check_for_new_versions_now: "Sprawdź teraz ręcznie dostępność nowych wersji."
 markdown:
   md: "Markdown (.md)"
 may:
@@ -713,7 +700,6 @@ no:
   transcriptions_yet: "Nie ma jeszcze transkrypcji"
   vocabulary_words: "Brak słów ze słownika"
   transcripts_audio_prompts_file_names_or_perso: "Żadnych transkrypcji, dźwięku, promptów, nazw plików ani treści osobistych — nigdy."
-  contributions_yet_pairs_are_stored_when_ai_en: "Brak wkładów. Pary są zapisywane, gdy ulepszanie przez AI lub ręczne zmiany zmodyfikują transkrypcję."
 not:
   assigned: "Nieprzypisane"
   enough_voice_data_yet: "Za mało danych głosowych"
@@ -856,8 +842,6 @@ please:
     
     Przejdź do sekcji Ustawienia → Modele, aby pobrać model.
   wait: "Proszę czekać..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Zmiany portu zaczną obowiązywać przy następnym uruchomieniu serwera."
 portuguese:
   brazil: "portugalski (Brazylia)"
 powered:
@@ -1006,8 +990,6 @@ retry:
   _self: "Spróbuj ponownie"
 right:
   _self: "Prawy"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Uruchom lokalny serwer HTTP, aby agenci AI mogli przesyłać zadania transkrypcji, przeszukiwać historię i zarządzać mówcami."
 runtime:
   _self: "Czas wykonania: %@"
   status: "Status środowiska"
@@ -1170,9 +1152,6 @@ temporarily:
   pause_active_media_playback_while_di: "Tymczasowo wstrzymuj aktywne odtwarzanie multimediów podczas nagrywania dyktowania."
 tertiary:
   text: "Tekst trzeciorzędny"
-thanks:
-  to_for_investigating_and_kicking_off_the: "Dziękujemy %@ za zbadanie problemu i rozpoczęcie poprawki (PR #64)."
-  to_for_the_contribution_pr_61: "Dziękujemy %@ za wkład (PR #61)."
 the:
   floating_indicator_is_hidden: "Pływający wskaźnik jest ukryty."
   model_failed_to_load_within_60_seconds_this: |-

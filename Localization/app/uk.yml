@@ -77,8 +77,6 @@ api:
   key: "Ключ API"
   key_saved: "Ключ API збережено"
   key_saved_endpoint: "Ключ API збережено • Кінцева точка: %@"
-app:
-  info_acknowledgments_support_and_logs: "Інформація про програму, подяки, підтримка та журнали"
 appearance:
   _self: "Вигляд"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "Аудіо вхід"
 automatic:
   follow_system: "Автоматично (за системою)"
-  updates_and_manual_update_checks: "Автоматичне оновлення та перевірка оновлень вручну"
 automatically:
-  check_for_new_versions_in_the_back: "Автоматично перевіряти наявність нових версій у фоновому режимі."
   start_pindrop_when_you_sign_in: "Автоматично запускати Pindrop під час входу."
 available:
   models: "Доступні моделі"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "Змінити мікрофон"
 changes:
   the_language_used_by_pindrop_s_interface: "Changes the language used by Pindrop's interface."
-check:
-  for_updates: "Перевірити наявність оновлень..."
 checking:
   _self: "Перевірка..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "Покращене копіювання"
   last_transcript: "Копіювати останню транскрипцію"
   original: "Копія Оригінал"
-  system_info_for_bug_report: "Копіювати інформацію про систему для звіту про помилку"
-  the_configuration_snippet_into_your_preferr: "Copy the configuration snippet into your preferred AI agent host."
   the_most_recent_transcript_to_the_clipboard: "Скопіюйте останню розшифровку в буфер обміну"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Copy the most recent transcript to the clipboard."
   to_clipboard: "Копіювати в буфер обміну"
@@ -524,9 +516,6 @@ items:
   _self: "елементи"
 japanese:
   _self: "Японський"
-keep:
-  pindrop_current_automatically_or_check_for: "Keep Pindrop current automatically, or check for a new version now."
-  pindrop_current_automatically_or_trigger_a: "Автоматично підтримуйте Pindrop актуальним або запустіть перевірку вручну, коли забажаєте."
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "Manage Presets…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "Перевірте наявність нових версій вручну."
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "Транскрипцій ще немає"
   vocabulary_words: "Немає словникових слів"
   transcripts_audio_prompts_file_names_or_perso: "Жодних транскрипцій, аудіо, промптів, імен файлів чи особистого вмісту — ніколи."
-  contributions_yet_pairs_are_stored_when_ai_en: "Ще немає внесків. Пари зберігаються, коли покращення за допомогою AI або ручні редагування змінюють транскрипцію."
 not:
   assigned: "Не призначено"
   enough_voice_data_yet: "Not enough voice data yet"
@@ -826,8 +812,6 @@ please:
     Перейдіть до Налаштування → Моделі, щоб завантажити модель.
   download_a_whisper_model_in_settings_befo_34e8a33c: "Будь ласка, завантажте модель Whisper у налаштуваннях перед записом.nnПерейдіть у налаштування → Моделі, щоб завантажити модель."
   wait: "Будь ласка, зачекайте..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Port changes take effect the next time the server starts."
 portuguese:
   brazil: "португальська (Бразилія)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "Повторіть спробу"
 right:
   _self: "правильно"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Run a local HTTP server so AI agents can submit transcription jobs, search history, and manage speakers."
 runtime:
   _self: "Тривалість: %@"
   status: "Стан виконання"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "Тимчасово призупинити активне відтворення медіа під час запису диктування."
 tertiary:
   text: "Третинний текст"
-thanks:
-  to_for_investigating_and_kicking_off_the: "Дякуємо %@ за розслідування та початок виправлення (PR #64)."
-  to_for_the_contribution_pr_61: "Дякуємо %@ за внесок (PR #61)."
 the:
   floating_indicator_is_hidden: "Плаваючий індикатор приховано."
   model_failed_to_load_within_60_seconds_this: "\"\" Модель не вдалося завантажити протягом 60 секунд. Зазвичай це означає, що файли моделі пошкоджені або несумісні.                          Щоб виправити це: 1. Відкрийте «Параметри» → «Моделі» 2. Видаліть проблемну модель 3. Повторно завантажте модель. Якщо проблема не зникає, спробуйте меншу модель (Tiny або Base).             \"\""

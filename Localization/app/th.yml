@@ -77,8 +77,6 @@ api:
   key: "คีย์ API"
   key_saved: "บันทึกคีย์ API แล้ว"
   key_saved_endpoint: "บันทึกคีย์ API แล้ว • จุดสิ้นสุด: %@"
-app:
-  info_acknowledgments_support_and_logs: "ข้อมูลแอป การรับทราบ การสนับสนุน และบันทึก"
 appearance:
   _self: "รูปลักษณ์"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "อินพุตเสียง"
 automatic:
   follow_system: "อัตโนมัติ (ติดตามระบบ)"
-  updates_and_manual_update_checks: "การอัปเดตอัตโนมัติและการตรวจสอบการอัปเดตด้วยตนเอง"
 automatically:
-  check_for_new_versions_in_the_back: "ตรวจสอบเวอร์ชันใหม่ในเบื้องหลังโดยอัตโนมัติ"
   start_pindrop_when_you_sign_in: "เริ่ม Pindrop โดยอัตโนมัติเมื่อคุณลงชื่อเข้าใช้"
 available:
   models: "รุ่นที่มีจำหน่าย"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "เปลี่ยนไมโครโฟน"
 changes:
   the_language_used_by_pindrop_s_interface: "Changes the language used by Pindrop's interface."
-check:
-  for_updates: "ตรวจสอบการอัปเดต..."
 checking:
   _self: "กำลังตรวจสอบ..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "คัดลอกขั้นสูง"
   last_transcript: "คัดลอกทรานสคริปต์ล่าสุด"
   original: "คัดลอกต้นฉบับ"
-  system_info_for_bug_report: "คัดลอกข้อมูลระบบสำหรับรายงานข้อผิดพลาด"
-  the_configuration_snippet_into_your_preferr: "Copy the configuration snippet into your preferred AI agent host."
   the_most_recent_transcript_to_the_clipboard: "คัดลอกข้อความถอดเสียงล่าสุดไปยังคลิปบอร์ด"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Copy the most recent transcript to the clipboard."
   to_clipboard: "คัดลอกไปยังคลิปบอร์ด"
@@ -524,9 +516,6 @@ items:
   _self: "รายการ"
 japanese:
   _self: "ญี่ปุ่น"
-keep:
-  pindrop_current_automatically_or_check_for: "Keep Pindrop current automatically, or check for a new version now."
-  pindrop_current_automatically_or_trigger_a: "รักษา Pindrop ให้เป็นปัจจุบันโดยอัตโนมัติ หรือเรียกใช้การตรวจสอบด้วยตนเองทุกครั้งที่คุณต้องการ"
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "Manage Presets…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "ตรวจสอบเวอร์ชันใหม่ด้วยตนเองทันที"
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "ยังไม่มีการถอดเสียงเป็นคำ"
   vocabulary_words: "ไม่มีคำศัพท์"
   transcripts_audio_prompts_file_names_or_perso: "ไม่มีการถอดเสียง เสียง พรอมต์ ชื่อไฟล์ หรือเนื้อหาส่วนบุคคล — ไม่มีเลย"
-  contributions_yet_pairs_are_stored_when_ai_en: "ยังไม่มีการมีส่วนร่วม คู่ข้อความจะถูกจัดเก็บเมื่อการปรับปรุงด้วย AI หรือการแก้ไขด้วยตนเองเปลี่ยนแปลงการถอดเสียง"
 not:
   assigned: "ไม่ได้รับมอบหมาย"
   enough_voice_data_yet: "Not enough voice data yet"
@@ -826,8 +812,6 @@ please:
     ไปที่การตั้งค่า → โมเดล เพื่อดาวน์โหลดโมเดล
   download_a_whisper_model_in_settings_befo_34e8a33c: "โปรดดาวน์โหลดโมเดล Whisper ในการตั้งค่าก่อนบันทึก ไปที่การตั้งค่า → โมเดล เพื่อดาวน์โหลดโมเดล"
   wait: "โปรดรอ..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Port changes take effect the next time the server starts."
 portuguese:
   brazil: "โปรตุเกส (บราซิล)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "ลองอีกครั้ง"
 right:
   _self: "ขวา"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Run a local HTTP server so AI agents can submit transcription jobs, search history, and manage speakers."
 runtime:
   _self: "รันไทม์: %@"
   status: "สถานะรันไทม์"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "หยุดการเล่นสื่อที่ใช้งานชั่วคราวชั่วคราวในขณะที่กำลังบันทึกการเขียนตามคำบอก"
 tertiary:
   text: "ข้อความระดับอุดมศึกษา"
-thanks:
-  to_for_investigating_and_kicking_off_the: "ขอบคุณ %@ สำหรับการตรวจสอบและเริ่มต้นการแก้ไข (PR #64)"
-  to_for_the_contribution_pr_61: "ขอบคุณ %@ สำหรับการมีส่วนร่วม (PR #61)"
 the:
   floating_indicator_is_hidden: "ตัวบ่งชี้แบบลอยถูกซ่อนอยู่"
   model_failed_to_load_within_60_seconds_this: "\"\" ไม่สามารถโหลดโมเดลได้ภายใน 60 วินาที ซึ่งมักจะหมายถึงไฟล์โมเดลเสียหายหรือเข้ากันไม่ได้                          วิธีแก้ไขปัญหานี้: 1. เปิดการตั้งค่า → โมเดล 2. ลบโมเดลที่มีปัญหา 3. ดาวน์โหลดโมเดลอีกครั้ง หากปัญหายังคงอยู่ ให้ลองใช้โมเดลที่เล็กกว่า (จิ๋วหรือฐาน)             \"\""

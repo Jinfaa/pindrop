@@ -77,8 +77,6 @@ api:
   key: "एपीआई कुंजी"
   key_saved: "एपीआई कुंजी सहेजी गई"
   key_saved_endpoint: "एपीआई कुंजी सहेजी गई • समापन बिंदु: %@"
-app:
-  info_acknowledgments_support_and_logs: "ऐप की जानकारी, स्वीकृतियाँ, समर्थन और लॉग"
 appearance:
   _self: "दिखावट"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "श्रव्य इनपुट"
 automatic:
   follow_system: "स्वचालित (सिस्टम का पालन करें)"
-  updates_and_manual_update_checks: "स्वचालित अद्यतन और मैन्युअल अद्यतन जाँच"
 automatically:
-  check_for_new_versions_in_the_back: "पृष्ठभूमि में नए संस्करणों के लिए स्वचालित रूप से जाँच करें।"
   start_pindrop_when_you_sign_in: "जब आप साइन इन करते हैं तो स्वचालित रूप से पिनड्रॉप प्रारंभ करें।"
 available:
   models: "उपलब्ध मॉडल"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "माइक्रोफ़ोन बदलें"
 changes:
   the_language_used_by_pindrop_s_interface: "Changes the language used by Pindrop's interface."
-check:
-  for_updates: "अद्यतन के लिए जाँच..."
 checking:
   _self: "जाँच हो रही है..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "कॉपी एन्हांस्ड"
   last_transcript: "अंतिम प्रतिलेख कॉपी करें"
   original: "मूल कॉपी करें"
-  system_info_for_bug_report: "बग रिपोर्ट के लिए सिस्टम जानकारी कॉपी करें"
-  the_configuration_snippet_into_your_preferr: "Copy the configuration snippet into your preferred AI agent host."
   the_most_recent_transcript_to_the_clipboard: "नवीनतम प्रतिलेख को क्लिपबोर्ड पर कॉपी करें"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Copy the most recent transcript to the clipboard."
   to_clipboard: "क्लिपबोर्ड पर कॉपी करें"
@@ -524,9 +516,6 @@ items:
   _self: "सामान"
 japanese:
   _self: "जापानी"
-keep:
-  pindrop_current_automatically_or_check_for: "Keep Pindrop current automatically, or check for a new version now."
-  pindrop_current_automatically_or_trigger_a: "पिनड्रॉप को स्वचालित रूप से चालू रखें, या जब चाहें मैन्युअल जांच चालू करें।"
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "Manage Presets…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "अब नए संस्करणों के लिए मैन्युअल रूप से जाँच करें।"
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "अभी तक कोई प्रतिलेखन नहीं"
   vocabulary_words: "कोई शब्दावली शब्द नहीं"
   transcripts_audio_prompts_file_names_or_perso: "कोई ट्रांसक्रिप्ट, ऑडियो, प्रॉम्प्ट, फ़ाइल नाम या व्यक्तिगत सामग्री नहीं — कभी नहीं।"
-  contributions_yet_pairs_are_stored_when_ai_en: "अभी तक कोई योगदान नहीं। जब AI संवर्द्धन या मैन्युअल संपादन किसी ट्रांसक्रिप्ट को बदलते हैं, तो जोड़े संग्रहीत होते हैं।"
 not:
   assigned: "सौंपा नहीं गया है"
   enough_voice_data_yet: "Not enough voice data yet"
@@ -826,8 +812,6 @@ please:
     मॉडल डाउनलोड करने के लिए सेटिंग्स → मॉडल पर जाएं।
   download_a_whisper_model_in_settings_befo_34e8a33c: "कृपया रिकॉर्डिंग से पहले सेटिंग्स में एक व्हिस्पर मॉडल डाउनलोड करें। किसी मॉडल को डाउनलोड करने के लिए सेटिंग्स → मॉडल पर जाएं।"
   wait: "कृपया प्रतीक्षा करें..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Port changes take effect the next time the server starts."
 portuguese:
   brazil: "पुर्तगाली (ब्राजील)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "पुन: प्रयास करें"
 right:
   _self: "सही"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Run a local HTTP server so AI agents can submit transcription jobs, search history, and manage speakers."
 runtime:
   _self: "रनटाइम: %@"
   status: "रनटाइम स्थिति"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "श्रुतलेख रिकॉर्ड करते समय सक्रिय मीडिया प्लेबैक को अस्थायी रूप से रोकें।"
 tertiary:
   text: "तृतीयक पाठ"
-thanks:
-  to_for_investigating_and_kicking_off_the: "जाँच करने और सुधार शुरू करने के लिए %@ का धन्यवाद (PR #64)।"
-  to_for_the_contribution_pr_61: "योगदान के लिए %@ का धन्यवाद (PR #61)।"
 the:
   floating_indicator_is_hidden: "फ़्लोटिंग संकेतक छिपा हुआ है।"
   model_failed_to_load_within_60_seconds_this: "\"\" मॉडल 60 सेकंड के भीतर लोड होने में विफल रहा। इसका आमतौर पर मतलब है कि मॉडल फ़ाइलें दूषित या असंगत हैं।                          इसे ठीक करने के लिए: 1. सेटिंग्स खोलें → मॉडल 2. समस्याग्रस्त मॉडल हटाएं 3. मॉडल को दोबारा डाउनलोड करें यदि समस्या बनी रहती है, तो एक छोटा मॉडल (छोटा या बेस) आज़माएं।             \"\""

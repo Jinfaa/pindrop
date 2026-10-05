@@ -77,8 +77,6 @@ api:
   key: "Kunci API"
   key_saved: "Kunci API disimpan"
   key_saved_endpoint: "Kunci API disimpan • Titik akhir: %@"
-app:
-  info_acknowledgments_support_and_logs: "Info aplikasi, ucapan terima kasih, dukungan, dan log"
 appearance:
   _self: "Tampilan"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "Masukan Audio"
 automatic:
   follow_system: "Otomatis (Ikuti Sistem)"
-  updates_and_manual_update_checks: "Pembaruan otomatis dan pemeriksaan pembaruan manual"
 automatically:
-  check_for_new_versions_in_the_back: "Secara otomatis memeriksa versi baru di latar belakang."
   start_pindrop_when_you_sign_in: "Secara otomatis memulai Pindrop saat Anda masuk."
 available:
   models: "Model yang Tersedia"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "Ganti mikrofon"
 changes:
   the_language_used_by_pindrop_s_interface: "Changes the language used by Pindrop's interface."
-check:
-  for_updates: "Periksa Pembaruan..."
 checking:
   _self: "Memeriksa..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "Salin Ditingkatkan"
   last_transcript: "Salin Transkrip Terakhir"
   original: "Salin Asli"
-  system_info_for_bug_report: "Salin Info Sistem untuk Laporan Bug"
-  the_configuration_snippet_into_your_preferr: "Copy the configuration snippet into your preferred AI agent host."
   the_most_recent_transcript_to_the_clipboard: "Salin transkrip terbaru ke clipboard"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Copy the most recent transcript to the clipboard."
   to_clipboard: "Salin ke papan klip"
@@ -524,9 +516,6 @@ items:
   _self: "item"
 japanese:
   _self: "Jepang"
-keep:
-  pindrop_current_automatically_or_check_for: "Keep Pindrop current automatically, or check for a new version now."
-  pindrop_current_automatically_or_trigger_a: "Pertahankan Pindrop terkini secara otomatis, atau picu pemeriksaan manual kapan pun Anda mau."
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "Manage Presets…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "Periksa versi baru secara manual sekarang."
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "Belum ada transkripsi"
   vocabulary_words: "Tidak Ada Kata Kosakata"
   transcripts_audio_prompts_file_names_or_perso: "Tidak ada transkripsi, audio, prompt, nama file, atau konten pribadi — tidak pernah."
-  contributions_yet_pairs_are_stored_when_ai_en: "Belum ada kontribusi. Pasangan disimpan saat penyempurnaan AI atau suntingan manual mengubah transkripsi."
 not:
   assigned: "Tidak ditugaskan"
   enough_voice_data_yet: "Not enough voice data yet"
@@ -826,8 +812,6 @@ please:
     Buka Pengaturan → Model untuk mengunduh model.
   download_a_whisper_model_in_settings_befo_34e8a33c: "Silakan unduh model Whisper di Pengaturan sebelum merekam.nnBuka Pengaturan → Model untuk mengunduh model."
   wait: "Harap tunggu..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Port changes take effect the next time the server starts."
 portuguese:
   brazil: "Portugis (Brasil)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "Mencoba kembali"
 right:
   _self: "Benar"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Run a local HTTP server so AI agents can submit transcription jobs, search history, and manage speakers."
 runtime:
   _self: "Waktu tayang: %@"
   status: "Status runtime"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "Jeda sementara pemutaran media aktif saat dikte sedang direkam."
 tertiary:
   text: "Teks Tersier"
-thanks:
-  to_for_investigating_and_kicking_off_the: "Terima kasih kepada %@ karena telah menyelidiki dan memulai perbaikan (PR #64)."
-  to_for_the_contribution_pr_61: "Terima kasih kepada %@ atas kontribusinya (PR #61)."
 the:
   floating_indicator_is_hidden: "Indikator mengambang disembunyikan."
   model_failed_to_load_within_60_seconds_this: "\"\" Model gagal dimuat dalam waktu 60 detik. Ini biasanya berarti file model rusak atau tidak kompatibel.                          Untuk memperbaikinya: 1. Buka Pengaturan → Model 2. Hapus model yang bermasalah 3. Unduh ulang model Jika masalah terus berlanjut, coba model yang lebih kecil (Tiny atau Base).             \"\""

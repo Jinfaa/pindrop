@@ -77,8 +77,6 @@ api:
   key: "Chave de API"
   key_saved: "Chave de API salva"
   key_saved_endpoint: "Chave de API salva • Endpoint: %@"
-app:
-  info_acknowledgments_support_and_logs: "Informações, reconhecimentos, suporte e registros do aplicativo"
 appearance:
   _self: "Aparência"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "Entrada de áudio"
 automatic:
   follow_system: "Automático (Siga Sistema)"
-  updates_and_manual_update_checks: "Atualizações automáticas e verificações manuais de atualizações"
 automatically:
-  check_for_new_versions_in_the_back: "Verifique automaticamente novas versões em segundo plano."
   start_pindrop_when_you_sign_in: "Inicie o Pindrop automaticamente quando você fizer login."
 available:
   models: "Modelos Disponíveis"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "Mudar microfone"
 changes:
   the_language_used_by_pindrop_s_interface: "Altera o idioma da interface do Pindrop."
-check:
-  for_updates: "Verifique se há atualizações..."
 checking:
   _self: "Verificando..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "Cópia aprimorada"
   last_transcript: "Copiar a última transcrição"
   original: "Copiar original"
-  system_info_for_bug_report: "Copiar informações do sistema para relatório de bug"
-  the_configuration_snippet_into_your_preferr: "Copie o trecho de configuração para o host de agente de IA de sua preferência."
   the_most_recent_transcript_to_the_clipboard: "Copie a transcrição mais recente para a área de transferência"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Copia a transcrição mais recente para a área de transferência."
   to_clipboard: "Copiar para a área de transferência"
@@ -524,9 +516,6 @@ items:
   _self: "Unid"
 japanese:
   _self: "japonês"
-keep:
-  pindrop_current_automatically_or_check_for: "Mantenha o Pindrop atualizado automaticamente ou verifique uma nova versão agora."
-  pindrop_current_automatically_or_trigger_a: "Mantenha o Pindrop atualizado automaticamente ou acione uma verificação manual sempre que desejar."
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "Gerenciar predefinições…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "Verifique manualmente se há novas versões agora."
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "Ainda não há transcrições"
   vocabulary_words: "Sem palavras de vocabulário"
   transcripts_audio_prompts_file_names_or_perso: "Nenhuma transcrição, áudio, prompt, nome de arquivo ou conteúdo pessoal — nunca."
-  contributions_yet_pairs_are_stored_when_ai_en: "Ainda não há contribuições. Os pares são armazenados quando o aprimoramento por IA ou edições manuais alteram uma transcrição."
 not:
   assigned: "Não atribuído"
   enough_voice_data_yet: "Ainda não há dados de voz suficientes"
@@ -826,8 +812,6 @@ please:
     Vá para Configurações → Modelos para baixar um modelo.
   download_a_whisper_model_in_settings_befo_34e8a33c: "Baixe um modelo Whisper em Configurações antes de gravar.nnVá para Configurações → Modelos para baixar um modelo."
   wait: "Por favor, aguarde..."
-port:
-  changes_take_effect_the_next_time_the_serve: "As alterações de porta entram em vigor na próxima inicialização do servidor."
 portuguese:
   brazil: "Português (Brasil)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "Tentar novamente"
 right:
   _self: "Direita"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Executa um servidor HTTP local para agentes de IA enviarem trabalhos de transcrição, pesquisarem o histórico e gerenciarem falantes."
 runtime:
   _self: "Tempo de execução: %@"
   status: "Status de execução"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "Pause temporariamente a reprodução de mídia ativa enquanto o ditado está sendo gravado."
 tertiary:
   text: "Texto Terciário"
-thanks:
-  to_for_investigating_and_kicking_off_the: "Obrigado a %@ por investigar e iniciar a correção (PR #64)."
-  to_for_the_contribution_pr_61: "Obrigado a %@ pela contribuição (PR #61)."
 the:
   floating_indicator_is_hidden: "O indicador flutuante está oculto."
   model_failed_to_load_within_60_seconds_this: "\"\" O modelo não foi carregado em 60 segundos. Isso geralmente significa que os arquivos do modelo estão corrompidos ou incompatíveis.                          Para corrigir isso: 1. Abra Configurações → Modelos 2. Exclua o modelo problemático 3. Baixe novamente o modelo Se o problema persistir, tente um modelo menor (Tiny ou Base).             \"\""

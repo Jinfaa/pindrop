@@ -77,8 +77,6 @@ api:
   key: "API Key"
   key_saved: "API key saved"
   key_saved_endpoint: "API key saved • Endpoint: %@"
-app:
-  info_acknowledgments_support_and_logs: "App info, acknowledgments, support, and logs"
 appearance:
   _self: "Appearance"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "Audio Input"
 automatic:
   follow_system: "Automatic (Follow System)"
-  updates_and_manual_update_checks: "Automatic updates and manual update checks"
 automatically:
-  check_for_new_versions_in_the_back: "Automatically check for new versions in the background."
   start_pindrop_when_you_sign_in: "Automatically start Pindrop when you sign in."
 available:
   models: "Available Models"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "Change microphone"
 changes:
   the_language_used_by_pindrop_s_interface: "Changes the language used by Pindrop's interface."
-check:
-  for_updates: "Check for Updates..."
 checking:
   _self: "Checking..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "Copy Enhanced"
   last_transcript: "Copy Last Transcript"
   original: "Copy Original"
-  system_info_for_bug_report: "Copy System Info for Bug Report"
-  the_configuration_snippet_into_your_preferr: "Copy the configuration snippet into your preferred AI agent host."
   the_most_recent_transcript_to_the_clipboard: "Copy the most recent transcript to the clipboard"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Copy the most recent transcript to the clipboard."
   to_clipboard: "Copy to clipboard"
@@ -524,9 +516,6 @@ items:
   _self: "items"
 japanese:
   _self: "Japanese"
-keep:
-  pindrop_current_automatically_or_check_for: "Keep Pindrop current automatically, or check for a new version now."
-  pindrop_current_automatically_or_trigger_a: "Keep Pindrop current automatically, or trigger a manual check whenever you want."
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "Manage Presets…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "Manually check for new versions now."
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "No transcriptions yet"
   vocabulary_words: "No Vocabulary Words"
   transcripts_audio_prompts_file_names_or_perso: "No transcripts, audio, prompts, file names, or personal content — ever."
-  contributions_yet_pairs_are_stored_when_ai_en: "No contributions yet. Pairs are stored when AI enhancement or manual edits change a transcript."
 not:
   assigned: "Not assigned"
   enough_voice_data_yet: "Not enough voice data yet"
@@ -826,8 +812,6 @@ please:
     Go to Settings → Models to download a model.
   download_a_whisper_model_in_settings_befo_34e8a33c: "Please download a Whisper model in Settings before recording.nnGo to Settings → Models to download a model."
   wait: "Please wait..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Port changes take effect the next time the server starts."
 portuguese:
   brazil: "Portuguese (Brazil)"
 powered:
@@ -976,8 +960,6 @@ retry:
   _self: "Retry"
 right:
   _self: "Right"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Run a local HTTP server so AI agents can submit transcription jobs, search history, and manage speakers."
 runtime:
   _self: "Runtime: %@"
   status: "Runtime Status"
@@ -1138,9 +1120,6 @@ temporarily:
   pause_active_media_playback_while_di: "Temporarily pause active media playback while dictation is recording."
 tertiary:
   text: "Tertiary Text"
-thanks:
-  to_for_investigating_and_kicking_off_the: "Thanks to %@ for investigating and kicking off the fix (PR #64)."
-  to_for_the_contribution_pr_61: "Thanks to %@ for the contribution (PR #61)."
 the:
   floating_indicator_is_hidden: "The floating indicator is hidden."
   model_failed_to_load_within_60_seconds_this: "\"\"             The model failed to load within 60 seconds. This usually means the model files are corrupted or incompatible.                          To fix this:             1. Open Settings → Models             2. Delete the problematic model             3. Re-download the model                          If the problem persists, try a smaller model (Tiny or Base).             \"\""

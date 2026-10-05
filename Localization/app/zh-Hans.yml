@@ -77,8 +77,6 @@ api:
   key: "API 密钥"
   key_saved: "API 密钥已保存"
   key_saved_endpoint: "API 密钥已保存 • 端点：%@"
-app:
-  info_acknowledgments_support_and_logs: "应用信息、致谢、支持和日志"
 appearance:
   _self: "外观"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "音频输入"
 automatic:
   follow_system: "自动（跟随系统）"
-  updates_and_manual_update_checks: "自动更新和手动更新检查"
 automatically:
-  check_for_new_versions_in_the_back: "自动在后台检查新版本。"
   start_pindrop_when_you_sign_in: "登录时自动启动 Pindrop。"
 available:
   models: "可用模型"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "更改麦克风"
 changes:
   the_language_used_by_pindrop_s_interface: "更改 Pindrop 界面使用的语言。"
-check:
-  for_updates: "检查更新..."
 checking:
   _self: "检查中..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "复制增强版"
   last_transcript: "复制上次转录"
   original: "复制原版"
-  system_info_for_bug_report: "复制系统信息以提交错误报告"
-  the_configuration_snippet_into_your_preferr: "将配置片段复制到你偏好的 AI 代理主机。"
   the_most_recent_transcript_to_the_clipboard: "将最新的转录复制到剪贴板"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "将最近的转写复制到剪贴板。"
   to_clipboard: "复制到剪贴板"
@@ -524,9 +516,6 @@ items:
   _self: "项目"
 japanese:
   _self: "日语"
-keep:
-  pindrop_current_automatically_or_check_for: "自动保持 Pindrop 最新，或立即检查新版本。"
-  pindrop_current_automatically_or_trigger_a: "自动保持 Pindrop 最新，或随时触发手动检查。"
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "管理预设…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "立即手动检查新版本。"
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "尚无转录"
   vocabulary_words: "无词汇词"
   transcripts_audio_prompts_file_names_or_perso: "绝无转录、音频、提示词、文件名或个人内容 — 永不。"
-  contributions_yet_pairs_are_stored_when_ai_en: "暂无贡献。当 AI 增强或手动编辑更改转录时，将存储文本对。"
 not:
   assigned: "未分配"
   enough_voice_data_yet: "语音数据尚不足"
@@ -826,8 +812,6 @@ please:
     前往设置 → 模型下载模型。
   download_a_whisper_model_in_settings_befo_34e8a33c: "请在录制前在设置中下载 Whisper 模型。nn前往设置 → 模型下载模型。"
   wait: "请稍候..."
-port:
-  changes_take_effect_the_next_time_the_serve: "端口更改将在下次启动服务器时生效。"
 portuguese:
   brazil: "葡萄牙语（巴西）"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "重试"
 right:
   _self: "右侧"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "运行本地 HTTP 服务器，以便 AI 代理提交转写任务、搜索历史并管理说话人。"
 runtime:
   _self: "运行时间：%@"
   status: "运行时状态"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "在听写录制期间暂时暂停活动的媒体播放。"
 tertiary:
   text: "第三文本"
-thanks:
-  to_for_investigating_and_kicking_off_the: "感谢 %@ 调查并启动修复 (PR #64)。"
-  to_for_the_contribution_pr_61: "感谢 %@ 的贡献 (PR #61)。"
 the:
   floating_indicator_is_hidden: "悬浮指示器已隐藏。"
   model_failed_to_load_within_60_seconds_this: "\"\"             模型在 60 秒内未能加载。这通常意味着模型文件已损坏或不兼容。                          解决方法：             1. 打开设置 → 模型             2. 删除有问题的模型             3. 重新下载模型                          如果问题仍然存在，请尝试使用较小的模型（Tiny 或 Base）。             \"\""

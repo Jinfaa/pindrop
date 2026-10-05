@@ -77,8 +77,6 @@ api:
   key: "Cheia API"
   key_saved: "Cheia API salvată"
   key_saved_endpoint: "Cheia API salvată • Punct final: %@"
-app:
-  info_acknowledgments_support_and_logs: "Informații despre aplicație, mulțumiri, asistență și jurnalele"
 appearance:
   _self: "Aspect"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "Intrare audio"
 automatic:
   follow_system: "Automat (sistem de urmărire)"
-  updates_and_manual_update_checks: "Actualizări automate și verificări manuale ale actualizărilor"
 automatically:
-  check_for_new_versions_in_the_back: "Verificați automat versiunile noi în fundal."
   start_pindrop_when_you_sign_in: "Porniți automat Pindrop când vă conectați."
 available:
   models: "Modele disponibile"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "Schimbați microfonul"
 changes:
   the_language_used_by_pindrop_s_interface: "Changes the language used by Pindrop's interface."
-check:
-  for_updates: "Verificați actualizările..."
 checking:
   _self: "Control..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "Copiere îmbunătățită"
   last_transcript: "Copiați ultima transcriere"
   original: "Copiați originalul"
-  system_info_for_bug_report: "Copiați informațiile de sistem pentru Raportul de eroare"
-  the_configuration_snippet_into_your_preferr: "Copy the configuration snippet into your preferred AI agent host."
   the_most_recent_transcript_to_the_clipboard: "Copiați cea mai recentă transcriere în clipboard"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Copy the most recent transcript to the clipboard."
   to_clipboard: "Copiați în clipboard"
@@ -524,9 +516,6 @@ items:
   _self: "articole"
 japanese:
   _self: "japonez"
-keep:
-  pindrop_current_automatically_or_check_for: "Keep Pindrop current automatically, or check for a new version now."
-  pindrop_current_automatically_or_trigger_a: "Păstrați curentul Pindrop în mod automat sau declanșați o verificare manuală oricând doriți."
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "Manage Presets…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "Verificați manual dacă există versiuni noi acum."
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "Nicio transcriere încă"
   vocabulary_words: "Fără cuvinte de vocabular"
   transcripts_audio_prompts_file_names_or_perso: "Nicio transcriere, audio, prompt, nume de fișier sau conținut personal — niciodată."
-  contributions_yet_pairs_are_stored_when_ai_en: "Nicio contribuție încă. Perechile sunt stocate când îmbunătățirea prin AI sau modificările manuale schimbă o transcriere."
 not:
   assigned: "Nu este atribuit"
   enough_voice_data_yet: "Not enough voice data yet"
@@ -826,8 +812,6 @@ please:
     Accesați Setări → Modele pentru a descărca un model.
   download_a_whisper_model_in_settings_befo_34e8a33c: "Vă rugăm să descărcați un model Whisper din Setări înainte de a înregistra.nnAccesați Setări → Modele pentru a descărca un model."
   wait: "Va rugam asteptati..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Port changes take effect the next time the server starts."
 portuguese:
   brazil: "portugheză (Brazilia)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "Reîncercați"
 right:
   _self: "Corect"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Run a local HTTP server so AI agents can submit transcription jobs, search history, and manage speakers."
 runtime:
   _self: "Timp de rulare: %@"
   status: "Stare runtime"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "Întrerupeți temporar redarea media activă în timp ce se înregistrează dictarea."
 tertiary:
   text: "Text terțiar"
-thanks:
-  to_for_investigating_and_kicking_off_the: "Mulțumiri lui %@ pentru investigație și pentru pornirea remedierii (PR #64)."
-  to_for_the_contribution_pr_61: "Mulțumiri lui %@ pentru contribuție (PR #61)."
 the:
   floating_indicator_is_hidden: "Indicatorul plutitor este ascuns."
   model_failed_to_load_within_60_seconds_this: "\"\" Modelul nu s-a încărcat în 60 de secunde. Aceasta înseamnă de obicei că fișierele model sunt corupte sau incompatibile.                          Pentru a remedia acest lucru: 1. Deschideți Setări → Modele 2. Ștergeți modelul problematic 3. Descărcați din nou modelul Dacă problema persistă, încercați un model mai mic (Tiny sau Base).             \"\""

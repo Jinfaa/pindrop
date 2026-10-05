@@ -77,8 +77,6 @@ api:
   key: "API nøgle"
   key_saved: "API-nøgle gemt"
   key_saved_endpoint: "API-nøgle gemt • Slutpunkt: %@"
-app:
-  info_acknowledgments_support_and_logs: "Appinfo, anerkendelser, support og logfiler"
 appearance:
   _self: "Udseende"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "Lydindgang"
 automatic:
   follow_system: "Automatisk (følg systemet)"
-  updates_and_manual_update_checks: "Automatiske opdateringer og manuelle opdateringstjek"
 automatically:
-  check_for_new_versions_in_the_back: "Tjek automatisk efter nye versioner i baggrunden."
   start_pindrop_when_you_sign_in: "Start Pindrop automatisk, når du logger ind."
 available:
   models: "Tilgængelige modeller"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "Skift mikrofon"
 changes:
   the_language_used_by_pindrop_s_interface: "Changes the language used by Pindrop's interface."
-check:
-  for_updates: "Se efter opdateringer..."
 checking:
   _self: "Tjekker..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "Kopier forbedret"
   last_transcript: "Kopi sidste udskrift"
   original: "Kopi original"
-  system_info_for_bug_report: "Kopiér systemoplysninger til fejlrapport"
-  the_configuration_snippet_into_your_preferr: "Copy the configuration snippet into your preferred AI agent host."
   the_most_recent_transcript_to_the_clipboard: "Kopier den seneste udskrift til udklipsholderen"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Copy the most recent transcript to the clipboard."
   to_clipboard: "Kopiér til udklipsholder"
@@ -524,9 +516,6 @@ items:
   _self: "genstande"
 japanese:
   _self: "japansk"
-keep:
-  pindrop_current_automatically_or_check_for: "Keep Pindrop current automatically, or check for a new version now."
-  pindrop_current_automatically_or_trigger_a: "Hold Pindrop aktuel automatisk, eller udløs en manuel kontrol, når du vil."
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "Manage Presets…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "Tjek manuelt for nye versioner nu."
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "Ingen transskriptioner endnu"
   vocabulary_words: "Ingen ordforråd"
   transcripts_audio_prompts_file_names_or_perso: "Ingen transskriptioner, lyd, prompter, filnavne eller personligt indhold — aldrig."
-  contributions_yet_pairs_are_stored_when_ai_en: "Ingen bidrag endnu. Par gemmes, når AI-forbedring eller manuelle redigeringer ændrer en transskription."
 not:
   assigned: "Ikke tildelt"
   enough_voice_data_yet: "Not enough voice data yet"
@@ -826,8 +812,6 @@ please:
     Gå til Indstillinger → Modeller for at downloade en model.
   download_a_whisper_model_in_settings_befo_34e8a33c: "Download venligst en Whisper-model i Indstillinger før optagelse.nnGå til Indstillinger → Modeller for at downloade en model."
   wait: "Vent venligst..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Port changes take effect the next time the server starts."
 portuguese:
   brazil: "Portugisisk (Brasilien)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "Prøv igen"
 right:
   _self: "Højre"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Run a local HTTP server so AI agents can submit transcription jobs, search history, and manage speakers."
 runtime:
   _self: "Kørselstid: %@"
   status: "Kørselsstatus"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "Sæt aktiv medieafspilning midlertidigt på pause, mens diktering optages."
 tertiary:
   text: "Tertiær tekst"
-thanks:
-  to_for_investigating_and_kicking_off_the: "Tak til %@ for at undersøge og sætte rettelsen i gang (PR #64)."
-  to_for_the_contribution_pr_61: "Tak til %@ for bidraget (PR #61)."
 the:
   floating_indicator_is_hidden: "Den flydende indikator er skjult."
   model_failed_to_load_within_60_seconds_this: "\\\"\\\" Modellen kunne ikke indlæses inden for 60 sekunder. Dette betyder normalt, at modelfilerne er beskadigede eller inkompatible.                          For at løse dette: 1. Åbn Indstillinger → Modeller 2. Slet den problematiske model 3. Download modellen igen Hvis problemet fortsætter, prøv en mindre model (Tiny eller Base).             \\\"\\\""

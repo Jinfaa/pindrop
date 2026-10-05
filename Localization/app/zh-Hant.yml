@@ -77,8 +77,6 @@ api:
   key: "API 金鑰"
   key_saved: "API 金鑰已儲存"
   key_saved_endpoint: "API 金鑰已儲存 • 端點：%@"
-app:
-  info_acknowledgments_support_and_logs: "應用資訊、致謝、支援和日誌"
 appearance:
   _self: "外觀"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "音訊輸入"
 automatic:
   follow_system: "自動（跟隨系統）"
-  updates_and_manual_update_checks: "自動更新和手動更新檢查"
 automatically:
-  check_for_new_versions_in_the_back: "自動在後臺檢查新版本。"
   start_pindrop_when_you_sign_in: "登入時自動啟動 Pindrop。"
 available:
   models: "可用模型"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "更改麥克風"
 changes:
   the_language_used_by_pindrop_s_interface: "變更 Pindrop 介面使用的語言。"
-check:
-  for_updates: "檢查更新..."
 checking:
   _self: "檢查中..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "複製增強版"
   last_transcript: "複製上次轉錄"
   original: "複製原版"
-  system_info_for_bug_report: "複製系統資訊以提交錯誤報告"
-  the_configuration_snippet_into_your_preferr: "將設定片段複製到你偏好的 AI 代理主機。"
   the_most_recent_transcript_to_the_clipboard: "將最新的轉錄複製到剪貼簿"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "將最近的轉錄複製到剪貼簿。"
   to_clipboard: "複製到剪貼簿"
@@ -524,9 +516,6 @@ items:
   _self: "專案"
 japanese:
   _self: "日語"
-keep:
-  pindrop_current_automatically_or_check_for: "自動保持 Pindrop 最新，或立即檢查新版本。"
-  pindrop_current_automatically_or_trigger_a: "自動保持 Pindrop 最新，或隨時觸發手動檢查。"
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "管理預設…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "立即手動檢查新版本。"
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "尚無轉錄"
   vocabulary_words: "無詞彙詞"
   transcripts_audio_prompts_file_names_or_perso: "絕無轉錄、音訊、提示詞、檔案名稱或個人內容 — 永不。"
-  contributions_yet_pairs_are_stored_when_ai_en: "尚無貢獻。當 AI 增強或手動編輯更改轉錄時，將儲存文字配對。"
 not:
   assigned: "未分配"
   enough_voice_data_yet: "語音資料尚不足"
@@ -826,8 +812,6 @@ please:
     前往設定 → 模型下載模型。
   download_a_whisper_model_in_settings_befo_34e8a33c: "請在錄製前在設定中下載 Whisper 模型。nn前往設定 → 模型下載模型。"
   wait: "請稍候..."
-port:
-  changes_take_effect_the_next_time_the_serve: "連接埠變更會在下次啟動伺服器時生效。"
 portuguese:
   brazil: "葡萄牙語（巴西）"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "重試"
 right:
   _self: "右側"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "執行本機 HTTP 伺服器，讓 AI 代理能提交轉錄工作、搜尋歷程並管理說話者。"
 runtime:
   _self: "執行時間：%@"
   status: "執行階段狀態"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "在聽寫錄製期間暫時暫停活動的媒體播放。"
 tertiary:
   text: "第三文字"
-thanks:
-  to_for_investigating_and_kicking_off_the: "感謝 %@ 調查並啟動修正 (PR #64)。"
-  to_for_the_contribution_pr_61: "感謝 %@ 的貢獻 (PR #61)。"
 the:
   floating_indicator_is_hidden: "懸浮指示器已隱藏。"
   model_failed_to_load_within_60_seconds_this: "\"\"             模型在 60 秒內未能載入。這通常意味著模型檔案已損壞或不相容。                          解決方法：             1. 開啟設定 → 模型             2. 刪除有問題的模型             3. 重新下載模型                          如果問題仍然存在，請嘗試使用較小的模型（Tiny 或 Base）。             \"\""

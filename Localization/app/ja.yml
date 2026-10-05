@@ -77,8 +77,6 @@ api:
   key: "APIキー"
   key_saved: "APIキーが保存されました"
   key_saved_endpoint: "API キーが保存されました • エンドポイント: %@"
-app:
-  info_acknowledgments_support_and_logs: "アプリ情報、承認、サポート、ログ"
 appearance:
   _self: "外観"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "オーディオ入力"
 automatic:
   follow_system: "自動（フォローシステム）"
-  updates_and_manual_update_checks: "自動更新と手動更新チェック"
 automatically:
-  check_for_new_versions_in_the_back: "バックグラウンドで新しいバージョンを自動的にチェックします。"
   start_pindrop_when_you_sign_in: "サインインすると Pindrop が自動的に起動します。"
 available:
   models: "利用可能なモデル"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "マイクを変更する"
 changes:
   the_language_used_by_pindrop_s_interface: "Pindrop のインターフェース言語を変更します。"
-check:
-  for_updates: "アップデートを確認してください..."
 checking:
   _self: "チェック中..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "コピー強化"
   last_transcript: "最後のトランスクリプトをコピー"
   original: "オリジナルをコピー"
-  system_info_for_bug_report: "バグレポート用にシステム情報をコピーする"
-  the_configuration_snippet_into_your_preferr: "設定スニペットを好みの AI エージェントホストにコピーします。"
   the_most_recent_transcript_to_the_clipboard: "最新のトランスクリプトをクリップボードにコピーします"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "最新の文字起こしをクリップボードにコピーします。"
   to_clipboard: "クリップボードにコピー"
@@ -524,9 +516,6 @@ items:
   _self: "アイテム"
 japanese:
   _self: "日本語"
-keep:
-  pindrop_current_automatically_or_check_for: "Pindrop を自動更新するか、今すぐ新しいバージョンを確認します。"
-  pindrop_current_automatically_or_trigger_a: "Pindrop を自動的に最新の状態に保つことも、必要に応じていつでも手動チェックをトリガーすることもできます。"
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "プリセットを管理…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "今すぐ新しいバージョンを手動で確認してください。"
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "転写はまだありません"
   vocabulary_words: "語彙がありません"
   transcripts_audio_prompts_file_names_or_perso: "文字起こし、音声、プロンプト、ファイル名、個人的な内容は一切ありません — 決して。"
-  contributions_yet_pairs_are_stored_when_ai_en: "まだ提供データはありません。AI 強化または手動編集で文字起こしが変更されると、ペアが保存されます。"
 not:
   assigned: "割り当てられていません"
   enough_voice_data_yet: "音声データがまだ不足しています"
@@ -826,8 +812,6 @@ please:
     [設定] → [モデル] に移動してモデルをダウンロードします。
   download_a_whisper_model_in_settings_befo_34e8a33c: "録音する前に、設定で Whisper モデルをダウンロードしてください。モデルをダウンロードするには、[設定] → [モデル] に移動します。"
   wait: "お待ちください..."
-port:
-  changes_take_effect_the_next_time_the_serve: "ポートの変更は次回サーバー起動時に反映されます。"
 portuguese:
   brazil: "ポルトガル語 (ブラジル)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "リトライ"
 right:
   _self: "右"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "AI エージェントが文字起こしジョブ送信・履歴検索・話者管理できるようローカル HTTP サーバーを実行します。"
 runtime:
   _self: "ランタイム: %@"
   status: "ランタイム状態"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "ディクテーションの録音中にアクティブなメディアの再生を一時停止します。"
 tertiary:
   text: "三次テキスト"
-thanks:
-  to_for_investigating_and_kicking_off_the: "調査し修正のきっかけを作ってくれた %@ に感謝します (PR #64)。"
-  to_for_the_contribution_pr_61: "貢献してくれた %@ に感謝します (PR #61)。"
 the:
   floating_indicator_is_hidden: "フローティングインジケータは非表示です。"
   model_failed_to_load_within_60_seconds_this: "\"\" モデルは 60 秒以内にロードできませんでした。これは通常、モデル ファイルが破損しているか、互換性がないことを意味します。                          これを修正するには: 1. [設定] → [モデル] を開きます。 2. 問題のあるモデルを削除します。 3. モデルを再ダウンロードします。 問題が解決しない場合は、より小さいモデル (Tiny または Base) を試してください。             「」"

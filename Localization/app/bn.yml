@@ -77,8 +77,6 @@ api:
   key: "API কী"
   key_saved: "API কী সংরক্ষিত"
   key_saved_endpoint: "API কী সংরক্ষিত • শেষবিন্দু: %@"
-app:
-  info_acknowledgments_support_and_logs: "অ্যাপের তথ্য, স্বীকৃতি, সমর্থন এবং লগ"
 appearance:
   _self: "চেহারা"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "অডিও ইনপুট"
 automatic:
   follow_system: "স্বয়ংক্রিয় (ফলো সিস্টেম)"
-  updates_and_manual_update_checks: "স্বয়ংক্রিয় আপডেট এবং ম্যানুয়াল আপডেট চেক"
 automatically:
-  check_for_new_versions_in_the_back: "স্বয়ংক্রিয়ভাবে পটভূমিতে নতুন সংস্করণগুলির জন্য পরীক্ষা করুন৷"
   start_pindrop_when_you_sign_in: "আপনি সাইন ইন করার সময় স্বয়ংক্রিয়ভাবে Pindrop শুরু করুন।"
 available:
   models: "উপলব্ধ মডেল"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "মাইক্রোফোন পরিবর্তন করুন"
 changes:
   the_language_used_by_pindrop_s_interface: "Changes the language used by Pindrop's interface."
-check:
-  for_updates: "আপডেটের জন্য চেক করুন..."
 checking:
   _self: "পরীক্ষা করা হচ্ছে..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "কপি উন্নত"
   last_transcript: "লাস্ট ট্রান্সক্রিপ্ট কপি করুন"
   original: "আসল কপি করুন"
-  system_info_for_bug_report: "বাগ রিপোর্টের জন্য সিস্টেম তথ্য অনুলিপি করুন"
-  the_configuration_snippet_into_your_preferr: "Copy the configuration snippet into your preferred AI agent host."
   the_most_recent_transcript_to_the_clipboard: "ক্লিপবোর্ডে সবচেয়ে সাম্প্রতিক প্রতিলিপি অনুলিপি করুন"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Copy the most recent transcript to the clipboard."
   to_clipboard: "ক্লিপবোর্ডে কপি করুন"
@@ -524,9 +516,6 @@ items:
   _self: "আইটেম"
 japanese:
   _self: "জাপানিজ"
-keep:
-  pindrop_current_automatically_or_check_for: "Keep Pindrop current automatically, or check for a new version now."
-  pindrop_current_automatically_or_trigger_a: "Pindrop কে স্বয়ংক্রিয়ভাবে বর্তমান রাখুন, অথবা আপনি যখনই চান একটি ম্যানুয়াল চেক ট্রিগার করুন।"
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -613,8 +602,6 @@ manage:
   presets_d5d4c2c2: "Manage Presets…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "এখন নতুন সংস্করণের জন্য ম্যানুয়ালি পরীক্ষা করুন।"
 markdown:
   md: "Markdown (.md)"
 may:
@@ -703,7 +690,6 @@ no:
   transcriptions_yet: "এখনও কোন প্রতিলিপি"
   vocabulary_words: "কোন ভোকাবুলারি শব্দ নেই"
   transcripts_audio_prompts_file_names_or_perso: "কোনো প্রতিলিপি, অডিও, প্রম্পট, ফাইলের নাম বা ব্যক্তিগত কনটেন্ট নয় — কখনও নয়।"
-  contributions_yet_pairs_are_stored_when_ai_en: "এখনও কোনো অবদান নেই। AI উন্নতি বা ম্যানুয়াল সম্পাদনা কোনো প্রতিলিপি পরিবর্তন করলে জোড়া সংরক্ষিত হয়।"
 not:
   assigned: "বরাদ্দ করা হয়নি"
   enough_voice_data_yet: "Not enough voice data yet"
@@ -830,8 +816,6 @@ please:
     একটি মডেল ডাউনলোড করতে সেটিংস → মডেলগুলিতে যান৷
   download_a_whisper_model_in_settings_befo_34e8a33c: "রেকর্ড করার আগে দয়া করে সেটিংস থেকে একটি হুইস্পার মডেল ডাউনলোড করুন। nn একটি মডেল ডাউনলোড করতে সেটিংস → মডেলগুলিতে যান৷"
   wait: "অনুগ্রহ করে অপেক্ষা করুন..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Port changes take effect the next time the server starts."
 portuguese:
   brazil: "পর্তুগিজ (ব্রাজিল)"
 powered:
@@ -963,8 +947,6 @@ retry:
   _self: "আবার চেষ্টা করুন"
 right:
   _self: "ঠিক"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Run a local HTTP server so AI agents can submit transcription jobs, search history, and manage speakers."
 runtime:
   _self: "রানটাইম: %@"
   status: "রানটাইম স্ট্যাটাস"
@@ -1126,9 +1108,6 @@ temporarily:
   pause_active_media_playback_while_di: "ডিক্টেশন রেকর্ডিং করার সময় সক্রিয় মিডিয়া প্লেব্যাক সাময়িকভাবে বিরাম দিন।"
 tertiary:
   text: "তৃতীয় পাঠ্য"
-thanks:
-  to_for_investigating_and_kicking_off_the: "অনুসন্ধান করে সমাধান শুরু করার জন্য %@-কে ধন্যবাদ (PR #64)।"
-  to_for_the_contribution_pr_61: "অবদানের জন্য %@-কে ধন্যবাদ (PR #61)।"
 the:
   floating_indicator_is_hidden: "ভাসমান নির্দেশকটি লুকানো আছে।"
   model_failed_to_load_within_60_seconds_this: "\" মডেলটি 60 সেকেন্ডের মধ্যে লোড হতে ব্যর্থ হয়েছে৷ এর মানে সাধারণত মডেল ফাইলগুলি দূষিত বা বেমানান।                          এটি ঠিক করতে: 1. সেটিংস খুলুন → মডেলগুলি 2. সমস্যাযুক্ত মডেলটি মুছুন 3. মডেলটি পুনরায় ডাউনলোড করুন যদি সমস্যাটি থেকে যায়, একটি ছোট মডেল চেষ্টা করুন (ক্ষুদ্র বা বেস)।             \""

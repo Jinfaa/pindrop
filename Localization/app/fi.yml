@@ -77,8 +77,6 @@ api:
   key: "API-avain"
   key_saved: "API-avain tallennettu"
   key_saved_endpoint: "API-avain tallennettu • Päätepiste: %@"
-app:
-  info_acknowledgments_support_and_logs: "Sovellustiedot, kuittaukset, tuki ja lokit"
 appearance:
   _self: "Ulkoasu"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "Äänitulo"
 automatic:
   follow_system: "Automaattinen (seuraa järjestelmää)"
-  updates_and_manual_update_checks: "Automaattiset päivitykset ja manuaaliset päivitystarkistukset"
 automatically:
-  check_for_new_versions_in_the_back: "Tarkista automaattisesti uudet versiot taustalla."
   start_pindrop_when_you_sign_in: "Käynnistä Pindrop automaattisesti, kun kirjaudut sisään."
 available:
   models: "Saatavilla olevat mallit"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "Vaihda mikrofoni"
 changes:
   the_language_used_by_pindrop_s_interface: "Changes the language used by Pindrop's interface."
-check:
-  for_updates: "Tarkista päivitykset..."
 checking:
   _self: "Tarkistetaan..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "Kopioi parannettu"
   last_transcript: "Kopioi viimeinen transkriptio"
   original: "Kopioi alkuperäinen"
-  system_info_for_bug_report: "Kopioi järjestelmätiedot virheraporttia varten"
-  the_configuration_snippet_into_your_preferr: "Copy the configuration snippet into your preferred AI agent host."
   the_most_recent_transcript_to_the_clipboard: "Kopioi viimeisin transkriptio leikepöydälle"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Copy the most recent transcript to the clipboard."
   to_clipboard: "Kopioi leikepöydälle"
@@ -524,9 +516,6 @@ items:
   _self: "kohteita"
 japanese:
   _self: "japanilainen"
-keep:
-  pindrop_current_automatically_or_check_for: "Keep Pindrop current automatically, or check for a new version now."
-  pindrop_current_automatically_or_trigger_a: "Pidä Pindrop ajan tasalla automaattisesti tai käynnistä manuaalinen tarkistus milloin haluat."
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "Manage Presets…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "Tarkista uudet versiot manuaalisesti nyt."
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "Ei vielä transkriptioita"
   vocabulary_words: "Ei sanastoa"
   transcripts_audio_prompts_file_names_or_perso: "Ei transkriptioita, ääntä, kehotteita, tiedostonimiä tai henkilökohtaista sisältöä — ei koskaan."
-  contributions_yet_pairs_are_stored_when_ai_en: "Ei vielä osallistumisia. Parit tallennetaan, kun tekoälyparannus tai manuaaliset muokkaukset muuttavat transkriptiota."
 not:
   assigned: "Ei määrätty"
   enough_voice_data_yet: "Not enough voice data yet"
@@ -826,8 +812,6 @@ please:
     Lataa malli siirtymällä kohtaan Asetukset → Mallit.
   download_a_whisper_model_in_settings_befo_34e8a33c: "Lataa Whisper-malli asetuksista ennen tallennusta.nnSiirry kohtaan Asetukset → Mallit ladataksesi malli."
   wait: "Odota..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Port changes take effect the next time the server starts."
 portuguese:
   brazil: "portugali (Brasilia)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "Yritä uudelleen"
 right:
   _self: "Oikein"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Run a local HTTP server so AI agents can submit transcription jobs, search history, and manage speakers."
 runtime:
   _self: "Kesto: %@"
   status: "Ajonaikainen tila"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "Keskeytä aktiivisen median toisto väliaikaisesti sanelun tallennuksen aikana."
 tertiary:
   text: "Kolmannen asteen teksti"
-thanks:
-  to_for_investigating_and_kicking_off_the: "Kiitos %@ selvitystyöstä ja korjauksen käynnistämisestä (PR #64)."
-  to_for_the_contribution_pr_61: "Kiitos %@ panoksesta (PR #61)."
 the:
   floating_indicator_is_hidden: "Kelluva ilmaisin on piilotettu."
   model_failed_to_load_within_60_seconds_this: "\"\" Malli ei latautunut 60 sekunnissa. Tämä tarkoittaa yleensä sitä, että mallitiedostot ovat vioittuneet tai yhteensopimattomia.                          Korjaa tämä seuraavasti: 1. Avaa Asetukset → Mallit 2. Poista ongelmallinen malli 3. Lataa malli uudelleen Jos ongelma jatkuu, kokeile pienempää mallia (Tiny tai Base).             \"\""

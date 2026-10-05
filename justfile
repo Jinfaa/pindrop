@@ -45,11 +45,11 @@ build:
     @just _build Debug
     @echo "✅ Debug build complete"
 
-# Build Debug .app and copy it into /Applications (unsigned local install)
+# Build signed Debug .app and copy it into /Applications
 install:
     @./scripts/install-to-applications.sh Debug /Applications
 
-# Build Release .app and copy it into /Applications (unsigned local install)
+# Build signed Release .app and copy it into /Applications
 install-release:
     @./scripts/install-to-applications.sh Release /Applications
 

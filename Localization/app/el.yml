@@ -77,8 +77,6 @@ api:
   key: "Κλειδί API"
   key_saved: "Το κλειδί API αποθηκεύτηκε"
   key_saved_endpoint: "Το κλειδί API αποθηκεύτηκε • Τελικό σημείο: %@"
-app:
-  info_acknowledgments_support_and_logs: "Πληροφορίες εφαρμογής, επιβεβαιώσεις, υποστήριξη και αρχεία καταγραφής"
 appearance:
   _self: "Εμφάνιση"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "Είσοδος ήχου"
 automatic:
   follow_system: "Αυτόματο (Ακολουθήστε το σύστημα)"
-  updates_and_manual_update_checks: "Αυτόματες ενημερώσεις και έλεγχοι μη αυτόματων ενημερώσεων"
 automatically:
-  check_for_new_versions_in_the_back: "Αυτόματος έλεγχος για νέες εκδόσεις στο παρασκήνιο."
   start_pindrop_when_you_sign_in: "Αυτόματη έναρξη του Pindrop όταν συνδέεστε."
 available:
   models: "Διαθέσιμα μοντέλα"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "Αλλαγή μικροφώνου"
 changes:
   the_language_used_by_pindrop_s_interface: "Changes the language used by Pindrop's interface."
-check:
-  for_updates: "Ελέγξτε για ενημερώσεις..."
 checking:
   _self: "Ελεγχος..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "Ενισχυμένη αντιγραφή"
   last_transcript: "Αντιγραφή της τελευταίας μεταγραφής"
   original: "Αντιγραφή πρωτοτύπου"
-  system_info_for_bug_report: "Αντιγράψτε τις πληροφορίες συστήματος για την αναφορά σφαλμάτων"
-  the_configuration_snippet_into_your_preferr: "Copy the configuration snippet into your preferred AI agent host."
   the_most_recent_transcript_to_the_clipboard: "Αντιγράψτε την πιο πρόσφατη μεταγραφή στο πρόχειρο"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Copy the most recent transcript to the clipboard."
   to_clipboard: "Αντιγραφή στο πρόχειρο"
@@ -524,9 +516,6 @@ items:
   _self: "είδη"
 japanese:
   _self: "Ιαπωνικά"
-keep:
-  pindrop_current_automatically_or_check_for: "Keep Pindrop current automatically, or check for a new version now."
-  pindrop_current_automatically_or_trigger_a: "Διατηρήστε το Pindrop τρέχον αυτόματα ή ενεργοποιήστε έναν μη αυτόματο έλεγχο όποτε θέλετε."
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "Manage Presets…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "Ελέγξτε με μη αυτόματο τρόπο για νέες εκδόσεις τώρα."
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "Δεν υπάρχουν ακόμη μεταγραφές"
   vocabulary_words: "Χωρίς λεξιλογικές λέξεις"
   transcripts_audio_prompts_file_names_or_perso: "Καμία μεταγραφή, ήχος, προτροπή, όνομα αρχείου ή προσωπικό περιεχόμενο — ποτέ."
-  contributions_yet_pairs_are_stored_when_ai_en: "Δεν υπάρχουν συνεισφορές ακόμη. Τα ζεύγη αποθηκεύονται όταν η βελτίωση με AI ή οι μη αυτόματες επεξεργασίες αλλάζουν μια μεταγραφή."
 not:
   assigned: "Δεν έχει ανατεθεί"
   enough_voice_data_yet: "Not enough voice data yet"
@@ -826,8 +812,6 @@ please:
     Μεταβείτε στις Ρυθμίσεις → Μοντέλα για λήψη ενός μοντέλου.
   download_a_whisper_model_in_settings_befo_34e8a33c: "Κάντε λήψη ενός μοντέλου Whisper στις Ρυθμίσεις πριν από την εγγραφή.nnΜεταβείτε στις Ρυθμίσεις → Μοντέλα για λήψη ενός μοντέλου."
   wait: "Παρακαλώ περιμένετε..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Port changes take effect the next time the server starts."
 portuguese:
   brazil: "Πορτογαλικά (Βραζιλία)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "Δοκιμάζω πάλι"
 right:
   _self: "Δικαίωμα"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Run a local HTTP server so AI agents can submit transcription jobs, search history, and manage speakers."
 runtime:
   _self: "Χρόνος εκτέλεσης: %@"
   status: "Κατάσταση εκτέλεσης"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "Διακόψτε προσωρινά την ενεργή αναπαραγωγή πολυμέσων κατά την εγγραφή της υπαγόρευσης."
 tertiary:
   text: "Τριτογενές Κείμενο"
-thanks:
-  to_for_investigating_and_kicking_off_the: "Ευχαριστούμε τον/την %@ για τη διερεύνηση και την έναρξη της διόρθωσης (PR #64)."
-  to_for_the_contribution_pr_61: "Ευχαριστούμε τον/την %@ για τη συνεισφορά (PR #61)."
 the:
   floating_indicator_is_hidden: "Η αιωρούμενη ένδειξη είναι κρυμμένη."
   model_failed_to_load_within_60_seconds_this: "\"\" Το μοντέλο απέτυχε να φορτώσει μέσα σε 60 δευτερόλεπτα. Αυτό συνήθως σημαίνει ότι τα αρχεία του μοντέλου είναι κατεστραμμένα ή μη συμβατά.                          Για να το διορθώσετε: 1. Ανοίξτε τις Ρυθμίσεις → Μοντέλα 2. Διαγράψτε το προβληματικό μοντέλο 3. Κάντε ξανά λήψη του μοντέλου Εάν το πρόβλημα παραμένει, δοκιμάστε ένα μικρότερο μοντέλο (Tiny ή Base).             \"\""

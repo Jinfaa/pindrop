@@ -77,8 +77,6 @@ api:
   key: "API-ключ"
   key_saved: "Ключ API сохранен."
   key_saved_endpoint: "Ключ API сохранен • Конечная точка: %@."
-app:
-  info_acknowledgments_support_and_logs: "Информация о приложении, подтверждения, поддержка и журналы"
 appearance:
   _self: "Оформление"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "Аудиовход"
 automatic:
   follow_system: "Автоматический (следовать системе)"
-  updates_and_manual_update_checks: "Автоматические обновления и проверки обновлений вручную"
 automatically:
-  check_for_new_versions_in_the_back: "Автоматически проверять наличие новых версий в фоновом режиме."
   start_pindrop_when_you_sign_in: "Автоматически запускать Pindrop при входе в систему."
 available:
   models: "Доступные модели"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "Сменить микрофон"
 changes:
   the_language_used_by_pindrop_s_interface: "Меняет язык интерфейса Pindrop."
-check:
-  for_updates: "Проверьте наличие обновлений..."
 checking:
   _self: "Проверка..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "Копировать расширенное"
   last_transcript: "Копировать последнюю стенограмму"
   original: "Копировать оригинал"
-  system_info_for_bug_report: "Скопировать информацию о системе для отчета об ошибке"
-  the_configuration_snippet_into_your_preferr: "Скопируйте фрагмент конфигурации в предпочитаемый хост AI-агента."
   the_most_recent_transcript_to_the_clipboard: "Скопируйте самую последнюю расшифровку в буфер обмена."
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Копирует последнюю расшифровку в буфер обмена."
   to_clipboard: "Скопировать в буфер обмена"
@@ -524,9 +516,6 @@ items:
   _self: "предметы"
 japanese:
   _self: "японский"
-keep:
-  pindrop_current_automatically_or_check_for: "Обновляйте Pindrop автоматически или проверьте новую версию сейчас."
-  pindrop_current_automatically_or_trigger_a: "Поддерживайте актуальность Pindrop автоматически или запускайте ручную проверку, когда захотите."
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "Управление пресетами…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "Проверьте наличие новых версий вручную."
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "Транскрипций пока нет"
   vocabulary_words: "Нет словарных слов"
   transcripts_audio_prompts_file_names_or_perso: "Никаких транскрипций, аудио, промптов, имён файлов или личного контента — никогда."
-  contributions_yet_pairs_are_stored_when_ai_en: "Пока нет материалов. Пары сохраняются, когда улучшение с помощью ИИ или ручные правки изменяют транскрипцию."
 not:
   assigned: "Не назначено"
   enough_voice_data_yet: "Пока недостаточно голосовых данных"
@@ -826,8 +812,6 @@ please:
     Перейдите в Настройки → Модели, чтобы загрузить модель.
   download_a_whisper_model_in_settings_befo_34e8a33c: "Перед записью загрузите модель Whisper в настройках. Чтобы загрузить модель, перейдите в «Настройки» → «Модели»."
   wait: "Пожалуйста, подождите..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Изменения порта вступят в силу при следующем запуске сервера."
 portuguese:
   brazil: "Португальский (Бразилия)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "Повторить попытку"
 right:
   _self: "Верно"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Запускает локальный HTTP-сервер, чтобы AI-агенты могли отправлять задания транскрипции, искать в истории и управлять спикерами."
 runtime:
   _self: "Время выполнения: %@"
   status: "Состояние среды выполнения"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "Временно приостановите воспроизведение активного мультимедиа во время записи диктовки."
 tertiary:
   text: "Третичный текст"
-thanks:
-  to_for_investigating_and_kicking_off_the: "Спасибо %@ за расследование и запуск исправления (PR #64)."
-  to_for_the_contribution_pr_61: "Спасибо %@ за вклад (PR #61)."
 the:
   floating_indicator_is_hidden: "Плавающий индикатор скрыт."
   model_failed_to_load_within_60_seconds_this: "\"\" Модель не удалось загрузить в течение 60 секунд. Обычно это означает, что файлы модели повреждены или несовместимы.                          Чтобы это исправить: 1. Откройте «Настройки» → «Модели». 2. Удалите проблемную модель. 3. Загрузите модель заново. Если проблема не устранена, попробуйте модель меньшего размера (Tiny или Base).             \"\""

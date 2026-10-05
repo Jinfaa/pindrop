@@ -77,8 +77,6 @@ api:
   key: "مفتاح واجهة برمجة التطبيقات"
   key_saved: "تم حفظ مفتاح API"
   key_saved_endpoint: "تم حفظ مفتاح واجهة برمجة التطبيقات • نقطة النهاية: %@"
-app:
-  info_acknowledgments_support_and_logs: "معلومات التطبيق والإقرارات والدعم والسجلات"
 appearance:
   _self: "المظهر"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "إدخال الصوت"
 automatic:
   follow_system: "تلقائي (نظام المتابعة)"
-  updates_and_manual_update_checks: "التحديثات التلقائية والتحقق من التحديث اليدوي"
 automatically:
-  check_for_new_versions_in_the_back: "التحقق تلقائيًا من وجود إصدارات جديدة في الخلفية."
   start_pindrop_when_you_sign_in: "قم بتشغيل Pindrop تلقائيًا عند تسجيل الدخول."
 available:
   models: "النماذج المتاحة"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "تغيير الميكروفون"
 changes:
   the_language_used_by_pindrop_s_interface: "Changes the language used by Pindrop's interface."
-check:
-  for_updates: "التحقق من وجود تحديثات..."
 checking:
   _self: "جارٍ التحقق..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "نسخة محسنة"
   last_transcript: "نسخ النص الأخير"
   original: "نسخ الأصل"
-  system_info_for_bug_report: "انسخ معلومات النظام لتقرير الأخطاء"
-  the_configuration_snippet_into_your_preferr: "Copy the configuration snippet into your preferred AI agent host."
   the_most_recent_transcript_to_the_clipboard: "انسخ أحدث نسخة إلى الحافظة"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Copy the most recent transcript to the clipboard."
   to_clipboard: "نسخ إلى الحافظة"
@@ -524,9 +516,6 @@ items:
   _self: "أغراض"
 japanese:
   _self: "اليابانية"
-keep:
-  pindrop_current_automatically_or_check_for: "Keep Pindrop current automatically, or check for a new version now."
-  pindrop_current_automatically_or_trigger_a: "حافظ على تحديث Pindrop تلقائيًا، أو قم بإجراء فحص يدوي وقتما تشاء."
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "Manage Presets…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "تحقق يدويًا من وجود إصدارات جديدة الآن."
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "لا يوجد نسخ بعد"
   vocabulary_words: "لا توجد كلمات المفردات"
   transcripts_audio_prompts_file_names_or_perso: "لا نسخ ولا صوت ولا مطالبات ولا أسماء ملفات ولا محتوى شخصي — أبدًا."
-  contributions_yet_pairs_are_stored_when_ai_en: "لا مساهمات بعد. تُخزَّن الأزواج عندما يغيّر التحسين بالذكاء الاصطناعي أو التعديلات اليدوية نسخًا."
 not:
   assigned: "لم يتم تعيينه"
   enough_voice_data_yet: "Not enough voice data yet"
@@ -826,8 +812,6 @@ please:
     انتقل إلى الإعدادات → النماذج لتنزيل نموذج.
   download_a_whisper_model_in_settings_befo_34e8a33c: "يرجى تنزيل نموذج Whisper في الإعدادات قبل التسجيل. انتقل إلى الإعدادات → النماذج لتنزيل النموذج."
   wait: "انتظر من فضلك..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Port changes take effect the next time the server starts."
 portuguese:
   brazil: "البرتغالية (البرازيل)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "أعد المحاولة"
 right:
   _self: "يمين"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Run a local HTTP server so AI agents can submit transcription jobs, search history, and manage speakers."
 runtime:
   _self: "وقت التشغيل: %@"
   status: "حالة التشغيل"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "قم بإيقاف تشغيل الوسائط النشطة مؤقتًا أثناء تسجيل الإملاء."
 tertiary:
   text: "النص الثالثي"
-thanks:
-  to_for_investigating_and_kicking_off_the: "شكرًا لـ %@ على التحقيق وبدء الإصلاح (PR #64)."
-  to_for_the_contribution_pr_61: "شكرًا لـ %@ على المساهمة (PR #61)."
 the:
   floating_indicator_is_hidden: "المؤشر العائم مخفي."
   model_failed_to_load_within_60_seconds_this: "\" \"فشل تحميل النموذج خلال 60 ثانية. وهذا يعني عادةً أن ملفات النموذج تالفة أو غير متوافقة.                          لإصلاح ذلك: 1. افتح الإعدادات → النماذج 2. احذف النموذج الذي به مشكلة 3. أعد تنزيل النموذج إذا استمرت المشكلة، فجرّب نموذجًا أصغر (Tiny أو Base).             \"\""

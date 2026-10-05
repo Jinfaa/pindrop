@@ -77,8 +77,6 @@ api:
   key: "API Anahtarı"
   key_saved: "API anahtarı kaydedildi"
   key_saved_endpoint: "API anahtarı kaydedildi • Uç nokta: %@"
-app:
-  info_acknowledgments_support_and_logs: "Uygulama bilgileri, teşekkür, destek ve günlükler"
 appearance:
   _self: "Görünüm"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "Ses Girişi"
 automatic:
   follow_system: "Otomatik (Takip Sistemi)"
-  updates_and_manual_update_checks: "Otomatik güncellemeler ve manuel güncelleme kontrolleri"
 automatically:
-  check_for_new_versions_in_the_back: "Arka planda yeni sürümleri otomatik olarak kontrol edin."
   start_pindrop_when_you_sign_in: "Oturum açtığınızda Pindrop'u otomatik olarak başlatın."
 available:
   models: "Mevcut Modeller"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "Mikrofonu değiştir"
 changes:
   the_language_used_by_pindrop_s_interface: "Pindrop arayüzünün dilini değiştirir."
-check:
-  for_updates: "Güncellemeleri Kontrol Et..."
 checking:
   _self: "Kontrol ediliyor..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "Geliştirilmiş Kopyalama"
   last_transcript: "Son Transkripti Kopyala"
   original: "Orijinali Kopyala"
-  system_info_for_bug_report: "Hata Raporu için Sistem Bilgilerini Kopyala"
-  the_configuration_snippet_into_your_preferr: "Copy the configuration snippet into your preferred AI agent host."
   the_most_recent_transcript_to_the_clipboard: "En son transkripti panoya kopyalayın"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Copy the most recent transcript to the clipboard."
   to_clipboard: "Panoya kopyala"
@@ -524,9 +516,6 @@ items:
   _self: "öğeler"
 japanese:
   _self: "Japonca"
-keep:
-  pindrop_current_automatically_or_check_for: "Keep Pindrop current automatically, or check for a new version now."
-  pindrop_current_automatically_or_trigger_a: "Pindrop'u otomatik olarak güncel tutun veya istediğiniz zaman manuel kontrolü tetikleyin."
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "Manage Presets…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "Şimdi yeni sürümleri manuel olarak kontrol edin."
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "Henüz transkripsiyon yok"
   vocabulary_words: "Kelime Bilgisi Yok"
   transcripts_audio_prompts_file_names_or_perso: "Hiçbir transkripsiyon, ses, istem, dosya adı veya kişisel içerik yok — asla."
-  contributions_yet_pairs_are_stored_when_ai_en: "Henüz katkı yok. AI geliştirmesi veya el ile düzenlemeler bir transkripsiyonu değiştirdiğinde çiftler depolanır."
 not:
   assigned: "Atanmadı"
   enough_voice_data_yet: "Not enough voice data yet"
@@ -826,8 +812,6 @@ please:
     Bir model indirmek için Ayarlar → Modeller'e gidin.
   download_a_whisper_model_in_settings_befo_34e8a33c: "Lütfen kaydetmeden önce Ayarlar'dan bir Whisper modeli indirin.nnBir model indirmek için Ayarlar → Modeller bölümüne gidin."
   wait: "Lütfen bekleyin..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Port changes take effect the next time the server starts."
 portuguese:
   brazil: "Portekizce (Brezilya)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "Yeniden dene"
 right:
   _self: "Sağ"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Run a local HTTP server so AI agents can submit transcription jobs, search history, and manage speakers."
 runtime:
   _self: "Çalışma zamanı: %@"
   status: "Çalışma zamanı durumu"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "Dikte kaydı sırasında aktif medya oynatmayı geçici olarak duraklatın."
 tertiary:
   text: "Üçüncül Metin"
-thanks:
-  to_for_investigating_and_kicking_off_the: "Araştırıp düzeltmeyi başlattığı için %@ kişisine teşekkürler (PR #64)."
-  to_for_the_contribution_pr_61: "Katkısı için %@ kişisine teşekkürler (PR #61)."
 the:
   floating_indicator_is_hidden: "Kayan gösterge gizli."
   model_failed_to_load_within_60_seconds_this: "\"\" Model 60 saniye içinde yüklenemedi. Bu genellikle model dosyalarının bozuk veya uyumsuz olduğu anlamına gelir.                          Bunu düzeltmek için: 1. Ayarlar → Modeller'i açın 2. Sorunlu modeli silin 3. Modeli yeniden indirin Sorun devam ederse daha küçük bir model deneyin (Tiny veya Base).             \"\""

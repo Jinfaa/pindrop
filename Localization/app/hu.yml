@@ -77,8 +77,6 @@ api:
   key: "API kulcs"
   key_saved: "API-kulcs mentve"
   key_saved_endpoint: "API-kulcs mentve • Végpont: %@"
-app:
-  info_acknowledgments_support_and_logs: "Alkalmazásinformációk, visszaigazolások, támogatás és naplók"
 appearance:
   _self: "Megjelenés"
 append:
@@ -100,9 +98,7 @@ audio:
   input: "Audio bemenet"
 automatic:
   follow_system: "Automatikus (rendszerkövetés)"
-  updates_and_manual_update_checks: "Automatikus frissítések és kézi frissítés-ellenőrzések"
 automatically:
-  check_for_new_versions_in_the_back: "Az új verziók automatikus keresése a háttérben."
   start_pindrop_when_you_sign_in: "A Pindrop automatikus indítása bejelentkezéskor."
 available:
   models: "Elérhető modellek"
@@ -142,8 +138,6 @@ change:
   microphone_ac9970f4: "Mikrofon csere"
 changes:
   the_language_used_by_pindrop_s_interface: "Changes the language used by Pindrop's interface."
-check:
-  for_updates: "Frissítések keresése..."
 checking:
   _self: "Ellenőrzés..."
 choose:
@@ -223,8 +217,6 @@ copy:
   enhanced: "Továbbfejlesztett másolás"
   last_transcript: "Utolsó átirat másolása"
   original: "Eredeti másolása"
-  system_info_for_bug_report: "Rendszerinformációk másolása a hibajelentéshez"
-  the_configuration_snippet_into_your_preferr: "Copy the configuration snippet into your preferred AI agent host."
   the_most_recent_transcript_to_the_clipboard: "Másolja a legutóbbi átiratot a vágólapra"
   the_most_recent_transcript_to_the_clipboard_03a8d47b: "Copy the most recent transcript to the clipboard."
   to_clipboard: "Másolás a vágólapra"
@@ -524,9 +516,6 @@ items:
   _self: "tételeket"
 japanese:
   _self: "japán"
-keep:
-  pindrop_current_automatically_or_check_for: "Keep Pindrop current automatically, or check for a new version now."
-  pindrop_current_automatically_or_trigger_a: "Tartsa Pindrop automatikusan aktuális, vagy indítson el egy kézi ellenőrzést, amikor csak akarja."
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -612,8 +601,6 @@ manage:
   presets_d5d4c2c2: "Manage Presets…"
 manual:
   capture: "Manual capture"
-manually:
-  check_for_new_versions_now: "Most manuálisan ellenőrizze az új verziókat."
 markdown:
   md: "Markdown (.md)"
 may:
@@ -702,7 +689,6 @@ no:
   transcriptions_yet: "Még nincsenek átiratok"
   vocabulary_words: "Nincs szótár"
   transcripts_audio_prompts_file_names_or_perso: "Se átiratok, se hang, se promptok, se fájlnevek, se személyes tartalom — soha."
-  contributions_yet_pairs_are_stored_when_ai_en: "Még nincsenek hozzájárulások. A párok akkor tárolódnak, amikor az AI-fejlesztés vagy kézi szerkesztések megváltoztatnak egy átiratot."
 not:
   assigned: "Nincs hozzárendelve"
   enough_voice_data_yet: "Not enough voice data yet"
@@ -826,8 +812,6 @@ please:
     A modell letöltéséhez lépjen a Beállítások → Modellek menüpontba.
   download_a_whisper_model_in_settings_befo_34e8a33c: "A rögzítés előtt töltsön le egy Whisper-modellt a Beállításokban.nnA modell letöltéséhez lépjen a Beállítások → Modellek menüpontra."
   wait: "Kérem, várjon..."
-port:
-  changes_take_effect_the_next_time_the_serve: "Port changes take effect the next time the server starts."
 portuguese:
   brazil: "portugál (Brazília)"
 powered:
@@ -959,8 +943,6 @@ retry:
   _self: "Próbálja újra"
 right:
   _self: "Jobbra"
-run:
-  a_local_http_server_so_ai_agents_can_submit: "Run a local HTTP server so AI agents can submit transcription jobs, search history, and manage speakers."
 runtime:
   _self: "Futásidő: %@"
   status: "Futásidejű állapot"
@@ -1121,9 +1103,6 @@ temporarily:
   pause_active_media_playback_while_di: "Átmenetileg szünetelteti az aktív médialejátszást diktálás közben."
 tertiary:
   text: "Harmadlagos szöveg"
-thanks:
-  to_for_investigating_and_kicking_off_the: "Köszönet %@ számára a hiba feltárásáért és a javítás elindításáért (PR #64)."
-  to_for_the_contribution_pr_61: "Köszönet %@ számára a hozzájárulásért (PR #61)."
 the:
   floating_indicator_is_hidden: "A lebegő jelző el van rejtve."
   model_failed_to_load_within_60_seconds_this: "\"\" A modell betöltése nem sikerült 60 másodpercen belül. Ez általában azt jelenti, hogy a modellfájlok sérültek vagy nem kompatibilisek.                          A probléma megoldása: 1. Nyissa meg a Beállítások → Modellek menüpontot. 2. Törölje a problémás modellt 3. Töltse le újra a modellt. Ha a probléma továbbra is fennáll, próbáljon ki egy kisebb modellt (Tiny vagy Base).             \"\""
