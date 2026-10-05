@@ -14,6 +14,5 @@ transcripts and settings. If a field is not listed here, Pindrop does not collec
 
 Pindrop writes local log files
 (`~/Library/Application Support/Pindrop/Logs/`, rotated, capped). Log messages are
-redacted at write time — transcript text is never logged. **Export Logs…** in
-Settings → Advanced copies them to a folder of your choice so you can attach them to
-a GitHub issue. Logs never leave your machine unless you send them.
+redacted at write time — transcript text is never logged. **Open Logs in Finder**
+in Settings → About reveals the folder so you can attach them to a GitHub issue. Logs never leave your machine unless you send them.

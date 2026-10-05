@@ -196,7 +196,6 @@ MODELSPRESENTBUILD01A2B3C4 /* ModelsPresentation.swift in Sources */ = {isa = PB
 		WHISPERENG02A2B3C4D5E6F /* MLXWhisperEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = WHISPERENG03A2B3C4D5E6F /* MLXWhisperEngine.swift */; };
 		WKSPIDX02A2B3C4D5E6F /* WorkspaceFileIndexService.swift in Sources */ = {isa = PBXBuildFile; fileRef = WKSPIDX01A2B3C4D5E6F /* WorkspaceFileIndexService.swift */; };
 		WORDRPLACEA1B2C3D4 /* WordReplacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = WORDRPLACEA1B2C3D4E5 /* WordReplacement.swift */; };
-		MCPSETTVIEWBUILD01A2B3C4D5E6 /* AdvancedSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = MCPSETTVIEWFILE01A2B3C4D5E6F /* AdvancedSettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -389,7 +388,6 @@ MODELSPRESENTFILE01A2B3C4 /* ModelsPresentation.swift */ = {isa = PBXFileReferen
 		WORDRPLACEA1B2C3D4E5 /* WordReplacement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordReplacement.swift; sourceTree = "<group>"; };
 		a2189a034cf447e08e86f24b /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 		f5b1372d4c0e4e96a1ed0b59 /* AudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorder.swift; sourceTree = "<group>"; };
-		MCPSETTVIEWFILE01A2B3C4D5E6F /* AdvancedSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedSettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -567,7 +565,6 @@ MODELSPRESENTFILE01A2B3C4 /* ModelsPresentation.swift */ = {isa = PBXFileReferen
 				44EA00B68B5647C5A7ED8537 /* AIEnhancementSettingsView.swift */,
 				MODELPICKERSHEETFILE01A2B3C4D5 /* ModelPickerSheet.swift */,
 				83556707A5B946DA8E8D1F06 /* AboutSettingsView.swift */,
-				MCPSETTVIEWFILE01A2B3C4D5E6F /* AdvancedSettingsView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1038,7 +1035,6 @@ MODELSPRESENTBUILD01A2B3C4 /* ModelsPresentation.swift in Sources */,
 				AIMODELSERVICEBUILD01A2B3C4D5E6F /* AIModelService.swift in Sources */,
 				808D93D3AE93C8AC617300D6 /* AppTestMode.swift in Sources */,
 				987212BCF53288AC6E5C81D6 /* TaskScheduler.swift in Sources */,
-				MCPSETTVIEWBUILD01A2B3C4D5E6 /* AdvancedSettingsView.swift in Sources */,
 			);
 		};
 /* End PBXSourcesBuildPhase section */
