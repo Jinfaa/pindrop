@@ -8,7 +8,6 @@
 import AppKit
 import ApplicationServices
 import Foundation
-import os.log
 
 struct FocusedTextSnapshot: Equatable {
     let appBundleIdentifier: String?

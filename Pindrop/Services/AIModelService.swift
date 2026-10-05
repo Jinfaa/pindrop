@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import os.log
 
 @MainActor
 final class AIModelService {

@@ -86,10 +86,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Capture before any async hop; `currentAppleEvent` is only reliable here.
         launchSemantics = StartupWindowPresentationPolicy.captureLaunchSemantics()
         let bootStarted = CFAbsoluteTimeGetCurrent()
-        Log.bootstrap()
         FontLoader.bootstrap()
         Log.boot.info(
-            "applicationDidFinishLaunching begin logFile=\(Log.currentLogFileName) hideFlag=\(launchSemantics.launchServicesRequestedHide)"
+            "applicationDidFinishLaunching begin hideFlag=\(launchSemantics.launchServicesRequestedHide)"
         )
         guard !Self.isRunningUITests else {
             AppUITestFixture.configureApplication()

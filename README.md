@@ -75,7 +75,7 @@ Pindrop runs in the menu bar only, so there is no dock icon. Look for the microp
 
 ## Privacy
 
-By default, audio and transcripts are processed and stored on your Mac. Selecting an OpenAI cloud transcription model sends recorded audio to the OpenAI Audio API and may incur OpenAI usage charges; the API key is stored in the macOS Keychain. Pindrop has no telemetry. Local diagnostic logs are described in [docs/TELEMETRY.md](docs/TELEMETRY.md).
+By default, audio and transcripts are processed and stored on your Mac. Selecting an OpenAI cloud transcription model sends recorded audio to the OpenAI Audio API and may incur OpenAI usage charges; the API key is stored in the macOS Keychain. Pindrop has no telemetry and writes no logs.
 
 ## Building from source
 

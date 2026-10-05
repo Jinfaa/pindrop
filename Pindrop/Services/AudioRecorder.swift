@@ -9,7 +9,6 @@ import Foundation
 import AVFoundation
 import CoreAudio
 import AudioToolbox
-import os.log
 
 enum AudioRecordingMode: String, CaseIterable, Equatable, Sendable {
     case microphone

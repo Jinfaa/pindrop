@@ -1,7 +1,6 @@
 import Foundation
 import AppKit
 import SwiftUI
-import os.log
 
 @MainActor
 final class StatusBarController: NSObject, NSMenuDelegate {

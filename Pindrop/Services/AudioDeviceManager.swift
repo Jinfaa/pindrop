@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreAudio
-import os.log
 
 struct AudioInputDevice: Identifiable, Hashable {
     let deviceID: AudioDeviceID

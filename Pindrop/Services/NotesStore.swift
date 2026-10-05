@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftData
-import os.log
 
 extension Notification.Name {
     static let pindropNoteTagsDidChange = Notification.Name("PindropNoteTagsDidChange")

@@ -78,9 +78,8 @@ just xcode                 # open Xcode project
 
 ## Logging
 
-- Use `Log` categories from `Pindrop/Utils/Logger.swift`
-- Categories include: `audio`, `transcription`, `model`, `output`, `hotkey`, `app`, `ui`, `aiEnhancement`, `context`
-- Log intent and failure context; avoid noisy per-frame spam
+- Logging is disabled: `Log` in `Pindrop/Utils/Logger.swift` is a no-op kept only so existing call sites compile
+- Pindrop writes no logs to disk or the unified log; do not add `os.Logger`, `print`, or file logging
 
 ## SwiftData and Persistence
 

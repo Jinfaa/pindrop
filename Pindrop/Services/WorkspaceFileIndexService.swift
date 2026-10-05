@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import os.log
 
 // MARK: - File System Provider Protocol
 

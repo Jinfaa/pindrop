@@ -8,7 +8,6 @@
 import Foundation
 import AppKit
 import ApplicationServices
-import os.log
 
 enum OutputMode {
     case clipboard

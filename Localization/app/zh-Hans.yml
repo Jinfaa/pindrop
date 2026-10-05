@@ -39,21 +39,12 @@ add:
   custom_words_to_improve_transcription_accura: "添加自定义词汇以提高专业术语、名称或行话的转录准确性。"
   provider: "添加提供商"
   tag: "添加标签..."
-  this_to_claude_settings_json_in_your_project: "将其添加到项目根目录的 .claude/settings.json，或用户级 ~/.claude/settings.json。"
-  this_to_codex_config_toml_project_scoped_con: "将其添加到 ~/.codex/config.toml。受信任项目可将项目级配置放在 .codex/config.toml。"
-  this_to_config_opencode_opencode_json_for_us: "将其添加到 ~/.config/opencode/opencode.json，以在所有项目中获得用户级访问。"
-  this_to_cursor_mcp_json_in_your_project_root: "将其添加到项目根目录的 .cursor/mcp.json，或所有项目的 ~/.cursor/mcp.json。保存后重启 Cursor。"
-  this_to_opencode_json_in_your_project_root_f: "将其添加到项目根目录的 opencode.json，以获得项目级访问。"
   to_existing: "添加到现有"
   trailing_space: "添加尾随空格"
   blank_lines_between_sentence_groups_in_longe: "在较长听写中于句组之间添加空行。完全本地处理，不使用 AI。"
   word_replacements_to_automatically_correct_c: "添加词汇替换以自动纠正常见的转录错误。"
   words_to_help_pindrop_recognize_them_properl: "添加词汇以帮助 Pindrop 正确识别它们"
   words_you_manually_correct_into_your_vocabul: "将您手动更正的词汇添加到词汇表中，以供将来的转录使用。"
-advanced:
-  _self: "高级"
-agent:
-  setup: "代理设置"
 ai:
   _self: "AI"
   enhanced: "AI-enhanced"
@@ -88,7 +79,6 @@ api:
   key_saved_endpoint: "API 密钥已保存 • 端点：%@"
 app:
   info_acknowledgments_support_and_logs: "应用信息、致谢、支持和日志"
-  version_macos_version_hardware_type_which_fe: "应用版本、macOS 版本、硬件类型、使用了哪些功能以及错误类别。"
 appearance:
   _self: "外观"
 append:
@@ -105,14 +95,11 @@ are:
   you_sure_you_want_to_delete_this_action_cann: "您确定要删除'%@'吗？此操作无法撤销。"
 assignments:
   _self: "作业"
-attach:
-  logs_from_this_folder_when_filing_a_githu: "在提交 GitHub 问题时，请附上此文件夹中的日志。"
 audio:
   duration: "Audio duration"
   input: "音频输入"
 automatic:
   follow_system: "自动（跟随系统）"
-  updates: "自动更新"
   updates_and_manual_update_checks: "自动更新和手动更新检查"
 automatically:
   check_for_new_versions_in_the_back: "自动在后台检查新版本。"
@@ -132,8 +119,6 @@ back:
   to_library: "返回库"
 base:
   _self: "基础"
-bearer:
-  token: "Bearer 令牌"
 best:
   _self: "最佳"
 better:
@@ -155,13 +140,10 @@ capture:
 change:
   microphone: "更改麦克风"
   microphone_ac9970f4: "更改麦克风"
-  your_choice_anytime_in_settings_privacy: "随时可在设置 → 隐私中更改你的选择。"
 changes:
   the_language_used_by_pindrop_s_interface: "更改 Pindrop 界面使用的语言。"
 check:
   for_updates: "检查更新..."
-  for_updates_736b9062: "检查更新"
-  now: "立即检查"
 checking:
   _self: "检查中..."
 choose:
@@ -188,7 +170,6 @@ choose:
   which_microphone_pindrop_should_use_for_d: "选择 Pindrop 用于听写的麦克风以及录制时的行为。"
   which_microphone_pindrop_uses_for_dictati: "选择 Pindrop 用于听写的麦克风。"
   which_side_the_navigation_sidebar_appears: "选择导航侧边栏显示在哪一侧。"
-  where_to_save_the_training_data_file: "选择训练数据文件的保存位置。"
 clean:
   up_filler_words: "清理填充词"
 clear:
@@ -203,8 +184,6 @@ click:
   or_press: "点击或按下"
   or_set_a_hotkey_to_start_talking: "点击或设置快捷键开始说话"
   this_icon_anytime_to: "随时点击此图标以："
-client:
-  _self: "客户端"
 clipboard:
   _self: "剪贴板"
   temporarily_copies_the_transcript_for: "剪贴板会临时复制转写以便粘贴。直接插入会在可能时输入到当前应用。"
@@ -221,8 +200,6 @@ coming:
   soon_04d2fd85: "即将推出"
 configuration:
   file: "配置文件"
-  scope: "配置范围"
-  snippet: "配置片段"
 configure:
   ai_providers_and_credentials_apple_int: "配置 AI 提供商和凭据。Apple Intelligence 在设备上运行；其他提供商需要 API 密钥。"
   keyboard_shortcuts_for_recording_and_n: "配置录制和笔记捕获的键盘快捷键"
@@ -246,7 +223,6 @@ copy:
   enhanced: "复制增强版"
   last_transcript: "复制上次转录"
   original: "复制原版"
-  system_info: "复制系统信息"
   system_info_for_bug_report: "复制系统信息以提交错误报告"
   the_configuration_snippet_into_your_preferr: "将配置片段复制到你偏好的 AI 代理主机。"
   the_most_recent_transcript_to_the_clipboard: "将最新的转录复制到剪贴板"
@@ -316,8 +292,6 @@ delete:
   preset_4f6cfe36: "删除预设？"
   transcription: "删除转录"
   transcription_f82187c4: "删除转录？"
-  all_contributions: "删除所有贡献…"
-  all_stored_text_pairs: "删除所有已存储的文本对？"
 destinations:
   _self: "Destinations"
 diarization:
@@ -387,7 +361,6 @@ empty:
 enable:
   ai_enhancement: "启用 AI 增强"
   live_session_updates_during_recording: "启用录制期间的实时会话更新"
-  mcp_server: "启用 MCP 服务器"
   vibe_mode_ui_context: "启用 vibe 模式（UI 上下文）"
 enabled:
   _self: "已启用"
@@ -423,7 +396,6 @@ export:
   failed: "导出失败：%@"
   last_transcript: "导出上次转录..."
   presets: "导出预设"
-  jsonl: "导出 JSONL…"
 failed:
   to_add_replacement: "添加替换失败：%@"
   to_add_word: "添加词汇失败：%@"
@@ -480,7 +452,6 @@ hindi:
 get:
   started: "开始使用"
 global:
-  _self: "全局"
   keyboard_shortcuts: "全局键盘快捷键"
 go:
   back: "返回"
@@ -501,7 +472,6 @@ great:
   _self: "很好"
 help:
   _self: "帮助"
-  improve_pindrop: "帮助改进 Pindrop？"
 hide:
   api_key: "隐藏 API 密钥"
   this_for_1_hour: "隐藏 1 小时"
@@ -557,7 +527,6 @@ japanese:
 keep:
   pindrop_current_automatically_or_check_for: "自动保持 Pindrop 最新，或立即检查新版本。"
   pindrop_current_automatically_or_trigger_a: "自动保持 Pindrop 最新，或随时触发手动检查。"
-  before_and_after_text_pairs_when_ai_enhance: "当 AI 增强或你的编辑改进转录时，保留修改前后的文本对。仅存储在此 Mac 上 — 不会上传任何内容。"
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -580,7 +549,6 @@ layout:
   _self: "布局"
 learn:
   corrected_words_automatically: "自动学习更正的词汇"
-  more: "了解更多"
 left:
   _self: "左侧"
 legacy:
@@ -650,9 +618,6 @@ markdown:
   md: "Markdown (.md)"
 may:
   conflict_with_a_system_shortcut: "May conflict with a system shortcut (%@)"
-mcp:
-  configuration_error: "MCP 配置错误"
-  server: "MCP 服务器"
 malayalam:
   _self: "马拉雅拉姆语"
 media:
@@ -741,12 +706,10 @@ no:
 not:
   assigned: "未分配"
   enough_voice_data_yet: "语音数据尚不足"
-  generated_yet_enable_the_server: "尚未生成 — 请启用服务器"
   granted: "未授予"
   selected: "未选择"
   set: "未设置"
   set_93039e60: "未设置"
-  now: "暂不"
 note:
   _self: "笔记"
   capture_hold: "笔记采集 — 按住"
@@ -777,7 +740,6 @@ open:
   _self: "打开"
   history: "打开历史"
   library: "打开资料库"
-  logs_in_finder: "在 Finder 中打开日志"
   original_link: "打开原始链接"
   progress: "打开进度"
   settings: "打开设置"
@@ -808,7 +770,6 @@ originals:
 other:
   _self: "Other"
 output:
-  _self: "输出"
   audio_interface_and_everyday_behavior: "输出、音频、界面和日常行为"
   mode: "输出模式"
 overview:
@@ -851,7 +812,6 @@ pindrop:
   orb: "Pindrop 光球"
   pill: "Pindrop 胶囊"
   theme: "Pindrop 主题"
-  can_send_anonymous_privacy_preserving_si: "Pindrop 可以发送匿名且保护隐私的信号，以便更快修复错误。"
 pinned:
   _self: "已置顶"
 plain:
@@ -867,7 +827,6 @@ please:
   download_a_whisper_model_in_settings_befo_34e8a33c: "请在录制前在设置中下载 Whisper 模型。nn前往设置 → 模型下载模型。"
   wait: "请稍候..."
 port:
-  _self: "端口"
   changes_take_effect_the_next_time_the_serve: "端口更改将在下次启动服务器时生效。"
 portuguese:
   brazil: "葡萄牙语（巴西）"
@@ -912,8 +871,6 @@ processing:
   5aa377e2: "⏳ 处理中"
   ellipsis: "处理中…"
   transcript: "Processing transcript"
-project:
-  _self: "项目"
 prompt:
   _self: "提示词"
   preset: "提示词预设"
@@ -964,8 +921,6 @@ redo:
 refresh:
   _self: "刷新"
   the_provider_or_open_edit_to_fetch_model: "请刷新提供商或打开“编辑”以获取模型。"
-regenerate:
-  _self: "重新生成"
 remove:
   _self: "消除"
   and_clear_any_assignments_that_reference: "删除“%@”并清除引用它的所有作业？存储的凭据将被删除。"
@@ -1197,7 +1152,6 @@ this:
   will_clear_all_your_settings_including_api_8cd9a6fb: "这将清除包括 API 密钥在内的所有设置，并重新开始引导"
   will_permanently_remove_the_transcript_and: "这将永久删除转录及其托管的媒体文件。"
   will_permanently_remove_this_note: "这将永久删除此笔记。"
-  permanently_deletes_all_stored_text_pairs_f: "此操作将从此 Mac 永久删除所有已存储的文本对。"
 time:
   of_day: "Time of day"
   range: "Time range"
@@ -1254,7 +1208,6 @@ u10:
   floating_inserted_into: "已插入到 %@"
   floating_microphone_unavailable: "麦克风不可用"
   floating_transcribing: "正在转写…"
-  floating_whats_new: "新功能"
   floating_word_count: "%d 个字词"
 u11:
   estimating_time: "正在估算剩余时间…"
@@ -1367,34 +1320,22 @@ u8:
   settings_acknowledgements: "致谢"
   settings_advanced_assignments: "高级分配"
   settings_audio_on_disk_format: "磁盘上的音频：%@ · %@"
-  settings_beta_channel: "测试版"
   settings_bundled_fonts_ofl: "内置字体（Newsreader、Inter、JetBrains Mono）采用 SIL Open Font License。"
-  settings_checks_for_updates_automatically: "Pindrop 会自动检查更新。"
   settings_choose_a_provider: "选择提供方"
-  settings_choose_folder_export_logs: "选择用于复制 Pindrop 日志文件的文件夹。"
   settings_copy_last_transcript: "复制上次转写"
-  settings_copy_token: "复制令牌"
   settings_days_30: "30 天"
   settings_days_7: "7 天"
-  settings_debug: "调试"
   settings_delete_all_audio: "删除全部音频"
   settings_delete_all_audio_ellipsis: "删除全部音频…"
   settings_delete_all_audio_question: "删除全部音频？"
-  settings_diagnostics: "诊断"
   settings_edit_prompt_ellipsis: "编辑提示词…"
-  settings_endpoint: "端点"
   settings_enhance_transcripts: "增强转写"
   settings_example_label: "示例"
-  settings_export_logs_ellipsis: "导出日志…"
   settings_forever: "永久"
   settings_github: "GitHub"
-  settings_info: "信息"
   settings_keep_dictation_audio: "保留听写音频"
-  settings_last_checked_format: "上次检查 %@"
   settings_license_mit: "许可 — MIT"
   settings_listening_ellipsis: "正在聆听…"
-  settings_log_level: "日志级别"
-  settings_logs_never_include_transcript: "日志从不包含转写正文"
   settings_made_with_care: "为本地语音精心打造。"
   settings_manage_ellipsis: "管理…"
   settings_n_samples: "%d 个样本"
@@ -1406,7 +1347,6 @@ u8:
   settings_presets_recolor_caption: "预设会重新着色强调色和背景。文本对比度会自动校验。"
   settings_push_to_talk: "按住说话"
   settings_recording_indicator: "录音指示器"
-  settings_release_channel: "正式版"
   settings_removes_kept_dictation_audio: "删除已保留的听写音频文件。文稿仍保留在资料库中。"
   settings_reset_all_settings_ellipsis: "重置所有设置…"
   settings_separate_from_interface_language: "与界面语言分开"
@@ -1416,7 +1356,6 @@ u8:
   settings_theme_preset: "主题预设"
   settings_toggle_dictation: "切换听写"
   settings_trained_summary_format: "%@ — 用于标注会议中谁说了什么"
-  settings_update_checks_unavailable: "更新检查暂时不可用。"
   settings_warning: "警告"
   settings_website: "网站"
 u9:
@@ -1449,8 +1388,6 @@ unknown:
   _self: "Unknown"
 unpin:
   from_screen: "从屏幕取消固定"
-update:
-  _self: "更新"
 updates:
   _self: "更新"
 use:
@@ -1492,10 +1429,6 @@ web:
   link: "Web link"
 welcome:
   to_pindrop: "欢迎使用 Pindrop"
-what:
-  s_new: "新功能…"
-  s_new_in_pindrop: "Pindrop 的新功能"
-  does_pindrop_collect: "Pindrop 收集哪些数据？"
 while:
   recording: "录制时"
 whisperkit:
@@ -1521,7 +1454,6 @@ you:
   re_all_set: "一切就绪！"
   re_all_set_058a8130: "一切就绪！"
   ve_exceeded_your_api_rate_limit_or_quota_to: "\"\"                 您已超出 API 速率限制或配额。                                  解决方法：                 1. 等待几分钟后重试                 2. 检查您的 API 提供商的使用限制                 3. 考虑升级您的 API 计划                                  转录已保存，未进行增强。                 \"\""
-  re_in_control: "你掌握控制权"
 your:
   api_key_appears_to_be_invalid_or_expired_to: "\"\"                 您的 API 密钥似乎无效或已过期。                                  解决方法：                 1. 打开设置 → AI 增强                 2. 验证您的 API 密钥是否正确                 3. 检查您的 API 端点是否正确                                  转录已保存，未进行增强。                 \"\""
   floating_indicator_is_now_a_living_audio_re: "你的浮动指示器现在是会对音频作出反应的活体 orb。闲置时会呼吸，说话时会膨胀，并在你听写时实时流式显示文字。"
@@ -1532,7 +1464,6 @@ your:
   model_is_ready_to_use: "您的模型已准备好使用。"
   stats: "您的统计"
   stats_will_appear_after_you_create_transcri: "Your stats will appear after you create transcriptions."
-  words_stay_yours: "你的文字始终属于你"
 zoom:
   _self: "缩放"
 polish:
@@ -1541,36 +1472,6 @@ bubble:
   _self: "气泡"
 notch:
   _self: "刘海"
-whatsnew:
-  footer: "此外：提示词预设已重回菜单栏，录音光球有了新波形，现有资料库也能再次可靠打开。"
-  formatting_body: "可在 Library 中修正已保存的转录，并保留清晰的 Edited 标记。"
-  formatting_title: "可编辑转录"
-  indicators_body: "查看每次听写各阶段耗时与 AI 令牌用量，以及 Stats 中的平均值。"
-  indicators_title: "流水线洞察"
-  languages_body: "遥测在你主动启用前保持关闭，训练贡献数据仍留在你的 Mac 上，可随时查看、导出或删除。"
-  languages_title: "隐私优先的诊断"
-  sensevoice_body: "流式回调、关闭流程与实时界面更新现在保持有序且高效。"
-  sensevoice_title: "更可靠的听写"
-  summary: "私密诊断、可编辑历史、更深入的性能洞察，以及更可靠的听写。"
-  version_line: "Pindrop 1.22.0 · 2026 年 7 月"
-privacy:
-  _self: "隐私"
-share:
-  anonymous_usage_data: "共享匿名使用数据"
-  anonymous_diagnostics: "共享匿名诊断"
-anonymous:
-  diagnostics_and_usage_signals_never_tr: "匿名诊断和使用信号。绝不包含转录文本、音频或个人内容。"
-  usage_signals: "匿名使用信号"
-contribute:
-  transcription_fixes: "贡献转录修正"
-stored:
-  text_pairs: "已存储的文本对"
-review:
-  _self: "查看…"
-training:
-  data: "训练数据"
-corrected:
-  _self: "已更正"
 edited:
   _self: "已编辑"
 total:

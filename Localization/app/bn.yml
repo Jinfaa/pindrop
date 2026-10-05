@@ -39,21 +39,12 @@ add:
   custom_words_to_improve_transcription_accura: "বিশেষ পদ, নাম বা শব্দার্থের জন্য প্রতিলিপি নির্ভুলতা উন্নত করতে কাস্টম শব্দ যোগ করুন।"
   provider: "প্রদানকারী যোগ করুন"
   tag: "ট্যাগ যোগ করুন..."
-  this_to_claude_settings_json_in_your_project: "Add this to .claude/settings.json in your project root, or ~/.claude/settings.json for user-wide access."
-  this_to_codex_config_toml_project_scoped_con: "Add this to ~/.codex/config.toml. Project-scoped configuration can live in .codex/config.toml for trusted projects."
-  this_to_config_opencode_opencode_json_for_us: "Add this to ~/.config/opencode/opencode.json for user-wide access across all projects."
-  this_to_cursor_mcp_json_in_your_project_root: "Add this to .cursor/mcp.json in your project root, or ~/.cursor/mcp.json for all projects. Restart Cursor after saving."
-  this_to_opencode_json_in_your_project_root_f: "Add this to opencode.json in your project root for project-specific access."
   to_existing: "বিদ্যমান এ যোগ করুন"
   trailing_space: "পিছনের স্থান যোগ করুন"
   blank_lines_between_sentence_groups_in_longe: "দীর্ঘ ডিকটেশনে বাক্যগোষ্ঠীর মাঝে ফাঁকা লাইন যোগ করে। সম্পূর্ণ স্থানীয়, AI ছাড়া।"
   word_replacements_to_automatically_correct_c: "স্বয়ংক্রিয়ভাবে সাধারণ ট্রান্সক্রিপশন ত্রুটি সংশোধন করতে শব্দ প্রতিস্থাপন যোগ করুন।"
   words_to_help_pindrop_recognize_them_properl: "Pindrop তাদের সঠিকভাবে চিনতে সাহায্য করার জন্য শব্দ যোগ করুন"
   words_you_manually_correct_into_your_vocabul: "ভবিষ্যত ট্রান্সক্রিপশনের জন্য আপনার শব্দভান্ডারে ম্যানুয়ালি ঠিক করা শব্দ যোগ করুন।"
-advanced:
-  _self: "উন্নত"
-agent:
-  setup: "এজেন্ট সেটআপ"
 ai:
   _self: "AI"
   enhanced: "AI-enhanced"
@@ -88,7 +79,6 @@ api:
   key_saved_endpoint: "API কী সংরক্ষিত • শেষবিন্দু: %@"
 app:
   info_acknowledgments_support_and_logs: "অ্যাপের তথ্য, স্বীকৃতি, সমর্থন এবং লগ"
-  version_macos_version_hardware_type_which_fe: "অ্যাপ সংস্করণ, macOS সংস্করণ, হার্ডওয়্যারের ধরন, কোন বৈশিষ্ট্যগুলি ব্যবহৃত হয় এবং ত্রুটির শ্রেণি।"
 appearance:
   _self: "চেহারা"
 append:
@@ -105,14 +95,11 @@ are:
   you_sure_you_want_to_delete_this_action_cann: "আপনি কি '%@' মুছতে চান? এই ক্রিয়াটি পূর্বাবস্থায় ফেরানো যাবে না৷"
 assignments:
   _self: "অ্যাসাইনমেন্ট"
-attach:
-  logs_from_this_folder_when_filing_a_githu: "GitHub সমস্যা ফাইল করার সময় এই ফোল্ডার থেকে লগ সংযুক্ত করুন।"
 audio:
   duration: "Audio duration"
   input: "অডিও ইনপুট"
 automatic:
   follow_system: "স্বয়ংক্রিয় (ফলো সিস্টেম)"
-  updates: "স্বয়ংক্রিয় আপডেট"
   updates_and_manual_update_checks: "স্বয়ংক্রিয় আপডেট এবং ম্যানুয়াল আপডেট চেক"
 automatically:
   check_for_new_versions_in_the_back: "স্বয়ংক্রিয়ভাবে পটভূমিতে নতুন সংস্করণগুলির জন্য পরীক্ষা করুন৷"
@@ -132,8 +119,6 @@ back:
   to_library: "লাইব্রেরিতে ফিরে যান"
 base:
   _self: "বেস"
-bearer:
-  token: "Bearer টোকেন"
 best:
   _self: "সেরা"
 better:
@@ -155,13 +140,10 @@ capture:
 change:
   microphone: "মাইক্রোফোন পরিবর্তন করুন"
   microphone_ac9970f4: "মাইক্রোফোন পরিবর্তন করুন"
-  your_choice_anytime_in_settings_privacy: "সেটিংস → গোপনীয়তা-তে যেকোনো সময় আপনার পছন্দ পরিবর্তন করুন।"
 changes:
   the_language_used_by_pindrop_s_interface: "Changes the language used by Pindrop's interface."
 check:
   for_updates: "আপডেটের জন্য চেক করুন..."
-  for_updates_736b9062: "আপডেটের জন্য চেক করুন"
-  now: "এখন পরীক্ষা করুন"
 checking:
   _self: "পরীক্ষা করা হচ্ছে..."
 choose:
@@ -188,7 +170,6 @@ choose:
   which_microphone_pindrop_should_use_for_d: "ডিক্টেশনের জন্য কোন মাইক্রোফোন Pindrop ব্যবহার করা উচিত এবং রেকর্ডিংয়ের সময় এটি কীভাবে আচরণ করবে তা চয়ন করুন৷"
   which_microphone_pindrop_uses_for_dictati: "Choose which microphone Pindrop uses for dictation."
   which_side_the_navigation_sidebar_appears: "নেভিগেশন সাইডবার কোন দিকে প্রদর্শিত হবে তা চয়ন করুন৷"
-  where_to_save_the_training_data_file: "প্রশিক্ষণ ডেটা ফাইলটি কোথায় সংরক্ষণ করবেন তা বেছে নিন।"
 clean:
   up_filler_words: "ফিলার শব্দ পরিষ্কার করুন"
 clear:
@@ -203,8 +184,6 @@ click:
   or_press: "ক্লিক করুন বা টিপুন"
   or_set_a_hotkey_to_start_talking: "কথা বলা শুরু করতে একটি হটকি ক্লিক করুন বা সেট করুন"
   this_icon_anytime_to: "যেকোনো সময় এই আইকনে ক্লিক করুন:"
-client:
-  _self: "ক্লায়েন্ট"
 clipboard:
   _self: "ক্লিপবোর্ড"
   temporarily_copies_the_transcript_for: "Clipboard temporarily copies the transcript for pasting. Direct Insert types into the active app when possible."
@@ -221,8 +200,6 @@ coming:
   soon_04d2fd85: "শীঘ্রই আসছে"
 configuration:
   file: "Configuration File"
-  scope: "Configuration Scope"
-  snippet: "Configuration Snippet"
 configure:
   ai_providers_and_credentials_apple_int: "AI প্রদানকারী এবং শংসাপত্র কনফিগার করুন। অ্যাপল ইন্টেলিজেন্স ডিভাইসে চলে; অন্যান্য প্রদানকারীদের API কী প্রয়োজন।"
   keyboard_shortcuts_for_recording_and_n: "রেকর্ডিং এবং নোট ক্যাপচারের জন্য কীবোর্ড শর্টকাট কনফিগার করুন"
@@ -246,7 +223,6 @@ copy:
   enhanced: "কপি উন্নত"
   last_transcript: "লাস্ট ট্রান্সক্রিপ্ট কপি করুন"
   original: "আসল কপি করুন"
-  system_info: "Copy System Info"
   system_info_for_bug_report: "বাগ রিপোর্টের জন্য সিস্টেম তথ্য অনুলিপি করুন"
   the_configuration_snippet_into_your_preferr: "Copy the configuration snippet into your preferred AI agent host."
   the_most_recent_transcript_to_the_clipboard: "ক্লিপবোর্ডে সবচেয়ে সাম্প্রতিক প্রতিলিপি অনুলিপি করুন"
@@ -316,8 +292,6 @@ delete:
   preset_4f6cfe36: "প্রিসেট মুছবেন?"
   transcription: "ট্রান্সক্রিপশন মুছুন"
   transcription_f82187c4: "ট্রান্সক্রিপশন মুছবেন?"
-  all_contributions: "সব অবদান মুছুন…"
-  all_stored_text_pairs: "সব সংরক্ষিত টেক্সট জোড়া মুছবেন?"
 destinations:
   _self: "Destinations"
 diarization:
@@ -387,7 +361,6 @@ empty:
 enable:
   ai_enhancement: "এআই এনহান্সমেন্ট সক্ষম করুন"
   live_session_updates_during_recording: "রেকর্ডিংয়ের সময় লাইভ সেশন আপডেটগুলি সক্ষম করুন"
-  mcp_server: "Enable MCP Server"
   vibe_mode_ui_context: "ভাইব মোড সক্ষম করুন (UI প্রসঙ্গ)"
 enabled:
   _self: "সক্রিয়"
@@ -423,7 +396,6 @@ export:
   failed: "রপ্তানি ব্যর্থ হয়েছে: %@"
   last_transcript: "শেষ প্রতিলিপি রপ্তানি করুন..."
   presets: "প্রিসেট রপ্তানি করুন"
-  jsonl: "JSONL এক্সপোর্ট করুন…"
 failed:
   to_add_replacement: "প্রতিস্থাপন যোগ করতে ব্যর্থ হয়েছে: %@"
   to_add_word: "শব্দ যোগ করতে ব্যর্থ হয়েছে: %@"
@@ -480,7 +452,6 @@ hindi:
 get:
   started: "শুরু করুন"
 global:
-  _self: "গ্লোবাল"
   keyboard_shortcuts: "গ্লোবাল কীবোর্ড শর্টকাট"
 go:
   back: "ফিরে যান"
@@ -501,7 +472,6 @@ great:
   _self: "দারুণ"
 help:
   _self: "সহায়তা"
-  improve_pindrop: "Pindrop উন্নত করতে সাহায্য করবেন?"
 hide:
   api_key: "API কী লুকান"
   this_for_1_hour: "এটি 1 ঘন্টার জন্য লুকিয়ে রাখুন"
@@ -557,7 +527,6 @@ japanese:
 keep:
   pindrop_current_automatically_or_check_for: "Keep Pindrop current automatically, or check for a new version now."
   pindrop_current_automatically_or_trigger_a: "Pindrop কে স্বয়ংক্রিয়ভাবে বর্তমান রাখুন, অথবা আপনি যখনই চান একটি ম্যানুয়াল চেক ট্রিগার করুন।"
-  before_and_after_text_pairs_when_ai_enhance: "AI উন্নতি বা আপনার সম্পাদনা কোনো প্রতিলিপি উন্নত করলে আগে-ও-পরের টেক্সট জোড়া রাখুন। শুধুমাত্র এই Mac-এ সংরক্ষিত — কিছুই আপলোড করা হয় না।"
 key:
   _self: "#%@"
   a979ef10: "+"
@@ -580,7 +549,6 @@ layout:
   _self: "লেআউট"
 learn:
   corrected_words_automatically: "স্বয়ংক্রিয়ভাবে সংশোধন করা শব্দ শিখুন"
-  more: "আরও জানুন"
 left:
   _self: "বাম"
 legacy:
@@ -651,9 +619,6 @@ markdown:
   md: "Markdown (.md)"
 may:
   conflict_with_a_system_shortcut: "May conflict with a system shortcut (%@)"
-mcp:
-  configuration_error: "MCP Configuration Error"
-  server: "MCP সার্ভার"
 malayalam:
   _self: "মালয়ালম"
 media:
@@ -742,12 +707,10 @@ no:
 not:
   assigned: "বরাদ্দ করা হয়নি"
   enough_voice_data_yet: "Not enough voice data yet"
-  generated_yet_enable_the_server: "Not generated yet — enable the server"
   granted: "মঞ্জুর নয়"
   selected: "নির্বাচিত হয়নি"
   set: "সেট নয়"
   set_93039e60: "সেট করা হয়নি"
-  now: "এখন নয়"
 note:
   _self: "দ্রষ্টব্য"
   capture_hold: "Note Capture — Hold"
@@ -778,7 +741,6 @@ open:
   _self: "খোলা"
   history: "ইতিহাস খুলুন"
   library: "লাইব্রেরি খুলুন"
-  logs_in_finder: "লগ ইন ফাইন্ডার খুলুন"
   original_link: "আসল লিঙ্ক খুলুন"
   progress: "উন্মুক্ত অগ্রগতি"
   settings: "সেটিংস খুলুন"
@@ -809,7 +771,6 @@ originals:
 other:
   _self: "Other"
 output:
-  _self: "আউটপুট"
   audio_interface_and_everyday_behavior: "আউটপুট, অডিও, ইন্টারফেস এবং দৈনন্দিন আচরণ"
   mode: "আউটপুট মোড"
 overview:
@@ -854,7 +815,6 @@ pindrop:
   orb: "Pindrop অর্ব"
   pill: "পিনড্রপ পিল"
   theme: "পিনড্রপ থিম"
-  can_send_anonymous_privacy_preserving_si: "Pindrop বেনামী, গোপনীয়তা-রক্ষাকারী সিগন্যাল পাঠাতে পারে যাতে বাগ দ্রুত ঠিক হয়।"
 pinned:
   _self: "পিন করা"
 plain:
@@ -871,7 +831,6 @@ please:
   download_a_whisper_model_in_settings_befo_34e8a33c: "রেকর্ড করার আগে দয়া করে সেটিংস থেকে একটি হুইস্পার মডেল ডাউনলোড করুন। nn একটি মডেল ডাউনলোড করতে সেটিংস → মডেলগুলিতে যান৷"
   wait: "অনুগ্রহ করে অপেক্ষা করুন..."
 port:
-  _self: "পোর্ট"
   changes_take_effect_the_next_time_the_serve: "Port changes take effect the next time the server starts."
 portuguese:
   brazil: "পর্তুগিজ (ব্রাজিল)"
@@ -916,8 +875,6 @@ processing:
   5aa377e2: "⏳ প্রক্রিয়াকরণ"
   ellipsis: "প্রক্রিয়াকরণ…"
   transcript: "প্রতিলিপি প্রক্রিয়াকরণ"
-project:
-  _self: "প্রজেক্ট"
 prompt:
   _self: "প্রম্পট"
   preset: "প্রম্পট প্রিসেট"
@@ -968,8 +925,6 @@ redo:
 refresh:
   _self: "রিফ্রেশ"
   the_provider_or_open_edit_to_fetch_model: "Refresh the provider or open Edit to fetch models."
-regenerate:
-  _self: "পুনরায় তৈরি"
 remove:
   _self: "সরান"
   and_clear_any_assignments_that_reference: "\"%@\" সরান এবং এটির উল্লেখ করে এমন কোনো অ্যাসাইনমেন্ট সাফ করবেন? সঞ্চিত শংসাপত্র মুছে ফেলা হবে."
@@ -1204,7 +1159,6 @@ this:
   will_clear_all_your_settings_including_api_8cd9a6fb: "This will clear all your settings including API keys and restart onboarding"
   will_permanently_remove_the_transcript_and: "এটি স্থায়ীভাবে ট্রান্সক্রিপ্ট এবং এর পরিচালিত মিডিয়া ফাইল সরিয়ে দেবে।"
   will_permanently_remove_this_note: "এতে এই নোট স্থায়ীভাবে মুছে যাবে।"
-  permanently_deletes_all_stored_text_pairs_f: "এটি এই Mac থেকে সব সংরক্ষিত টেক্সট জোড়া স্থায়ীভাবে মুছে ফেলে।"
 time:
   of_day: "Time of day"
   range: "Time range"
@@ -1261,7 +1215,6 @@ u10:
   floating_inserted_into: "%@-এ সন্নিবেশ করা হয়েছে"
   floating_microphone_unavailable: "মাইক্রোফোন উপলভ্য নয়"
   floating_transcribing: "ট্রান্সক্রাইব করা হচ্ছে…"
-  floating_whats_new: "নতুন কী"
   floating_word_count: "%dটি শব্দ"
 u11:
   estimating_time: "অবশিষ্ট সময় অনুমান করা হচ্ছে…"
@@ -1374,34 +1327,22 @@ u8:
   settings_acknowledgements: "স্বীকৃতি"
   settings_advanced_assignments: "উন্নত অ্যাসাইনমেন্ট"
   settings_audio_on_disk_format: "ডিস্কে অডিও: %@ · %@"
-  settings_beta_channel: "বেটা"
   settings_bundled_fonts_ofl: "বান্ডিল করা ফন্টগুলি (Newsreader, Inter, JetBrains Mono) SIL Open Font License-এর অধীনে লাইসেন্সপ্রাপ্ত।"
-  settings_checks_for_updates_automatically: "Pindrop স্বয়ংক্রিয়ভাবে আপডেটের জন্য পরীক্ষা করে।"
   settings_choose_a_provider: "একটি প্রদানকারী নির্বাচন করুন"
-  settings_choose_folder_export_logs: "Pindrop লগ ফাইলগুলি অনুলিপি করার জন্য একটি ফোল্ডার নির্বাচন করুন।"
   settings_copy_last_transcript: "শেষ প্রতিলিপি অনুলিপি করুন"
-  settings_copy_token: "টোকেন অনুলিপি করুন"
   settings_days_30: "৩০ দিন"
   settings_days_7: "৭ দিন"
-  settings_debug: "ডিবাগ"
   settings_delete_all_audio: "সমস্ত অডিও মুছুন"
   settings_delete_all_audio_ellipsis: "সমস্ত অডিও মুছুন…"
   settings_delete_all_audio_question: "সমস্ত অডিও মুছবেন?"
-  settings_diagnostics: "ডায়াগনস্টিকস"
   settings_edit_prompt_ellipsis: "প্রম্পট সম্পাদনা করুন…"
-  settings_endpoint: "এন্ডপয়েন্ট"
   settings_enhance_transcripts: "প্রতিলিপি উন্নত করুন"
   settings_example_label: "উদাহরণ"
-  settings_export_logs_ellipsis: "লগ রপ্তানি করুন…"
   settings_forever: "চিরকাল"
   settings_github: "GitHub"
-  settings_info: "তথ্য"
   settings_keep_dictation_audio: "ডিক্টেশন অডিও সংরক্ষণ করুন"
-  settings_last_checked_format: "সর্বশেষ পরীক্ষা করা হয়েছে %@"
   settings_license_mit: "লাইসেন্স — MIT"
   settings_listening_ellipsis: "শুনছে…"
-  settings_log_level: "লগ স্তর"
-  settings_logs_never_include_transcript: "লগে কখনো প্রতিলিপির টেক্সট অন্তর্ভুক্ত থাকে না"
   settings_made_with_care: "স্থানীয় বক্তৃতার জন্য যত্ন সহকারে তৈরি।"
   settings_manage_ellipsis: "পরিচালনা করুন…"
   settings_n_samples: "%d নমুনা"
@@ -1413,7 +1354,6 @@ u8:
   settings_presets_recolor_caption: "প্রিসেটগুলি অ্যাক্সেন্ট রঙ এবং পটভূমি পুনরায় রং করে। টেক্সট কনট্রাস্ট স্বয়ংক্রিয়ভাবে যাচাই করা হয়।"
   settings_push_to_talk: "পুশ-টু-টক"
   settings_recording_indicator: "রেকর্ডিং সূচক"
-  settings_release_channel: "স্থিতিশীল রিলিজ"
   settings_removes_kept_dictation_audio: "সংরক্ষিত ডিক্টেশন অডিও ফাইল মুছে দেয়। প্রতিলিপি আপনার লাইব্রেরিতে থেকে যায়।"
   settings_reset_all_settings_ellipsis: "সমস্ত সেটিংস রিসেট করুন…"
   settings_separate_from_interface_language: "ইন্টারফেস ভাষা থেকে পৃথক"
@@ -1423,7 +1363,6 @@ u8:
   settings_theme_preset: "থিম প্রিসেট"
   settings_toggle_dictation: "ডিক্টেশন টগল করুন"
   settings_trained_summary_format: "%@ — মিটিংয়ে কে কী বলেছে তা লেবেল করতে ব্যবহৃত হয়"
-  settings_update_checks_unavailable: "আপডেট পরীক্ষা সাময়িকভাবে অনুপলব্ধ।"
   settings_warning: "সতর্কতা"
   settings_website: "ওয়েবসাইট"
 u9:
@@ -1456,8 +1395,6 @@ unknown:
   _self: "Unknown"
 unpin:
   from_screen: "স্ক্রীন থেকে আনপিন করুন"
-update:
-  _self: "আপডেট"
 updates:
   _self: "আপডেট"
 use:
@@ -1499,10 +1436,6 @@ web:
   link: "Web link"
 welcome:
   to_pindrop: "Pindrop স্বাগতম"
-what:
-  s_new: "নতুন কী…"
-  s_new_in_pindrop: "Pindrop-এ নতুন কী"
-  does_pindrop_collect: "Pindrop কী সংগ্রহ করে?"
 while:
   recording: "রেকর্ডিংয়ের সময়"
 whisperkit:
@@ -1528,7 +1461,6 @@ you:
   re_all_set: "আপনি সম্পূর্ণ প্রস্তুত!"
   re_all_set_058a8130: "আপনি সব প্রস্তুত!"
   ve_exceeded_your_api_rate_limit_or_quota_to: "\" আপনি আপনার API রেট সীমা বা কোটা অতিক্রম করেছেন৷                                  এটি ঠিক করতে: 1. কয়েক মিনিট অপেক্ষা করুন এবং আবার চেষ্টা করুন 2. আপনার API প্রদানকারীর ব্যবহারের সীমা পরীক্ষা করুন 3. আপনার API প্ল্যান আপগ্রেড করার কথা বিবেচনা করুন ট্রান্সক্রিপশনটি বর্ধিতকরণ ছাড়াই সংরক্ষণ করা হয়েছিল৷                 \""
-  re_in_control: "নিয়ন্ত্রণ আপনার হাতে"
 your:
   api_key_appears_to_be_invalid_or_expired_to: "\" আপনার API কী অবৈধ বা মেয়াদোত্তীর্ণ বলে মনে হচ্ছে৷                                  এটি ঠিক করতে: 1. সেটিংস খুলুন → AI এনহ্যান্সমেন্ট 2. আপনার API কী সঠিক কিনা যাচাই করুন 3. পরীক্ষা করুন যে আপনার API এন্ডপয়েন্ট সঠিক কিনা ট্রান্সক্রিপশনটি বর্ধিতকরণ ছাড়াই সংরক্ষিত হয়েছে৷                 \""
   floating_indicator_is_now_a_living_audio_re: "আপনার ভাসমান সূচকটি এখন একটি জীবন্ত, অডিও-প্রতিক্রিয়াশীল orb। নিষ্ক্রিয় থাকলে এটি শ্বাস নেয়, আপনি কথা বললে ফুলে ওঠে, এবং ডিক্টেট করার সময় আপনার শব্দ সরাসরি দেখায়।"
@@ -1540,7 +1472,6 @@ your:
   model_is_ready_to_use: "আপনার মডেল ব্যবহারের জন্য প্রস্তুত."
   stats: "আপনার পরিসংখ্যান"
   stats_will_appear_after_you_create_transcri: "Your stats will appear after you create transcriptions."
-  words_stay_yours: "আপনার কথা আপনারই থাকে"
 zoom:
   _self: "জুম"
 polish:
@@ -1549,36 +1480,6 @@ bubble:
   _self: "বুদবুদ"
 notch:
   _self: "খাঁজ"
-whatsnew:
-  footer: "এছাড়াও: প্রম্পট প্রিসেট মেনু বারে ফিরে এসেছে, রেকর্ডিং অর্বে নতুন ওয়েভফর্ম যোগ হয়েছে, এবং বিদ্যমান লাইব্রেরি আবার নির্ভরযোগ্যভাবে খোলে।"
-  formatting_body: "Library-তে সংরক্ষিত ট্রান্সক্রিপ্ট সংশোধন করুন এবং স্পষ্ট Edited চিহ্ন রাখুন।"
-  formatting_title: "সম্পাদনযোগ্য ট্রান্সক্রিপ্ট"
-  indicators_body: "প্রতিটি ডিক্টেশনের পর্যায়ভিত্তিক সময় ও AI টোকেন ব্যবহার দেখুন, সাথে Stats-এর গড় মান।"
-  indicators_title: "পাইপলাইন অন্তর্দৃষ্টি"
-  languages_body: "আপনি সম্মতি না দেওয়া পর্যন্ত টেলিমেট্রি বন্ধ থাকে, এবং প্রশিক্ষণ অবদান পর্যালোচনা, রপ্তানি বা মুছে ফেলার জন্য আপনার Mac-এই থাকে।"
-  languages_title: "গোপনীয়তা-প্রথম ডায়াগনস্টিকস"
-  sensevoice_body: "স্ট্রিমিং কলব্যাক, শাটডাউন এবং লাইভ UI আপডেট এখন ক্রমানুসারে ও দক্ষ থাকে।"
-  sensevoice_title: "আরও নির্ভরযোগ্য ডিক্টেশন"
-  summary: "ব্যক্তিগত ডায়াগনস্টিকস, সম্পাদনযোগ্য ইতিহাস, গভীরতর পারফরম্যান্স অন্তর্দৃষ্টি, এবং আরও নির্ভরযোগ্য ডিক্টেশন।"
-  version_line: "Pindrop 1.22.0 · জুলাই 2026"
-privacy:
-  _self: "গোপনীয়তা"
-share:
-  anonymous_usage_data: "বেনামী ব্যবহারের ডেটা শেয়ার করুন"
-  anonymous_diagnostics: "বেনামী ডায়াগনস্টিকস শেয়ার করুন"
-anonymous:
-  diagnostics_and_usage_signals_never_tr: "বেনামী ডায়াগনস্টিকস এবং ব্যবহারের সিগন্যাল। প্রতিলিপির টেক্সট, অডিও বা ব্যক্তিগত কনটেন্ট কখনও নয়।"
-  usage_signals: "বেনামী ব্যবহারের সিগন্যাল"
-contribute:
-  transcription_fixes: "প্রতিলিপির সংশোধন অবদান রাখুন"
-stored:
-  text_pairs: "সংরক্ষিত টেক্সট জোড়া"
-review:
-  _self: "পর্যালোচনা…"
-training:
-  data: "প্রশিক্ষণ ডেটা"
-corrected:
-  _self: "সংশোধিত"
 edited:
   _self: "সম্পাদিত"
 total:

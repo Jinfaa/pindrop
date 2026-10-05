@@ -7,7 +7,6 @@
 
 import AVFoundation
 import Foundation
-import os.log
 
 enum DiarizationFailurePolicy: Sendable, Equatable {
     case bestEffort

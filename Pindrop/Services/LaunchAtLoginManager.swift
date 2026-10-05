@@ -7,7 +7,6 @@
 
 import Foundation
 import ServiceManagement
-import os.log
 
 protocol LaunchAtLoginServiceProtocol {
     var status: SMAppService.Status { get }

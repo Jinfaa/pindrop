@@ -11,7 +11,6 @@ import SwiftData
 import Combine
 import AVFoundation
 import AppKit
-import os.log
 
 private final class EventTapRunLoopThread: Thread {
 

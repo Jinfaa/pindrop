@@ -11,7 +11,6 @@ import SwiftUI
 struct AboutSettingsView: View {
     @ObservedObject var settings: SettingsStore
     @Environment(\.locale) private var locale
-    @State private var copiedSystemInfo = false
 
     var body: some View {
         SettingsPaneStack {
@@ -78,44 +77,6 @@ struct AboutSettingsView: View {
                     .strokeBorder(AppColors.border, lineWidth: 1)
             )
 
-            SettingsGroupCard {
-                SettingsRow(showSeparator: true) {
-                    SettingsRowLabel(title: localized("Copy System Info", locale: locale))
-                } control: {
-                    Button {
-                        copySystemInfo()
-                    } label: {
-                        SettingsMenuButton(
-                            title: copiedSystemInfo
-                                ? localized("Copied!", locale: locale)
-                                : localized("Copy", locale: locale),
-                            showsChevron: false
-                        )
-                    }
-                    .buttonStyle(.plain)
-                    .disabled(copiedSystemInfo)
-                    .accessibilityIdentifier("settings.button.copySystemInfo")
-                }
-
-                SettingsRow(showSeparator: false) {
-                    SettingsRowLabel(
-                        title: localized("Open Logs in Finder", locale: locale),
-                        subtitle: localized("Attach logs from this folder when filing a GitHub issue.", locale: locale)
-                    )
-                } control: {
-                    Button {
-                        revealLogsInFinder()
-                    } label: {
-                        SettingsMenuButton(
-                            title: localized("Open", locale: locale),
-                            showsChevron: false
-                        )
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("settings.button.openLogs")
-                }
-            }
-
             Text(localized("Made with care for local speech.", locale: locale))
                 .font(AppTypography.caption)
                 .foregroundStyle(AppColors.textTertiary)
@@ -138,48 +99,6 @@ struct AboutSettingsView: View {
                 .foregroundStyle(AppColors.accent)
         }
         .buttonStyle(.plain)
-    }
-
-    private func copySystemInfo() {
-        let info = """
-            Pindrop: \(appVersion) (\(buildNumber))
-            macOS: \(ProcessInfo.processInfo.operatingSystemVersionString)
-            Chip: \(chipType)
-            Model: \(activeModel)
-            """
-
-        NSPasteboard.general.clearContents()
-        NSPasteboard.general.setString(info, forType: .string)
-        copiedSystemInfo = true
-
-        Task {
-            try? await Task.sleep(for: .seconds(2))
-            copiedSystemInfo = false
-        }
-    }
-
-    private func revealLogsInFinder() {
-        NSWorkspace.shared.activateFileViewerSelecting([Log.currentLogFileURL])
-    }
-
-    private var chipType: String {
-        var systemInfo = utsname()
-        uname(&systemInfo)
-        let machine = withUnsafePointer(to: &systemInfo.machine) {
-            $0.withMemoryRebound(to: CChar.self, capacity: 1) {
-                String(validatingUTF8: $0)
-            }
-        }
-
-        switch machine {
-        case "arm64": return "Apple Silicon"
-        case "x86_64": return "Intel"
-        default: return machine ?? "Unknown"
-        }
-    }
-
-    private var activeModel: String {
-        settings.selectedModel.isEmpty ? "Not loaded" : settings.selectedModel
     }
 
     private static var isPreview: Bool {
