@@ -408,6 +408,14 @@ final class InputMuteMonitor: InputMuteObserving {
         rebindToPreferredDevice()
     }
 
+    /// Re-resolves the observed device after devices are attached or removed, so a
+    /// missing preferred device falls back to the system default and a reconnected
+    /// one is picked up again.
+    func refreshDevice() {
+        guard isRunning else { return }
+        rebindToPreferredDevice()
+    }
+
     // MARK: - Binding
 
     private func rebindToPreferredDevice() {

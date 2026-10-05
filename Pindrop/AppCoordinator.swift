@@ -4818,11 +4818,10 @@ final class AppCoordinator {
     private func setupInputDeviceMonitoring() {
         let monitor = AudioDeviceListMonitor()
         monitor.onChange = { [weak self] in
-            self?.validateSelectedInputDeviceAvailability()
+            self?.inputMuteMonitor?.refreshDevice()
         }
         monitor.start()
         inputDeviceListMonitor = monitor
-        validateSelectedInputDeviceAvailability()
         setupInputMuteMonitoring()
     }
 
@@ -4836,20 +4835,6 @@ final class AppCoordinator {
         muteMonitor.start()
         floatingIndicatorState.isInputMuted = muteMonitor.isMuted
         inputMuteMonitor = muteMonitor
-    }
-
-    /// If the explicitly selected input device is no longer attached, fall back to the
-    /// system default so capture and the device pickers don't stay pinned to a device
-    /// that isn't there anymore.
-    private func validateSelectedInputDeviceAvailability() {
-        let uid = settingsStore.selectedInputDeviceUID
-        guard !uid.isEmpty else { return }
-        guard !AudioDeviceManager.inputDevices().contains(where: { $0.uid == uid }) else { return }
-
-        Log.audio.info(
-            "Selected input device is no longer available (uid=\(uid)); falling back to system default"
-        )
-        handleSelectInputDeviceUID("")
     }
 
     private func handleSelectLanguage(_ language: AppLanguage) {

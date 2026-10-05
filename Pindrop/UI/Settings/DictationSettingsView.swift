@@ -460,7 +460,8 @@ struct DictationSettingsView: View {
         if let device = availableInputDevices.first(where: { $0.uid == settings.selectedInputDeviceUID }) {
             return device.displayName
         }
-        return localized("Unavailable device", locale: locale)
+        // The choice is kept; recording uses the system default until it reconnects.
+        return "\(localized("Unavailable device", locale: locale)) → \(localized("System Default", locale: locale))"
     }
 
     private var selectedInputDeviceIsUnavailable: Bool {
