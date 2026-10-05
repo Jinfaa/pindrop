@@ -182,41 +182,6 @@ enum SpeakerProfileSummaryPresentation {
     }
 }
 
-// MARK: - MCP endpoint display
-
-enum MCPEndpointPresentation {
-    static func endpointURL(port: Int) -> String {
-        "http://127.0.0.1:\(port)/mcp"
-    }
-}
-
-// MARK: - Update status subtitle
-
-enum SettingsUpdateStatusPresentation {
-    /// Sparkle-backed status under Automatic updates.
-    static func subtitle(
-        lastCheckDate: Date?,
-        canCheck: Bool,
-        now: Date = Date(),
-        locale: Locale
-    ) -> String {
-        if let lastCheckDate {
-            let formatter = RelativeDateTimeFormatter()
-            formatter.locale = locale
-            formatter.unitsStyle = .full
-            let relative = formatter.localizedString(for: lastCheckDate, relativeTo: now)
-            return String(
-                format: localized("Last checked %@", locale: locale),
-                relative
-            )
-        }
-        if !canCheck {
-            return localized("Update checks are temporarily unavailable.", locale: locale)
-        }
-        return localized("Pindrop checks for updates automatically.", locale: locale)
-    }
-}
-
 // MARK: - Hotkey conflict aggregate line
 
 enum SettingsHotkeyConflictPresentation {
@@ -241,26 +206,10 @@ enum SettingsHotkeyConflictPresentation {
     }
 }
 
-// MARK: - About / Sparkle channel
+// MARK: - About
 
 enum SettingsAboutPresentation {
     static let taglineKey = "Speak. It's written."
-
-    /// Stable / release channel label derived from the Sparkle feed URL host path.
-    static func channelLabel(feedURLString: String?, locale: Locale) -> String {
-        guard let feedURLString, let url = URL(string: feedURLString) else {
-            return localized("Release", locale: locale)
-        }
-        let path = url.path.lowercased()
-        if path.contains("beta") || path.contains("pre") {
-            return localized("Beta", locale: locale)
-        }
-        return localized("Release", locale: locale)
-    }
-
-    static func versionLine(version: String, build: String, channel: String) -> String {
-        "\(version) (\(build)) · \(channel)"
-    }
 }
 
 // MARK: - Log level presentation (B9 surface for Advanced pane)

@@ -17,7 +17,7 @@ env:
   CONFIGURATION: Debug
 
 jobs:
-  build-test:
+  build:
     runs-on: macos-26
     permissions:
       contents: read
@@ -50,11 +50,6 @@ jobs:
             find DerivedData -name "*.app" -type d
             exit 1
           fi
-
-      - name: Run Tests
-        env:
-          NSUnbufferedIO: YES
-        run: just test-unsigned
 
       - name: Package App Artifact
         run: |

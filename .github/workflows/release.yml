@@ -12,7 +12,6 @@ env:
   APP_NAME: Pindrop
   SCHEME: Pindrop
   CONFIGURATION: Release
-  SPARKLE_VERSION: "2.6.4"
 
 jobs:
   build:
@@ -42,24 +41,6 @@ jobs:
         run: |
           # Install create-dmg for DMG creation
           brew install create-dmg
-
-          # Download Sparkle tools directly (same as justfile)
-          echo "📦 Downloading Sparkle ${SPARKLE_VERSION} tools..."
-          curl -L -o /tmp/Sparkle.tar.xz "https://github.com/sparkle-project/Sparkle/releases/download/${SPARKLE_VERSION}/Sparkle-${SPARKLE_VERSION}.tar.xz"
-          mkdir -p /tmp/sparkle-extract
-          tar -xf /tmp/Sparkle.tar.xz -C /tmp/sparkle-extract
-          
-          # Copy tools to a known location
-          mkdir -p bin
-          cp /tmp/sparkle-extract/bin/generate_appcast bin/
-          cp /tmp/sparkle-extract/bin/sign_update bin/
-          chmod +x bin/generate_appcast bin/sign_update
-          
-          # Cleanup
-          rm -rf /tmp/Sparkle.tar.xz /tmp/sparkle-extract
-          
-          echo "✅ Sparkle tools installed to bin/"
-          ls -la bin/
 
       - name: Get Version
         id: version
@@ -213,119 +194,6 @@ jobs:
           echo "dmg_path=${DMG_PATH}" >> $GITHUB_ENV
           echo "dmg_name=${DMG_NAME}" >> $GITHUB_ENV
 
-      - name: Sign DMG with EdDSA
-        env:
-          SPARKLE_EDDSA_PRIVATE_KEY: ${{ secrets.SPARKLE_EDDSA_PRIVATE_KEY }}
-        run: |
-          if [ -z "$SPARKLE_EDDSA_PRIVATE_KEY" ]; then
-            echo "⚠️  Warning: SPARKLE_EDDSA_PRIVATE_KEY secret is not set"
-            echo "   Skipping EdDSA signing - updates will not be verifiable!"
-            echo "   To enable signing, add your EdDSA private key to GitHub Secrets"
-            echo "dmg_signature=" >> $GITHUB_ENV
-            exit 0
-          fi
-
-          DMG_PATH="${{ env.dmg_path }}"
-
-          # Sign the DMG using Sparkle's sign_update tool
-          # The tool outputs: sparkle:edSignature="..." length="..."
-          # We extract just the signature value
-          SIGN_OUTPUT=$(echo "$SPARKLE_EDDSA_PRIVATE_KEY" | ./bin/sign_update "$DMG_PATH" -f -)
-          SIGNATURE=$(echo "$SIGN_OUTPUT" | sed -n 's/.*sparkle:edSignature="\([^"]*\)".*/\1/p')
-
-          echo "✅ DMG signed with EdDSA"
-          echo "   Signature: ${SIGNATURE:0:20}..."
-          echo "dmg_signature=${SIGNATURE}" >> $GITHUB_ENV
-
-      - name: Generate Appcast
-        run: |
-          VERSION="${{ env.bundle_short_version }}"
-          BUILD_VERSION="${{ env.bundle_build_version }}"
-          FULL_VERSION="${{ steps.version.outputs.version }}"
-          DMG_NAME="${{ env.dmg_name }}"
-          DMG_PATH="${{ env.dmg_path }}"
-          SIGNATURE="${{ env.dmg_signature }}"
-
-          # Get DMG size
-          DMG_SIZE=$(stat -f%z "$DMG_PATH")
-
-          # Get current date in RFC 2822 format
-          PUB_DATE=$(date -R)
-
-          # Build signature attribute if present
-          if [ -n "$SIGNATURE" ]; then
-            SIG_ATTR="sparkle:edSignature=\"${SIGNATURE}\""
-          else
-            SIG_ATTR=""
-          fi
-
-          # Create the appcast.xml
-          cat > dist/appcast.xml << APPCAST_EOF
-          <?xml version="1.0" encoding="utf-8"?>
-          <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
-            <channel>
-              <title>${{ env.APP_NAME }} Changelog</title>
-              <link>https://github.com/${{ github.repository }}/releases</link>
-              <description>Most recent changes with links to updates.</description>
-              <language>en</language>
-              <item>
-                <title>Version ${VERSION}</title>
-                <pubDate>${PUB_DATE}</pubDate>
-                <enclosure
-                  url="https://github.com/${{ github.repository }}/releases/download/${FULL_VERSION}/${DMG_NAME}"
-                  sparkle:version="${BUILD_VERSION}"
-                  sparkle:shortVersionString="${VERSION}"
-                  ${SIG_ATTR}
-                  length="${DMG_SIZE}"
-                  type="application/octet-stream"
-                />
-                <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-              </item>
-            </channel>
-          </rss>
-          APPCAST_EOF
-
-          VERSION="$VERSION" BUILD_VERSION="$BUILD_VERSION" python3 - <<'PY'
-          import os
-          import sys
-          import xml.etree.ElementTree as ET
-
-          expected_short = os.environ["VERSION"]
-          expected_build = os.environ["BUILD_VERSION"]
-
-          root = ET.parse("dist/appcast.xml").getroot()
-          channel = root.find("channel")
-          if channel is None:
-              print("❌ appcast.xml missing channel element")
-              sys.exit(1)
-
-          item = channel.find("item")
-          if item is None:
-              print("❌ appcast.xml missing item element")
-              sys.exit(1)
-
-          enclosure = item.find("enclosure")
-          if enclosure is None:
-              print("❌ appcast.xml missing enclosure element")
-              sys.exit(1)
-
-          sparkle_build = enclosure.attrib.get("{http://www.andymatuschak.org/xml-namespaces/sparkle}version")
-          sparkle_short = enclosure.attrib.get("{http://www.andymatuschak.org/xml-namespaces/sparkle}shortVersionString")
-
-          if sparkle_build != expected_build:
-              print(f"❌ appcast sparkle:version ({sparkle_build}) != bundle build ({expected_build})")
-              sys.exit(1)
-
-          if sparkle_short != expected_short:
-              print(f"❌ appcast sparkle:shortVersionString ({sparkle_short}) != bundle short version ({expected_short})")
-              sys.exit(1)
-
-          print(f"✅ appcast versions verified: short={sparkle_short}, build={sparkle_build}")
-          PY
-
-          echo "✅ Appcast generated at: dist/appcast.xml"
-          cat dist/appcast.xml
-
       - name: Create GitHub Release
         id: create_release
         uses: softprops/action-gh-release@v1
@@ -337,7 +205,6 @@ jobs:
           make_latest: true
           files: |
             ${{ env.dmg_path }}
-            dist/appcast.xml
           body: |
             ## ${{ env.APP_NAME }} ${{ steps.version.outputs.app_version }}
             
@@ -360,20 +227,13 @@ jobs:
 
       - name: Summary
         run: |
-          SIGNED="No (secret not configured)"
-          if [ -n "${{ env.dmg_signature }}" ]; then
-            SIGNED="Yes"
-          fi
-          
           echo "## Release Build Complete" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- **Version:** ${{ steps.version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Build:** ${{ env.bundle_build_version }}" >> $GITHUB_STEP_SUMMARY
           echo "- **DMG:** ${{ env.dmg_name }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **EdDSA Signed:** ${SIGNED}" >> $GITHUB_STEP_SUMMARY
           echo "- **Release:** Published automatically as latest" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
           echo "1. Review the published release on GitHub" >> $GITHUB_STEP_SUMMARY
           echo "2. Update release notes if needed" >> $GITHUB_STEP_SUMMARY
-          echo "3. No appcast commit is required; Sparkle uses releases/latest/download/appcast.xml" >> $GITHUB_STEP_SUMMARY

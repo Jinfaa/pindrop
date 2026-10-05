@@ -35,11 +35,8 @@ enum Log {
     static let app = AppLogCategory(subsystem: subsystem, category: "App")
     static let boot = AppLogCategory(subsystem: subsystem, category: "Boot")
     static let ui = AppLogCategory(subsystem: subsystem, category: "UI")
-    static let update = AppLogCategory(subsystem: subsystem, category: "Update")
     static let aiEnhancement = AppLogCategory(subsystem: subsystem, category: "AIEnhancement")
     static let context = AppLogCategory(subsystem: subsystem, category: "Context")
-    static let mcp = AppLogCategory(subsystem: subsystem, category: "MCP")
-    static let telemetry = AppLogCategory(subsystem: subsystem, category: "Telemetry")
 
     static var logsDirectoryURL: URL {
         LogFileSink.shared.logsDirectoryURL

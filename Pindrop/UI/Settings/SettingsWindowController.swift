@@ -16,7 +16,6 @@ enum SettingsTab: String, CaseIterable, Identifiable {
     case appearance
     case shortcuts
     case ai
-    case privacy
     case advanced
     case about
 
@@ -29,7 +28,6 @@ enum SettingsTab: String, CaseIterable, Identifiable {
         case .appearance: return localized("Appearance", locale: locale)
         case .shortcuts: return localized("Shortcuts", locale: locale)
         case .ai: return localized("AI", locale: locale)
-        case .privacy: return localized("Privacy", locale: locale)
         case .advanced: return localized("Advanced", locale: locale)
         case .about: return localized("About", locale: locale)
         }
@@ -42,7 +40,6 @@ enum SettingsTab: String, CaseIterable, Identifiable {
         case .appearance: return "paintbrush"
         case .shortcuts: return "keyboard"
         case .ai: return "sparkles"
-        case .privacy: return "hand.raised"
         case .advanced: return "wrench.and.screwdriver"
         case .about: return "info.circle"
         }
@@ -58,18 +55,15 @@ struct SettingsPaneContent: View {
     @ObservedObject var settings: SettingsStore
     let tab: SettingsTab
     let launchAtLoginManager: LaunchAtLoginManager
-    let updateService: UpdateService
 
     init(
         settings: SettingsStore,
         tab: SettingsTab,
-        launchAtLoginManager: LaunchAtLoginManager,
-        updateService: UpdateService
+        launchAtLoginManager: LaunchAtLoginManager
     ) {
         self.settings = settings
         self.tab = tab
         self.launchAtLoginManager = launchAtLoginManager
-        self.updateService = updateService
     }
 
     @MainActor
@@ -77,8 +71,7 @@ struct SettingsPaneContent: View {
         self.init(
             settings: settings,
             tab: tab,
-            launchAtLoginManager: LaunchAtLoginManager(),
-            updateService: UpdateService()
+            launchAtLoginManager: LaunchAtLoginManager()
         )
     }
 
@@ -88,8 +81,7 @@ struct SettingsPaneContent: View {
         case .general:
             GeneralSettingsView(
                 settings: settings,
-                launchAtLoginManager: launchAtLoginManager,
-                updateService: updateService
+                launchAtLoginManager: launchAtLoginManager
             )
         case .dictation:
             DictationSettingsView(settings: settings)
@@ -99,10 +91,8 @@ struct SettingsPaneContent: View {
             HotkeysSettingsView(settings: settings)
         case .ai:
             AIEnhancementSettingsView(settings: settings)
-        case .privacy:
-            PrivacySettingsView(settings: settings)
         case .advanced:
-            MCPSettingsView(settings: settings)
+            AdvancedSettingsView(settings: settings)
         case .about:
             AboutSettingsView(settings: settings)
         }
@@ -121,7 +111,6 @@ final class SettingsWindowController: NSWindowController {
     private let settings: SettingsStore
     private let modelContainer: ModelContainer
     private let launchAtLoginManager: LaunchAtLoginManager
-    private let updateService: UpdateService
     private let windowModel = SettingsWindowModel()
     private var settingsObservation: AnyCancellable?
     private var tabObservation: AnyCancellable?
@@ -130,13 +119,11 @@ final class SettingsWindowController: NSWindowController {
     init(
         settings: SettingsStore,
         modelContainer: ModelContainer,
-        launchAtLoginManager: LaunchAtLoginManager,
-        updateService: UpdateService
+        launchAtLoginManager: LaunchAtLoginManager
     ) {
         self.settings = settings
         self.modelContainer = modelContainer
         self.launchAtLoginManager = launchAtLoginManager
-        self.updateService = updateService
         self.lastLocalizedAppLocale = settings.selectedAppLocale
         super.init(window: nil)
 
@@ -183,8 +170,7 @@ final class SettingsWindowController: NSWindowController {
             settings: settings,
             model: windowModel,
             modelContainer: modelContainer,
-            launchAtLoginManager: launchAtLoginManager,
-            updateService: updateService
+            launchAtLoginManager: launchAtLoginManager
         )
         let hostingController = NSHostingController(rootView: AnyView(rootView))
 
@@ -284,14 +270,12 @@ private struct SettingsRootHostingView: View {
     @ObservedObject var model: SettingsWindowModel
     let modelContainer: ModelContainer
     let launchAtLoginManager: LaunchAtLoginManager
-    let updateService: UpdateService
 
     var body: some View {
         SettingsShellView(
             settings: settings,
             model: model,
-            launchAtLoginManager: launchAtLoginManager,
-            updateService: updateService
+            launchAtLoginManager: launchAtLoginManager
         )
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .environment(\.locale, settings.selectedAppLocale.locale)

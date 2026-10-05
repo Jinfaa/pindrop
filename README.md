@@ -36,7 +36,7 @@
 ### Fits into your setup
 
 - Transcribe media files or web audio, with timestamps and speaker labels.
-- A context engine rewrites spoken file paths into @mentions, and a built-in MCP server lets AI agents dictate, transcribe files, and query your library.
+- A context engine rewrites spoken file paths into @mentions.
 - Four floating indicator styles (Orb, Pill, Notch, Bubble), preset themes, and activity stats with streaks and trends.
 - Pauses music and mutes system audio while you record so transcripts stay clean.
 - Text lands in your clipboard every time, and directly at your cursor if you grant Accessibility permission.
@@ -48,7 +48,6 @@
 - [mlx-community Whisper models](https://huggingface.co/collections/mlx-community/whisper-663256f9964fbb1177db93dc)
 - [FluidAudio](https://github.com/FluidInference/FluidAudio) for SenseVoice, Nemotron streaming, and diarization
 - [mlx-audio-swift](https://github.com/Blaizzy/mlx-audio-swift) for MLX Whisper and MLX Parakeet
-- [Sparkle](https://sparkle-project.org/) for updates
 
 ## Requirements
 
@@ -76,12 +75,7 @@ Pindrop runs in the menu bar only, so there is no dock icon. Look for the microp
 
 ## Privacy
 
-By default, audio and transcripts are processed and stored on your Mac. Selecting an OpenAI cloud transcription model sends recorded audio to the OpenAI Audio API and may incur OpenAI usage charges; the API key is stored in the macOS Keychain. Two other optional programs live in Settings → Privacy, both off by default:
-
-- Anonymous diagnostics via [TelemetryDeck](https://telemetrydeck.com): counts of app launches, transcription outcomes, and model download errors with bucketed timings. Never transcript text, audio, prompts, or file names.
-- Training data contributions: keeps redacted before/after transcript pairs on your Mac (nothing is uploaded; there is no upload backend) to support a future on-device correction model. You can review, export, or delete every stored pair.
-
-The full list of signals and stored fields is in [docs/TELEMETRY.md](docs/TELEMETRY.md).
+By default, audio and transcripts are processed and stored on your Mac. Selecting an OpenAI cloud transcription model sends recorded audio to the OpenAI Audio API and may incur OpenAI usage charges; the API key is stored in the macOS Keychain. Pindrop has no telemetry. Local diagnostic logs are described in [docs/TELEMETRY.md](docs/TELEMETRY.md).
 
 ## Building from source
 
@@ -95,7 +89,6 @@ Or with [just](https://github.com/casey/just) (`brew install just`):
 
 ```bash
 just build     # debug build
-just test      # unit tests
 just --list    # all recipes
 ```
 
@@ -115,20 +108,10 @@ just --list    # all recipes
 Pindrop/
 ├── PindropApp.swift           # entry point and lifecycle
 ├── AppCoordinator.swift       # service wiring
-├── Services/                  # audio, hotkeys, storage, settings, MCP, telemetry
+├── Services/                  # audio, hotkeys, storage, settings
 ├── Services/Transcription/    # local engines, streaming, and optional OpenAI cloud transcription
 ├── Models/                    # SwiftData models and schema
-├── UI/                        # main window, settings, onboarding, floating indicators
-├── PindropTests/              # unit tests (Swift Testing)
-└── PindropUITests/            # UI tests (XCTest)
-```
-
-## Running tests
-
-```bash
-just test          # unit tests
-just test-ui       # UI tests
-just test-all      # everything
+└── UI/                        # main window, settings, onboarding, floating indicators
 ```
 
 ## Community
@@ -148,4 +131,3 @@ MIT. See [LICENSE](LICENSE).
 
 - [mlx-audio-swift](https://github.com/Blaizzy/mlx-audio-swift) and [OpenAI Whisper](https://github.com/openai/whisper)
 - [FluidAudio](https://github.com/FluidInference/FluidAudio) by Fluid Inference
-- [Sparkle](https://sparkle-project.org/)

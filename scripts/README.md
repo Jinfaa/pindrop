@@ -63,11 +63,10 @@ just release 1.9.0
 This will:
 1. Create/edit contextual release notes (`release-notes/vX.Y.Z.md`)
 2. Bump version/build and commit the change (if needed)
-3. Run tests
-4. Build signed release DMG
-5. Generate `appcast.xml`
-6. Create and push tag
-7. Create GitHub release using `gh` with notes + DMG + `appcast.xml`
+3. Build, notarize, and staple the signed release DMG
+4. Render release notes HTML (`just release-notes-html`)
+5. Create and push tag
+6. Create GitHub release using `gh` with notes + DMG + release notes HTML
 
 ### Notarization (requires Apple Developer account)
 
@@ -84,6 +83,7 @@ scripts/
 ├── create-dmg.sh               # Signed DMG creation script
 ├── create-dmg-self-signed.sh   # Fallback self-signed DMG script
 ├── sign-app-bundle.sh          # Manual/fallback bundle signing
+├── render_release_notes_html.py # Release notes Markdown -> HTML
 └── ExportOptions.plist         # Xcode export configuration
 ```
 

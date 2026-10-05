@@ -11,10 +11,8 @@ import SwiftUI
 struct GeneralSettingsView: View {
     @ObservedObject var settings: SettingsStore
     let launchAtLoginManager: LaunchAtLoginManager
-    let updateService: UpdateService
 
     @Environment(\.locale) private var locale
-    @AppStorage("automaticallyCheckForUpdates") private var automaticallyCheckForUpdates = true
     @State private var showingResetConfirmation = false
     @State private var launchAtLoginError: String?
 
@@ -72,58 +70,6 @@ struct GeneralSettingsView: View {
                 }
             }
 
-            SettingsGroupCard {
-                SettingsRow(showSeparator: true) {
-                    SettingsRowLabel(
-                        title: localized("Automatic updates", locale: locale),
-                        subtitle: SettingsUpdateStatusPresentation.subtitle(
-                            lastCheckDate: updateService.lastUpdateCheckDate,
-                            canCheck: updateService.canCheckForUpdates,
-                            locale: locale
-                        )
-                    )
-                } control: {
-                    SettingsToggle(
-                        isOn: $automaticallyCheckForUpdates,
-                        // Matches the visible row title (and its existing translations).
-                        label: localized("Automatic updates", locale: locale)
-                    )
-                        .accessibilityIdentifier("settings.toggle.automaticUpdates")
-                        .onChange(of: automaticallyCheckForUpdates) { _, newValue in
-                            updateService.automaticallyChecksForUpdates = newValue
-                        }
-                }
-
-                SettingsRow(showSeparator: false) {
-                    SettingsRowLabel(title: localized("Check for updates", locale: locale))
-                } control: {
-                    HStack(spacing: 8) {
-                        if AnnouncementCatalog.current != nil {
-                            Button {
-                                NotificationCenter.default.post(name: .showWhatsNew, object: nil)
-                            } label: {
-                                SettingsMenuButton(
-                                    title: localized("What's New…", locale: locale),
-                                    showsChevron: false
-                                )
-                            }
-                            .buttonStyle(.plain)
-                        }
-
-                        Button {
-                            updateService.checkForUpdates()
-                        } label: {
-                            SettingsMenuButton(
-                                title: localized("Check Now", locale: locale),
-                                showsChevron: false
-                            )
-                        }
-                        .buttonStyle(.plain)
-                        .disabled(!updateService.canCheckForUpdates)
-                    }
-                }
-            }
-
             SettingsDestructiveFooter(
                 title: localized("Reset all settings…", locale: locale)
             ) {
@@ -133,7 +79,6 @@ struct GeneralSettingsView: View {
         }
         .onAppear {
             synchronizeLaunchAtLoginState()
-            updateService.automaticallyChecksForUpdates = automaticallyCheckForUpdates
         }
         .alert(
             localized("Reset All Settings?", locale: locale),
@@ -205,8 +150,7 @@ struct GeneralSettingsView: View {
 #Preview {
     GeneralSettingsView(
         settings: SettingsStore(),
-        launchAtLoginManager: LaunchAtLoginManager(),
-        updateService: UpdateService()
+        launchAtLoginManager: LaunchAtLoginManager()
     )
     .frame(width: 620, height: 560)
     .background(AppColors.windowBackground)

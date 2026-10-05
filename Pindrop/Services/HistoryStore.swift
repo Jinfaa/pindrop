@@ -955,17 +955,14 @@ final class HistoryStore {
     
     private let modelContext: ModelContext
     private let speakerIdentityService: SpeakerIdentityManaging?
-    private let contributionService: ContributionService?
     private let aggregationWorker: HistoryAggregationWorker
 
     init(
         modelContext: ModelContext,
-        speakerIdentityService: SpeakerIdentityManaging? = nil,
-        contributionService: ContributionService? = nil
+        speakerIdentityService: SpeakerIdentityManaging? = nil
     ) {
         self.modelContext = modelContext
         self.speakerIdentityService = speakerIdentityService
-        self.contributionService = contributionService
         self.aggregationWorker = HistoryAggregationWorker(modelContainer: modelContext.container)
     }
     
@@ -1034,18 +1031,6 @@ final class HistoryStore {
         // failed or leave history views stale.
         NotificationCenter.default.post(name: .historyStoreDidChange, object: nil)
 
-        // Opt-in training-data capture: a genuine before/after pair exists only
-        // when AI enhancement rewrote the text. Gated inside the service.
-        if let originalText, originalText != text, enhancedWith != nil {
-            contributionService?.recordAIEnhancementPair(
-                input: originalText,
-                target: text,
-                modelUsed: modelUsed,
-                enhancedWith: enhancedWith,
-                sourceRecordID: record.id
-            )
-        }
-
         let dictationTrainingSegments = speakerTrainingSegments ?? record.diarizedSegments
         if sourceKind == .voiceRecording, !dictationTrainingSegments.isEmpty {
             learnFromDictationBestEffort(
@@ -1058,12 +1043,10 @@ final class HistoryStore {
     }
 
     /// Applies a manual transcript edit from the library. `text` stays the single
-    /// source of truth (copy/export/search all read it); the pre-edit value is
-    /// captured transiently for the opt-in training contribution only.
+    /// source of truth (copy/export/search all read it).
     func updateText(_ record: TranscriptionRecord, to newText: String) throws {
         let trimmedText = newText.trimmingCharacters(in: .whitespacesAndNewlines)
-        let oldText = record.text
-        guard !trimmedText.isEmpty, trimmedText != oldText else { return }
+        guard !trimmedText.isEmpty, trimmedText != record.text else { return }
 
         record.text = trimmedText
         record.wordCount = trimmedText.wordCount
@@ -1076,13 +1059,6 @@ final class HistoryStore {
         }
 
         NotificationCenter.default.post(name: .historyStoreDidChange, object: nil)
-
-        contributionService?.recordManualEdit(
-            input: oldText,
-            target: trimmedText,
-            modelUsed: record.modelUsed,
-            sourceRecordID: record.id
-        )
     }
 
     func fetchAll() throws -> [TranscriptionRecord] {

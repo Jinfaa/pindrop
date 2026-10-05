@@ -58,10 +58,6 @@ enum ParakeetModelStorage {
 @MainActor
 @Observable
 class ModelManager {
-    /// Optional telemetry peer, injected by AppCoordinator after construction.
-    /// Download start/failure signals are dropped entirely when nil or opted out.
-    @ObservationIgnored var telemetryService: TelemetryService?
-
     nonisolated static let englishRecommendedMLXModelNames = [
         "apple_speech_on_device",
         "mlx-community/whisper-base.en-mlx",
@@ -1208,37 +1204,22 @@ class ModelManager {
             currentDownloadModel = nil
         }
 
-        telemetryService?.send(
-            .modelDownloadStarted,
-            parameters: [TelemetryParameter.model: modelName]
-        )
-        do {
-            if model.provider == .mlxParakeet {
-                try await downloadMLXParakeetModel(named: modelName, onProgress: onProgress)
-            } else if model.provider == .mlxQwen3 {
-                try await downloadMLXQwen3Model(named: modelName, onProgress: onProgress)
-            } else if model.provider == .parakeet {
-                try await downloadParakeetModel(named: modelName, onProgress: onProgress)
-            } else if model.provider == .senseVoice {
-                try await downloadSenseVoiceModel(named: modelName, onProgress: onProgress)
-            } else if model.provider == .mlxWhisper {
-                try await downloadMLXWhisperModel(named: modelName, onProgress: onProgress)
-            } else if model.provider == .whisperKit {
-                try await downloadWhisperKitModel(named: modelName, onProgress: onProgress)
-            } else if model.provider == .appleSpeech {
-                await refreshDownloadedModels()
-            } else {
-                throw ModelError.downloadNotImplemented(model.provider.rawValue)
-            }
-        } catch {
-            telemetryService?.send(
-                .modelDownloadFailed,
-                parameters: [
-                    TelemetryParameter.model: modelName,
-                    TelemetryParameter.errorCase: TelemetryService.errorCaseName(error)
-                ]
-            )
-            throw error
+        if model.provider == .mlxParakeet {
+            try await downloadMLXParakeetModel(named: modelName, onProgress: onProgress)
+        } else if model.provider == .mlxQwen3 {
+            try await downloadMLXQwen3Model(named: modelName, onProgress: onProgress)
+        } else if model.provider == .parakeet {
+            try await downloadParakeetModel(named: modelName, onProgress: onProgress)
+        } else if model.provider == .senseVoice {
+            try await downloadSenseVoiceModel(named: modelName, onProgress: onProgress)
+        } else if model.provider == .mlxWhisper {
+            try await downloadMLXWhisperModel(named: modelName, onProgress: onProgress)
+        } else if model.provider == .whisperKit {
+            try await downloadWhisperKitModel(named: modelName, onProgress: onProgress)
+        } else if model.provider == .appleSpeech {
+            await refreshDownloadedModels()
+        } else {
+            throw ModelError.downloadNotImplemented(model.provider.rawValue)
         }
         Log.boot.info("ModelManager.downloadModel finished OK name=\(modelName) wallClock=\(String(format: "%.2fs", CFAbsoluteTimeGetCurrent() - downloadWallClock))")
     }

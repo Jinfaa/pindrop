@@ -79,23 +79,6 @@ struct AboutSettingsView: View {
             )
 
             SettingsGroupCard {
-                if AnnouncementCatalog.current != nil {
-                    SettingsRow(showSeparator: true) {
-                        SettingsRowLabel(title: localized("What's New in Pindrop", locale: locale))
-                    } control: {
-                        Button {
-                            NotificationCenter.default.post(name: .showWhatsNew, object: nil)
-                        } label: {
-                            SettingsMenuButton(
-                                title: localized("What's New…", locale: locale),
-                                showsChevron: false
-                            )
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityIdentifier("settings.button.whatsNew")
-                    }
-                }
-
                 SettingsRow(showSeparator: true) {
                     SettingsRowLabel(title: localized("Copy System Info", locale: locale))
                 } control: {
@@ -142,15 +125,7 @@ struct AboutSettingsView: View {
     }
 
     private var versionChannelLine: String {
-        let channel = SettingsAboutPresentation.channelLabel(
-            feedURLString: Bundle.main.object(forInfoDictionaryKey: "SUFeedURL") as? String,
-            locale: locale
-        )
-        return SettingsAboutPresentation.versionLine(
-            version: appVersion,
-            build: buildNumber,
-            channel: channel
-        )
+        "\(appVersion) (\(buildNumber))"
     }
 
     private func linkButton(_ title: String, url: String) -> some View {

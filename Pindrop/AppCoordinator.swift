@@ -133,7 +133,6 @@ extension Notification.Name {
     static let switchModel = Notification.Name("tech.watzon.pindrop.switchModel")
     static let modelActiveChanged = Notification.Name("tech.watzon.pindrop.modelActiveChanged")
     static let requestActiveModel = Notification.Name("tech.watzon.pindrop.requestActiveModel")
-    static let showWhatsNew = Notification.Name("tech.watzon.pindrop.showWhatsNew")
     /// UI posts this with `userInfo["text"]` (String) to copy with clipboard-undo toast.
     static let copyTextWithUndo = Notification.Name("tech.watzon.pindrop.copyTextWithUndo")
 }
@@ -212,8 +211,6 @@ struct SettingsObservationSnapshot: Equatable {
     let vibeLiveSessionEnabled: Bool
     let streamingFeatureEnabled: Bool
     let hotkeys: HotkeySettingsSnapshot
-    let mcpServerEnabled: Bool
-    let mcpServerPort: Int
     let dictationAudioRetention: DictationAudioRetention
 }
 
@@ -494,7 +491,6 @@ final class AppCoordinator {
     let aiEnhancementService: AIEnhancementService
     let hotkeyManager: HotkeyManager
     let launchAtLoginManager: LaunchAtLoginManager
-    let updateService: UpdateService
     let outputManager: OutputManager
     let historyStore: HistoryStore
     let speakerIdentityService: SpeakerIdentityService
@@ -510,14 +506,9 @@ final class AppCoordinator {
     let mediaPauseService: MediaPauseService
     let mediaIngestionService: MediaIngestionService
     let mediaPreparationService: MediaPreparationService
-    let announcementService: AnnouncementService
-    let telemetryService: TelemetryService
-    let telemetryConsentService: TelemetryConsentService
-    let contributionService: ContributionService
     let dictationAudioRetentionService: DictationAudioRetentionService
     let recordingState: RecordingFeatureState
     let mediaTranscriptionState: MediaTranscriptionFeatureState
-    private(set) var mcpServer: MCPServer?
 
     // MARK: - UI Controllers
     
@@ -537,8 +528,6 @@ final class AppCoordinator {
     let floatingIndicatorPresenters: [FloatingIndicatorType: any FloatingIndicatorPresenting]
     let floatingIndicatorFocusTracker: FloatingIndicatorFocusTracker
     let onboardingController: OnboardingWindowController
-    let announcementController: AnnouncementWindowController
-    let telemetryConsentController: TelemetryConsentWindowController
     let splashController: SplashWindowController
     let settingsWindowController: SettingsWindowController
     let mainWindowController: MainWindowController
@@ -691,7 +680,6 @@ final class AppCoordinator {
         self.aiEnhancementService = AIEnhancementService()
         self.hotkeyManager = HotkeyManager()
         self.launchAtLoginManager = LaunchAtLoginManager()
-        self.updateService = UpdateService()
         self.settingsStore = SettingsStore()
         // TranscriptionService is built after SettingsStore so the streaming chunk
         // profile and backend providers can read the user's toggles when the engine
@@ -720,14 +708,9 @@ final class AppCoordinator {
         
         let initialOutputMode: OutputMode = settingsStore.outputMode == "directInsert" ? .directInsert : .clipboard
         self.outputManager = OutputManager(outputMode: initialOutputMode)
-        self.contributionService = ContributionService(
-            modelContext: modelContext,
-            settingsStore: settingsStore
-        )
         self.historyStore = HistoryStore(
             modelContext: modelContext,
-            speakerIdentityService: speakerIdentityService,
-            contributionService: contributionService
+            speakerIdentityService: speakerIdentityService
         )
         self.dictionaryStore = DictionaryStore(modelContext: modelContext)
         self.notesStore = NotesStore(modelContext: modelContext, aiEnhancementService: aiEnhancementService, settingsStore: settingsStore)
@@ -797,27 +780,14 @@ final class AppCoordinator {
             .orb: orbFloatingIndicatorController
         ]
         self.onboardingController = OnboardingWindowController()
-        self.announcementController = AnnouncementWindowController()
-        self.announcementService = AnnouncementService(
-            settingsStore: settingsStore,
-            presenter: announcementController
-        )
-        self.telemetryService = TelemetryService(settingsStore: settingsStore)
-        self.telemetryConsentController = TelemetryConsentWindowController()
-        self.telemetryConsentService = TelemetryConsentService(
-            settingsStore: settingsStore,
-            presenter: telemetryConsentController
-        )
         let splashState = SplashScreenState()
         self.splashController = SplashWindowController(state: splashState)
         self.settingsWindowController = SettingsWindowController(
             settings: settingsStore,
             modelContainer: modelContainer,
-            launchAtLoginManager: launchAtLoginManager,
-            updateService: updateService
+            launchAtLoginManager: launchAtLoginManager
         )
         self.mainWindowController = MainWindowController()
-        self.modelManager.telemetryService = telemetryService
         self.mainWindowController.setModelContainer(modelContainer)
         self.noteEditorWindowController = NoteEditorWindowController()
         self.noteEditorWindowController.setModelContainer(modelContainer)
@@ -1042,19 +1012,6 @@ final class AppCoordinator {
 
         notificationResources.install(
             NotificationCenter.default.addObserver(
-                forName: .showWhatsNew,
-                object: nil,
-                queue: .main
-            ) { [weak self] _ in
-                Task { @MainActor [weak self] in
-                    guard let self, !self.isShutdown else { return }
-                    self.handleShowWhatsNew()
-                }
-            }
-        )
-
-        notificationResources.install(
-            NotificationCenter.default.addObserver(
                 forName: .copyTextWithUndo,
                 object: nil,
                 queue: .main
@@ -1090,14 +1047,6 @@ final class AppCoordinator {
     
     func start(launchSemantics: StartupLaunchSemantics = .normal) async {
         Log.boot.info("AppCoordinator.start() entered hasCompletedOnboarding=\(settingsStore.hasCompletedOnboarding) selectedModel=\(settingsStore.selectedModel)")
-        telemetryService.send(
-            .appLaunched,
-            parameters: [
-                TelemetryParameter.backend: settingsStore.resolvedTranscriptionBackend.rawValue,
-                TelemetryParameter.model: settingsStore.selectedModel,
-                TelemetryParameter.locale: settingsStore.selectedAppLocale.locale.identifier
-            ]
-        )
         if !settingsStore.hasCompletedOnboarding {
             Log.boot.info("Taking onboarding path (skipping splash and normal operation until complete)")
             showOnboarding()
@@ -1119,7 +1068,7 @@ final class AppCoordinator {
             "Startup window presentation orderFront=\(shouldOrderMainWindowFront) preference=\(settingsStore.launchWithoutShowingWindow) hideFlag=\(launchSemantics.launchServicesRequestedHide)"
         )
 
-        // Skip splash / main window / auto What's New so silent launches never
+        // Skip splash / main window so silent launches never
         // flash non-onboarding chrome. Manual menu-bar access still opens later.
         if shouldOrderMainWindowFront {
             splashController.show()
@@ -1130,12 +1079,11 @@ final class AppCoordinator {
         if shouldOrderMainWindowFront {
             splashController.dismiss { [weak self] in
                 self?.mainWindowController.show()
-                self?.presentAnnouncementAfterStartup()
             }
         } else {
             // Keep the main window out of AppKit restoration/frontmost state.
             mainWindowController.hide()
-            Log.boot.info("Silent startup: suppressed main window and auto announcement presentation")
+            Log.boot.info("Silent startup: suppressed main window")
         }
         Log.boot.info("AppCoordinator.start() finished normal path")
     }
@@ -1149,52 +1097,14 @@ final class AppCoordinator {
             permissionManager: permissionManager,
             onComplete: { [weak self] in
                 Task { @MainActor in
-                    self?.announcementService.markCurrentAnnouncementSeen()
                     await self?.finishPostOnboardingSetup()
                     self?.mainWindowController.show()
                     self?.showWelcomePopoverAfterDelay()
-                    // Consent was answered via the onboarding permissions step;
-                    // this sends only if the user opted in there.
-                    self?.telemetryService.send(
-                        .onboardingCompleted,
-                        parameters: [
-                            TelemetryParameter.model: self?.settingsStore.selectedModel ?? ""
-                        ]
-                    )
                 }
             }
         )
     }
 
-    private func presentAnnouncementAfterStartup() {
-        guard !AppTestMode.isRunningAnyTests else {
-            Log.app.debug("Skipping announcement presentation in test mode")
-            return
-        }
-
-        // Telemetry consent takes priority; when it presents, defer What's New to
-        // the next launch so the two windows never stack.
-        if telemetryConsentService.presentConsentIfNeeded(
-            hasCompletedOnboarding: settingsStore.hasCompletedOnboarding
-        ) {
-            return
-        }
-
-        announcementService.presentCurrentAnnouncementIfNeeded(
-            hasCompletedOnboarding: settingsStore.hasCompletedOnboarding
-        )
-    }
-
-
-    private func handleShowWhatsNew() {
-        guard !AppTestMode.isRunningAnyTests else {
-            Log.app.debug("Skipping manual announcement presentation in test mode")
-            return
-        }
-
-        announcementService.showCurrentAnnouncement()
-    }
-    
     private func showWelcomePopoverAfterDelay() {
         Task {
             try? await Task.sleep(for: .milliseconds(400))
@@ -1359,23 +1269,12 @@ final class AppCoordinator {
         named modelName: String,
         provider: ModelManager.ModelProvider
     ) async throws {
-        do {
-            if provider == .mlxWhisper,
-               let localModelPath = modelManager.existingLocalModelPath(for: modelName) {
-                Log.model.info("Loading MLX Whisper model \(modelName) from local folder: \(localModelPath.path)")
-                try await transcriptionService.loadModel(modelPath: localModelPath.path)
-            } else {
-                try await transcriptionService.loadModel(modelName: modelName, provider: provider)
-            }
-        } catch {
-            telemetryService.send(
-                .modelLoadFailed,
-                parameters: [
-                    TelemetryParameter.model: modelName,
-                    TelemetryParameter.errorCase: TelemetryService.errorCaseName(error)
-                ]
-            )
-            throw error
+        if provider == .mlxWhisper,
+           let localModelPath = modelManager.existingLocalModelPath(for: modelName) {
+            Log.model.info("Loading MLX Whisper model \(modelName) from local folder: \(localModelPath.path)")
+            try await transcriptionService.loadModel(modelPath: localModelPath.path)
+        } else {
+            try await transcriptionService.loadModel(modelName: modelName, provider: provider)
         }
         setActiveModel(modelName)
     }
@@ -1566,7 +1465,6 @@ final class AppCoordinator {
         updateFloatingIndicatorVisibility()
 
         updateVibeRuntimeStateFromSettings()
-        applyMCPServerSettings()
         prewarmStreamingEngineIfEnabled()
         Log.boot.info("startNormalOperation complete")
     }
@@ -1589,84 +1487,6 @@ final class AppCoordinator {
                 Log.transcription.info("Streaming engine prewarm skipped: \(error.localizedDescription)")
             }
         }
-    }
-
-    // MARK: - MCP Server
-
-    private func applyMCPServerSettings() {
-        if settingsStore.mcpServerEnabled {
-            startMCPServerIfNeeded()
-        } else {
-            stopMCPServerIfRunning()
-        }
-    }
-
-    private func startMCPServerIfNeeded() {
-        let port = UInt16(clamping: settingsStore.mcpServerPort)
-
-        // Reuse existing server if port hasn't changed
-        if let existing = mcpServer, existing.port == port {
-            if !existing.isRunning { existing.start() }
-            return
-        }
-
-        // Stop old server (port changed)
-        mcpServer?.stop()
-
-        let token = resolvedMCPToken()
-        let server = MCPServer(port: port, token: token)
-        server.coordinator = self
-        mcpServer = server
-        server.start()
-    }
-
-    private func stopMCPServerIfRunning() {
-        mcpServer?.stop()
-        mcpServer = nil
-    }
-
-    private func resolvedMCPToken() -> String {
-        if let existing = settingsStore.loadMCPToken(), !existing.isEmpty {
-            return existing
-        }
-        let token = MCPTokenGenerator.generate()
-        try? settingsStore.saveMCPToken(token)
-        return token
-    }
-
-    /// Submits a transcription job from the MCP server (bypasses UI source validation).
-    func submitMCPTranscriptionJob(_ job: MediaTranscriptionJobState) {
-        enqueueOrStart(job)
-    }
-
-    /// Cancels the MCP-submitted job with the given internal state ID.
-    func cancelMCPJob(stateID: UUID) {
-        if mediaTranscriptionState.currentJob?.id == stateID {
-            mediaTranscriptionGeneration &+= 1
-            mediaQueueNeedsProcessingReset = mediaQueueNeedsProcessingReset || isProcessing
-            mediaTranscriptionTask?.cancel()
-            mediaTranscriptionState.clearCurrentJob()
-            if mediaTranscriptionTask == nil {
-                startMediaQueueContinuationIfNeeded()
-            }
-            Log.mcp.info("Cancelled active MCP job \(stateID)")
-        } else {
-            mediaTranscriptionState.pendingJobs.removeAll { $0.id == stateID }
-            Log.mcp.info("Removed pending MCP job \(stateID)")
-        }
-    }
-
-    /// Loads and activates a transcription model by name for MCP callers.
-    func loadAndActivateModelForMCP(named modelName: String) async throws {
-        guard let model = modelManager.availableModels.first(where: { $0.name == modelName }) else {
-            throw ModelManager.ModelError.modelNotFound(modelName)
-        }
-        if !modelManager.isModelDownloaded(modelName),
-           modelManager.existingLocalModelPath(for: modelName) == nil {
-            try await modelManager.downloadModel(named: modelName) { _ in }
-        }
-        try await loadAndActivateModel(named: modelName, provider: model.provider)
-        settingsStore.selectedModel = modelName
     }
 
     // MARK: - Hotkey Setup
@@ -2063,8 +1883,6 @@ final class AppCoordinator {
                     modifiers: settingsStore.cancelOperationHotkeyModifiers
                 )
             ),
-            mcpServerEnabled: settingsStore.mcpServerEnabled,
-            mcpServerPort: settingsStore.mcpServerPort,
             dictationAudioRetention: settingsStore.dictationAudioRetention
         )
     }
@@ -2136,11 +1954,6 @@ final class AppCoordinator {
                         self.statusBarController.reloadLocalizedStrings()
                         self.pillFloatingIndicatorController.reloadLocalizedStrings()
                         self.orbFloatingIndicatorController.reloadLocalizedStrings()
-                    }
-
-                    if previousSnapshot.mcpServerEnabled != snapshot.mcpServerEnabled
-                        || previousSnapshot.mcpServerPort != snapshot.mcpServerPort {
-                        self.applyMCPServerSettings()
                     }
 
                     if previousSnapshot.dictationAudioRetention != snapshot.dictationAudioRetention {
@@ -3017,7 +2830,6 @@ final class AppCoordinator {
                 throw CancellationError()
             }
             Log.app.error("Note-append transcription failed: \(error)")
-            reportTranscriptionFailureSignal(error, stage: "transcribe")
             resetProcessingState()
             didResetProcessingState = true
             let message = if case .modelNotLoaded = error {
@@ -3032,7 +2844,6 @@ final class AppCoordinator {
                 throw CancellationError()
             }
             Log.app.error("Note-append transcription failed: \(error)")
-            reportTranscriptionFailureSignal(error, stage: "transcribe")
             resetProcessingState()
             didResetProcessingState = true
             let locale = settingsStore.selectedAppLocale.locale
@@ -3123,7 +2934,6 @@ final class AppCoordinator {
                 throw CancellationError()
             }
             Log.app.error("Transcription failed: \(error)")
-            reportTranscriptionFailureSignal(error, stage: "transcribe")
             resetProcessingState()
             didResetProcessingState = true
             let locale = settingsStore.selectedAppLocale.locale
@@ -3141,7 +2951,6 @@ final class AppCoordinator {
                 throw CancellationError()
             }
             Log.app.error("Transcription failed: \(error)")
-            reportTranscriptionFailureSignal(error, stage: "transcribe")
             resetProcessingState()
             didResetProcessingState = true
             let locale = settingsStore.selectedAppLocale.locale
@@ -3530,13 +3339,6 @@ final class AppCoordinator {
 
     private func handleNoSpeechDetected(context: String) {
         Log.app.info("No speech detected for \(context); skipping output")
-        telemetryService.send(
-            .transcriptionEmptyResult,
-            parameters: [
-                TelemetryParameter.stage: context,
-                TelemetryParameter.backend: settingsStore.resolvedTranscriptionBackend.rawValue
-            ]
-        )
         toastService.show(
             ToastPayload(
                 message: localized(
@@ -3544,20 +3346,6 @@ final class AppCoordinator {
                     locale: settingsStore.selectedAppLocale.locale
                 )
             )
-        )
-    }
-
-    /// Reports a transcription failure as a telemetry signal. Only the bare error
-    /// case label and pipeline stage are sent — never messages or paths.
-    private func reportTranscriptionFailureSignal(_ error: Error, stage: String) {
-        telemetryService.send(
-            .transcriptionFailed,
-            parameters: [
-                TelemetryParameter.errorCase: TelemetryService.errorCaseName(error),
-                TelemetryParameter.stage: stage,
-                TelemetryParameter.backend: settingsStore.resolvedTranscriptionBackend.rawValue,
-                TelemetryParameter.model: settingsStore.selectedModel
-            ]
         )
     }
 
@@ -3910,7 +3698,6 @@ final class AppCoordinator {
                 throw CancellationError()
             }
             Log.app.error("Transcription failed: \(error)")
-            reportTranscriptionFailureSignal(error, stage: "transcribe")
             resetProcessingState()
             didResetProcessingState = true
             let locale = settingsStore.selectedAppLocale.locale
@@ -3928,7 +3715,6 @@ final class AppCoordinator {
                 throw CancellationError()
             }
             Log.app.error("Transcription failed: \(error)")
-            reportTranscriptionFailureSignal(error, stage: "transcribe")
             resetProcessingState()
             didResetProcessingState = true
             let locale = settingsStore.selectedAppLocale.locale
@@ -4186,13 +3972,6 @@ final class AppCoordinator {
                     throw CancellationError()
                 }
                 Log.app.error("AI enhancement failed: \(error)")
-                telemetryService.send(
-                    .enhancementFailed,
-                    parameters: [
-                        TelemetryParameter.providerKind: transcriptionAssignment.kind.rawValue,
-                        TelemetryParameter.errorCase: TelemetryService.errorCaseName(error)
-                    ]
-                )
                 toastService.show(
                     ToastPayload(
                         message: localized(
@@ -4275,28 +4054,6 @@ final class AppCoordinator {
                 destinationAppBundleID: outputResult?.destinationAppBundleID,
                 speakerTrainingSegments: speakerTrainingSegments,
                 pipelineMetricsJSON: pipelineMetrics.hasAnyStage ? pipelineMetrics.jsonString() : nil
-            )
-            var successParameters: [String: String] = [
-                TelemetryParameter.backend: settingsStore.resolvedTranscriptionBackend.rawValue,
-                TelemetryParameter.model: settingsStore.selectedModel,
-                TelemetryParameter.durationBucket: TelemetryService.durationBucket(duration),
-                TelemetryParameter.wordCountBucket: TelemetryService.wordCountBucket(finalText.wordCount),
-                TelemetryParameter.enhanced: String(enhancedWithModel != nil),
-                TelemetryParameter.diarized: String(diarizationSegmentsJSON != nil)
-            ]
-            if let seconds = pipelineMetrics.transcriptionSeconds {
-                successParameters[TelemetryParameter.transcribeLatencyBucket] = TelemetryService.latencyBucket(seconds)
-            }
-            if let seconds = pipelineMetrics.enhancementSeconds {
-                successParameters[TelemetryParameter.enhanceLatencyBucket] = TelemetryService.latencyBucket(seconds)
-            }
-            if let seconds = pipelineMetrics.totalSeconds {
-                successParameters[TelemetryParameter.totalLatencyBucket] = TelemetryService.latencyBucket(seconds)
-            }
-            telemetryService.send(
-                .transcriptionSucceeded,
-                parameters: successParameters,
-                sampleRate: TelemetryService.successSampleRate
             )
             if let nativeAudio = audioRecorder.takeLastNativeAudio(),
                let nativePCMURL = nativeAudio.takeFileURL() {
@@ -6088,18 +5845,6 @@ final class AppCoordinator {
         }
     }
 
-    private func handleCheckForUpdates() {
-        if updateService.shouldDeferUpdate(isRecording: isRecording || isProcessing) {
-            AlertManager.shared.showGenericErrorAlert(
-                title: "Update Deferred",
-                message: "Finish recording or processing before checking for updates."
-            )
-            return
-        }
-
-        updateService.checkForUpdates()
-    }
-
     // MARK: - Open History
 
     private func handleOpenHistory() {
@@ -6245,7 +5990,6 @@ final class AppCoordinator {
         floatingIndicatorFocusTracker.stop()
 
         hotkeyManager.unregisterAll()
-        stopMCPServerIfRunning()
         dictationAudioRetentionService.stopPeriodicSweep()
     }
 }

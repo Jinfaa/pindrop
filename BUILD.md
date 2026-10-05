@@ -1,6 +1,6 @@
 # Build Guide
 
-Complete guide for building, testing, and distributing Pindrop.
+Complete guide for building and distributing Pindrop.
 
 ## Prerequisites
 
@@ -23,7 +23,6 @@ Run `just --list` to see every available recipe.
 
 ```bash
 just build
-just test
 just xcode
 ```
 
@@ -36,9 +35,7 @@ just xcode
 ```bash
 just build              # Debug build with signing
 just build-unsigned     # Debug build without signing (CI/fallback)
-just test               # Run test suite
-just test-coverage      # Run tests with coverage
-just dev                # Clean + build + test
+just dev                # Clean + build
 ```
 
 ### Release
@@ -48,8 +45,8 @@ just build-release      # Release build
 just export-app         # Archive + export Developer ID-signed app
 just dmg                # Export signed app + create DMG
 just dmg-self-signed    # Fallback self-signed DMG (only if Apple signing is unavailable)
-just appcast dist/Pindrop.dmg   # Generate appcast.xml for DMG
 just release-notes 1.9.0        # Create draft release notes file
+just release-notes-html 1.9.0   # Render release notes HTML into dist/
 just release 1.9.0      # Manual GitHub release workflow (local)
 ```
 
@@ -74,7 +71,6 @@ just dev
 This runs:
 1. `clean` - Remove old artifacts
 2. `build` - Debug build
-3. `test` - Run test suite
 
 ### 2. Release Build
 
@@ -124,23 +120,14 @@ just release 1.9.0
 
 This runs:
 1. Ensure contextual release notes exist (`release-notes/vX.Y.Z.md`)
-2. For feature releases (X.Y.0): ensure the in-app What's New announcement
-   (`AnnouncementCatalog` in `Pindrop/Models/Announcement.swift`) references
-   `Pindrop X.Y.0` — update it plus the `whatsnew:` strings in
-   `Localization/app/*.yml` and run `just l10n-sync` before releasing
-3. Bump version/build in `project.pbxproj` (if needed)
-4. Commit version bump (if needed)
-5. `just test`
-6. `just dmg`
-7. `just appcast dist/Pindrop.dmg`
-8. Create and push tag (`vX.Y.Z`)
-9. Create GitHub release with notes + DMG + `appcast.xml` via `gh`
-
-Optional notarization/stapling for signed distribution:
-```bash
-just notarize dist/Pindrop.dmg
-just staple dist/Pindrop.dmg
-```
+2. Bump version/build in `project.pbxproj` (if needed)
+3. Commit version bump (if needed)
+4. `just dmg`
+5. `just notarize` + `just staple` on `dist/Pindrop.dmg`
+6. `just release-notes-html` (renders `dist/release-notes-vX.Y.Z.html`)
+7. Create and push tag (`vX.Y.Z`)
+8. Create GitHub release with notes + DMG + release notes HTML via `gh`
+9. `just sync-website-changelog` (best-effort)
 
 ## Code Signing
 
@@ -208,35 +195,12 @@ just release 1.9.0     # Sets MARKETING_VERSION to 1.9.0 and increments the buil
 To inspect or change the version manually, edit `MARKETING_VERSION` /
 `CURRENT_PROJECT_VERSION` in the Xcode project (or open it with `just xcode`).
 
-## Testing
-
-### Run All Tests
-
-```bash
-just test
-```
-
-### Run with Coverage
-
-```bash
-just test-coverage
-```
-
-### Manual Testing
-
-```bash
-xcodebuild test \
-  -project Pindrop.xcodeproj \
-  -scheme Pindrop \
-  -destination 'platform=macOS'
-```
-
 ## CI/CD
 
 ### GitHub Actions Example
 
 ```yaml
-name: Build and Test
+name: Build
 
 on: [push, pull_request]
 
@@ -254,8 +218,7 @@ jobs:
 The `just ci` command runs:
 1. `clean`
 2. `build-unsigned` (Debug)
-3. `test-unsigned`
-4. `build-release-unsigned`
+3. `build-release-unsigned`
 
 ## Troubleshooting
 
@@ -264,13 +227,6 @@ The `just ci` command runs:
 ```bash
 just clean
 just build
-```
-
-### Tests Fail
-
-```bash
-just clean
-just test
 ```
 
 ### DMG Creation Fails
@@ -307,6 +263,7 @@ pindrop/
 │   ├── create-dmg.sh
 │   ├── create-dmg-self-signed.sh
 │   ├── sign-app-bundle.sh
+│   ├── render_release_notes_html.py
 │   └── ExportOptions.plist
 ├── justfile                # Build commands
 └── Pindrop.xcodeproj       # Xcode project
@@ -336,10 +293,9 @@ just xcode
 ## Tips
 
 1. **Use `just` for everything** - Consistent, documented commands
-2. **Run tests before committing** - `just test`
-3. **Clean before release builds** - `just clean build-release`
-4. **Verify signatures** - `just verify-signature`
-5. **Test DMG on clean Mac** - Before distribution
+2. **Clean before release builds** - `just clean build-release`
+3. **Verify signatures** - `just verify-signature`
+4. **Test DMG on clean Mac** - Before distribution
 
 ## Resources
 

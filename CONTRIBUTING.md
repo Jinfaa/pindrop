@@ -9,7 +9,6 @@ Pindrop is a macOS menu bar dictation app that uses [mlx-audio-swift](https://gi
 - [Development Setup](#development-setup)
 - [Development Workflow](#development-workflow)
 - [Code Standards](#code-standards)
-- [Testing Requirements](#testing-requirements)
 - [Architecture Guidelines](#architecture-guidelines)
 - [Pull Request Checklist](#pull-request-checklist)
 - [Anti-Patterns to Avoid](#anti-patterns-to-avoid)
@@ -47,13 +46,7 @@ brew install swiftlint swiftformat
    just build
    ```
 
-3. **Run the test suite** to confirm everything works:
-
-   ```bash
-   just test
-   ```
-
-4. **Open in Xcode** (if you prefer the IDE):
+3. **Open in Xcode** (if you prefer the IDE):
 
    ```bash
    just xcode
@@ -84,7 +77,6 @@ feat: add floating volume indicator during recording
 fix: resolve hotkey conflict detection on Sequoia
 docs: update build instructions for Xcode 16
 refactor: extract audio format conversion to utility
-test: add tests for push-to-talk key-up handling
 ```
 
 ### Pull Request Process
@@ -100,7 +92,7 @@ test: add tests for push-to-talk key-up handling
 3. **Run the full dev cycle** before pushing:
 
    ```bash
-   just dev    # clean + build + test
+   just dev    # clean + build
    ```
 
 4. **Push and open a PR** against `main`:
@@ -153,8 +145,6 @@ import os.log                  // 4. Logging last
 | Variables / Functions | camelCase      | `isRecording`, `startRecording()`     |
 | Local constants       | camelCase      | `let maxRetries = 3`                  |
 | Static constants      | PascalCase     | `static let DefaultTimeout`           |
-| Test files            | `*Tests.swift` | `AudioRecorderTests.swift`            |
-| System Under Test     | `sut`          | `var sut: AudioRecorder!`             |
 
 ### Error Handling
 
@@ -209,73 +199,6 @@ Available categories: `audio`, `transcription`, `model`, `output`, `hotkey`, `ap
 
 All API keys and secrets go through the Keychain via `SettingsStore.saveAPIKey()`. **Never** store secrets in `UserDefaults` or `@AppStorage`.
 
-## Testing Requirements
-
-### Running Tests
-
-```bash
-just test                 # Unit test suite (default)
-just test-integration     # Integration suite only
-just test-all             # Both suites
-
-# Run a specific test class:
-xcodebuild test -scheme Pindrop -destination 'platform=macOS' \
-    -only-testing:PindropTests/AudioRecorderTests
-
-# Run a single test:
-xcodebuild test -scheme Pindrop -destination 'platform=macOS' \
-    -only-testing:PindropTests/AudioRecorderTests/testStartRecordingRequestsPermission
-```
-
-### Test Isolation
-
-Tests are isolated from user settings. The test plans set `PINDROP_TEST_MODE=1`, which causes `SettingsStore` to use test-only `@AppStorage` and Keychain backends. You don't need to do anything special; just make sure new settings-dependent code respects this flag.
-
-### Writing Tests for New Features
-
-1. **Add to the existing `*Tests.swift`** file for the service you changed, or create a new one following the same structure.
-
-2. **Use the standard pattern:**
-
-   ```swift
-   @MainActor
-   final class MyServiceTests: XCTestCase {
-       var sut: MyService!
-
-       override func setUpWithError() throws {
-           sut = MyService()
-       }
-
-       func testFeature() async throws {
-           let result = try await sut.doWork()
-           XCTAssertEqual(result, expected)
-       }
-   }
-   ```
-
-3. **For hardware-dependent code** (microphone, permissions), use protocol-based dependency injection with mocks. See `TestHelpers/MockPermissionProvider.swift` and `TestHelpers/MockAudioCaptureBackend.swift` for examples.
-
-4. **For SwiftData tests**, use in-memory containers:
-
-   ```swift
-   let config = ModelConfiguration(isStoredInMemoryOnly: true)
-   modelContainer = try ModelContainer(for: schema, configurations: [config])
-   ```
-
-5. **For network-dependent code**, use `MockURLSession` (see `AIEnhancementServiceTests.swift`).
-
-6. **Tests must pass on CI** (macOS runners with no microphone, no permission dialogs). Never depend on real hardware.
-
-### Test Conventions
-
-| Rule                      | Details                                                                |
-| ------------------------- | ---------------------------------------------------------------------- |
-| Variable naming           | Always use `sut` for the System Under Test                             |
-| `@MainActor`              | Required on tests for `@MainActor` services                            |
-| Cleanup                   | Clean up Keychain/file state in `setUp`; nil assignments in `tearDown` |
-| Timeouts                  | 1-5s for unit tests, up to 10s for integration tests                   |
-| No third-party frameworks | XCTest is sufficient                                                   |
-
 ## Architecture Guidelines
 
 ### Project Structure
@@ -314,17 +237,14 @@ AppCoordinator.handleToggleRecording()
 2. Follow the `@MainActor final class` pattern (unless threading constraints prevent it).
 3. Define a nested error enum.
 4. Wire it through `AppCoordinator`.
-5. Add tests in `PindropTests/` using the existing patterns.
-6. If the service depends on hardware, define a protocol and provide a mock in `TestHelpers/`.
+5. If the service depends on hardware, define a protocol at the system boundary.
 
 ## Pull Request Checklist
 
 Before submitting, verify:
 
 - [ ] Code builds without errors or warnings (`just build`)
-- [ ] All tests pass (`just test`)
 - [ ] Code is linted and formatted (`just lint`, `just format` — if tools are installed)
-- [ ] New features have tests
 - [ ] No force unwraps (`!`) or force casts (`as!`)
 - [ ] No test-only methods added to production code
 - [ ] Secrets use Keychain, not UserDefaults

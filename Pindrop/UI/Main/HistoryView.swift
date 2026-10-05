@@ -93,10 +93,7 @@ struct HistoryView: View {
     private var historyStore: HistoryStore {
         HistoryStore(
             modelContext: modelContext,
-            speakerIdentityService: SpeakerIdentityService(modelContext: modelContext),
-            contributionService: settingsStore.map {
-                ContributionService(modelContext: modelContext, settingsStore: $0)
-            }
+            speakerIdentityService: SpeakerIdentityService(modelContext: modelContext)
         )
     }
 

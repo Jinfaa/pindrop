@@ -16,7 +16,6 @@ struct SettingsShellView: View {
     @ObservedObject var settings: SettingsStore
     @ObservedObject var model: SettingsWindowModel
     let launchAtLoginManager: LaunchAtLoginManager
-    let updateService: UpdateService
 
     @Environment(\.locale) private var locale
     @Environment(\.layoutDirection) private var layoutDirection
@@ -29,8 +28,7 @@ struct SettingsShellView: View {
                 SettingsPaneContent(
                     settings: settings,
                     tab: model.selectedTab,
-                    launchAtLoginManager: launchAtLoginManager,
-                    updateService: updateService
+                    launchAtLoginManager: launchAtLoginManager
                 )
                 .padding(.top, SettingsLayoutMetrics.contentTopPadding)
                 .padding(.horizontal, SettingsLayoutMetrics.contentSidePadding)
@@ -442,8 +440,7 @@ struct SettingsPaneStack<Content: View>: View {
 
 extension SettingsLogExport {
     /// Shared "Export Logs…" flow: prompts for a destination folder, copies all
-    /// log files into a timestamped subfolder, and reveals it in Finder. Used by
-    /// both the Advanced (MCP) and Privacy panes.
+    /// log files into a timestamped subfolder, and reveals it in Finder.
     @MainActor
     static func presentExportPanel(
         locale: Locale,

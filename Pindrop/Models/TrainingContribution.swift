@@ -4,11 +4,8 @@
 //
 //  Created on 2026-07-14.
 //
-//  One locally stored before/after text pair for the opt-in training-data
-//  contribution program (Settings → Privacy). Rows exist only when the user has
-//  enabled contribution; both texts are redacted at capture time and never leave
-//  this Mac — `uploadStateRawValue` stays `pending` until a future release ships
-//  a real uploader (see ContributionUploader).
+//  Dormant: the training-data contribution program was removed. The model
+//  stays only so existing SwiftData stores keep opening without a migration.
 //
 
 import Foundation

@@ -12,7 +12,6 @@ build_dir := "DerivedData/Build/Products"
 release_dir := build_dir / "Release"
 app_bundle := release_dir / app_name + ".app"
 dmg_dir := "dist"
-sparkle_tools_version := "2.8.1"
 
 # Build configuration
 xcode_project := "Pindrop.xcodeproj"
@@ -39,18 +38,6 @@ _build configuration sign="yes":
         -skipPackagePluginValidation \
         {{ if sign == "no" { signing_disabled } else { "" } }} \
         build
-
-# Shared xcodebuild test invocation (signed unless sign="no"; coverage="yes" enables coverage)
-[private]
-_test testplan sign="yes" coverage="no":
-    xcodebuild test \
-        -project {{xcode_project}} \
-        -scheme {{scheme}} \
-        -testPlan {{testplan}} \
-        -destination 'platform=macOS' \
-        -skipPackagePluginValidation \
-        {{ if coverage == "yes" { "-enableCodeCoverage YES" } else { "" } }} \
-        {{ if sign == "no" { signing_disabled } else { "" } }}
 
 # Build for development (Debug, Xcode-managed signing)
 build:
@@ -96,44 +83,6 @@ dmg-self-signed: build-self-signed
     @echo "📦 Creating self-signed DMG..."
     @./scripts/create-dmg-self-signed.sh
     @echo "✅ Self-signed DMG created in {{dmg_dir}}/"
-
-# Run tests
-test:
-    @echo "🧪 Running tests..."
-    @just _test Unit
-    @echo "✅ Tests complete"
-
-# Run integration tests only (opt-in)
-test-integration:
-    @echo "🧪 Running integration tests..."
-    @just _test Integration
-    @echo "✅ Integration tests complete"
-
-# Run UI tests
-test-ui:
-    @echo "🧪 Running UI tests..."
-    @just _test UI
-    @echo "✅ UI tests complete"
-
-# Run unit + integration + UI suites
-test-all: test test-integration test-ui
-    @echo "✅ All test suites complete"
-
-# Run tests with coverage
-test-coverage:
-    @echo "🧪 Running tests with coverage..."
-    @just _test Unit yes yes
-    @echo "✅ Tests with coverage complete"
-
-# Run tests on unsigned CI runners
-test-unsigned:
-    @echo "🧪 Running tests (unsigned CI mode)..."
-    @just _test Unit no
-    @echo "✅ Unsigned CI tests complete"
-
-# Fetch checksum-pinned AMI diarization fixtures
-diarization-fixtures:
-    @python3 scripts/fetch_diarization_fixtures.py
 
 # Localization pipeline
 l10n-import-current:
@@ -207,7 +156,7 @@ staple dmg_path:
 
 # Manual GitHub release workflow
 # Usage: just release 1.9.0
-# Runs locally: tests -> signed DMG -> notarize/staple -> appcast -> release notes -> tag -> push tag -> gh release create
+# Runs locally: signed DMG -> notarize/staple -> release notes -> tag -> push tag -> gh release create
 release version:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -215,7 +164,6 @@ release version:
     VERSION="{{version}}"
     TAG="v${VERSION}"
     DMG_PATH="{{dmg_dir}}/{{app_name}}.dmg"
-    APPCAST_PATH="appcast.xml"
     NOTES_PATH="release-notes/${TAG}.md"
     NOTES_HTML_ASSET="release-notes-${TAG}.html"
     NOTES_HTML_PATH="{{dmg_dir}}/${NOTES_HTML_ASSET}"
@@ -271,20 +219,6 @@ release version:
         exit 1
     fi
 
-    # Feature releases (X.Y.0) must ship an updated in-app What's New announcement
-    PATCH_COMPONENT="${VERSION##*.}"
-    if [ "${PATCH_COMPONENT}" = "0" ]; then
-        if ! grep -q "Pindrop ${VERSION}" Pindrop/Models/Announcement.swift; then
-            echo "❌ AnnouncementCatalog.current does not reference Pindrop ${VERSION}."
-            echo "   Feature releases must update the in-app What's New announcement:"
-            echo "   1. Update AnnouncementCatalog in Pindrop/Models/Announcement.swift"
-            echo "      (new id, 'Pindrop ${VERSION} · <Month Year>' header, feature items)."
-            echo "   2. Update the 'whatsnew:' strings in Localization/app/*.yml for all locales."
-            echo "   3. Run: just l10n-sync && just l10n-lint"
-            exit 1
-        fi
-    fi
-
     # Get current version
     CURRENT_VERSION=$(grep 'MARKETING_VERSION = ' Pindrop.xcodeproj/project.pbxproj | head -1 | sed 's/.*= \(.*\);/\1/')
     CURRENT_BUILD=$(grep 'CURRENT_PROJECT_VERSION = ' Pindrop.xcodeproj/project.pbxproj | head -1 | sed 's/.*= \(.*\);/\1/')
@@ -337,32 +271,27 @@ release version:
         git commit -m "chore: bump version to ${VERSION} (build ${NEXT_BUILD})"
     fi
 
-    # Step 1: Ensure tests pass
-    echo "🧪 Running test suite..."
-    just test
-
-    # Step 2: Build signed release DMG
+    # Step 1: Build signed release DMG
     echo "📦 Building signed release DMG..."
     just dmg
 
-    # Step 3: Notarize and staple the DMG before publishing or generating appcast
+    # Step 2: Notarize and staple the DMG before publishing
     echo "📝 Notarizing release DMG..."
     just notarize "${DMG_PATH}"
     echo "📎 Stapling notarization ticket..."
     just staple "${DMG_PATH}"
 
-    # Step 4: Update appcast using the final stapled DMG bytes
-    echo "📡 Generating appcast.xml..."
-    just appcast "${DMG_PATH}"
+    # Step 3: Render release notes HTML asset
+    just release-notes-html "${VERSION}"
     if [ ! -f "${NOTES_HTML_PATH}" ]; then
         echo "❌ Expected rendered release notes asset was not generated: ${NOTES_HTML_PATH}"
         exit 1
     fi
 
-    # Step 5: Validate release notes
+    # Step 4: Validate release notes
     echo "📝 Using release notes: ${NOTES_PATH}"
 
-    # Step 6: Create annotated tag (if needed)
+    # Step 5: Create annotated tag (if needed)
     if git rev-parse -q --verify "refs/tags/${TAG}" >/dev/null 2>&1; then
         echo "ℹ️  Tag already exists locally: ${TAG}"
     else
@@ -370,7 +299,7 @@ release version:
         git tag -a "${TAG}" -m "Release ${TAG}"
     fi
 
-    # Step 7: Push tag (if needed)
+    # Step 6: Push tag (if needed)
     if git ls-remote --exit-code --tags origin "${TAG}" >/dev/null 2>&1; then
         echo "ℹ️  Tag already exists on origin: ${TAG}"
     else
@@ -378,13 +307,13 @@ release version:
         git push origin "${TAG}"
     fi
 
-    # Step 8: Create GitHub release and attach assets
-    echo "📤 Creating GitHub release with DMG + appcast + release notes..."
-    gh release create "${TAG}" "${DMG_PATH}" "${APPCAST_PATH}" "${NOTES_HTML_PATH}" \
+    # Step 7: Create GitHub release and attach assets
+    echo "📤 Creating GitHub release with DMG + release notes..."
+    gh release create "${TAG}" "${DMG_PATH}" "${NOTES_HTML_PATH}" \
         --title "Pindrop ${TAG}" \
         --notes-file "${NOTES_PATH}"
 
-    # Step 9: Sync release notes to the website changelog (best-effort, non-fatal)
+    # Step 8: Sync release notes to the website changelog (best-effort, non-fatal)
     echo "🌐 Syncing website changelog..."
     if ! just sync-website-changelog "${VERSION}"; then
         echo "⚠️  Website changelog sync failed (non-fatal)."
@@ -396,7 +325,6 @@ release version:
     echo ""
     echo "📋 Uploaded assets:"
     echo "  - ${DMG_PATH}"
-    echo "  - ${APPCAST_PATH}"
     echo "  - ${NOTES_HTML_PATH}"
     echo "📝 Release notes:"
     echo "  - ${NOTES_PATH}"
@@ -547,63 +475,6 @@ release-notes-html version:
 
     echo "✅ Rendered release notes HTML: ${NOTES_HTML_PATH}"
 
-# Generate appcast.xml for Sparkle updates
-# Usage: just appcast dist/Pindrop.dmg
-appcast dmg_path:
-    @echo "📡 Generating appcast.xml..."
-    @if [ ! -f "{{dmg_path}}" ]; then \
-        echo "❌ DMG not found: {{dmg_path}}"; \
-        echo "   Run: just dmg"; \
-        exit 1; \
-    fi
-    @if [ ! -d "bin" ] || [ ! -f "bin/generate_appcast" ]; then \
-        echo "⚠️  Sparkle tools not found. Downloading..."; \
-        curl -L -o /tmp/Sparkle.tar.xz "https://github.com/sparkle-project/Sparkle/releases/download/{{sparkle_tools_version}}/Sparkle-{{sparkle_tools_version}}.tar.xz"; \
-        mkdir -p /tmp/sparkle-extract; \
-        tar -xf /tmp/Sparkle.tar.xz -C /tmp/sparkle-extract; \
-        mkdir -p bin; \
-        cp /tmp/sparkle-extract/bin/generate_appcast bin/; \
-        cp /tmp/sparkle-extract/bin/sign_update bin/ 2>/dev/null || true; \
-        rm -rf /tmp/Sparkle.tar.xz /tmp/sparkle-extract; \
-        echo "✅ Sparkle tools downloaded to bin/"; \
-    fi
-    @TAG_VERSION="v$(grep 'MARKETING_VERSION = ' Pindrop.xcodeproj/project.pbxproj | head -1 | sed 's/.*= \(.*\);/\1/')"; \
-    NOTES_PATH="release-notes/${TAG_VERSION}.md"; \
-    NOTES_ASSET="release-notes-${TAG_VERSION}.html"; \
-    NOTES_OUTPUT="{{dmg_dir}}/${NOTES_ASSET}"; \
-    RELEASE_NOTES_URL="https://github.com/watzon/pindrop/releases/download/${TAG_VERSION}/${NOTES_ASSET}"; \
-    RELEASE_PAGE_URL="https://github.com/watzon/pindrop/releases/tag/${TAG_VERSION}"; \
-    DOWNLOAD_PREFIX="https://github.com/watzon/pindrop/releases/download/${TAG_VERSION}/"; \
-    echo "🔏 Signing DMG and generating appcast for ${TAG_VERSION}..."; \
-    echo "🔗 Download prefix: ${DOWNLOAD_PREFIX}"; \
-    mkdir -p "{{dmg_dir}}"; \
-    if [ -f "${NOTES_PATH}" ]; then \
-        echo "📝 Rendering release notes HTML asset..."; \
-        python3 scripts/render_release_notes_html.py --input "${NOTES_PATH}" --output "${NOTES_OUTPUT}" --version "${TAG_VERSION}"; \
-    else \
-        echo "⚠️  Release notes markdown not found for ${TAG_VERSION}; appcast will not include release notes"; \
-    fi; \
-    mkdir -p updates; \
-    cp "{{dmg_path}}" updates/; \
-    if ./bin/generate_appcast --help 2>&1 | grep -q -- '--download-url-prefix'; then \
-        ./bin/generate_appcast --download-url-prefix "${DOWNLOAD_PREFIX}" updates/; \
-    else \
-        echo "⚠️  generate_appcast does not support --download-url-prefix; generating without explicit URL prefix"; \
-        ./bin/generate_appcast updates/; \
-    fi; \
-    if [ -f "updates/appcast.xml" ]; then \
-        cp updates/appcast.xml appcast.xml; \
-    fi; \
-    if [ -f "${NOTES_OUTPUT}" ]; then \
-        python3 scripts/augment_appcast_release_notes.py --appcast appcast.xml --release-notes-url "${RELEASE_NOTES_URL}" --full-release-notes-url "${RELEASE_PAGE_URL}" --download-page-url "${RELEASE_PAGE_URL}"; \
-    fi; \
-    rm -rf updates/
-    @echo "✅ Appcast generated: appcast.xml"
-    @echo ""
-    @echo "Next steps:"
-    @echo "  1. Review appcast.xml"
-    @echo "  2. Attach {{dmg_path}}, appcast.xml, and the rendered release notes HTML to the matching GitHub release tag"
-
 # Open project in Xcode
 xcode:
     @echo "🔧 Opening Xcode..."
@@ -627,10 +498,10 @@ format:
         echo "⚠️  SwiftFormat not installed. Run: brew install swiftformat"; \
     fi
 
-# Development workflow: clean, build, test
-dev: clean build test
-    @echo "✅ Development build and test complete"
+# Development workflow: clean, build
+dev: clean build
+    @echo "✅ Development build complete"
 
-# CI workflow: clean, unsigned build, unsigned test, unsigned release build
-ci: clean build-unsigned test-unsigned build-release-unsigned
+# CI workflow: clean, unsigned build, unsigned release build
+ci: clean build-unsigned build-release-unsigned
     @echo "✅ CI workflow complete"

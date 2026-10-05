@@ -560,31 +560,6 @@ final class SettingsStore: ObservableObject {
    var hasCompletedOnboarding: Bool = false
    @AppStorage("currentOnboardingStep", store: SettingsStoreRuntime.appStorageStore)
    var currentOnboardingStep: Int = 0
-   @AppStorage("lastSeenAnnouncementID", store: SettingsStoreRuntime.appStorageStore)
-   var lastSeenAnnouncementID: String = ""
-
-   // MARK: - Privacy & Telemetry
-
-   /// Opt-in anonymous telemetry (Settings → Privacy). Off by default; nothing is
-   /// ever sent until the user explicitly enables it.
-   @AppStorage("telemetryEnabled", store: SettingsStoreRuntime.appStorageStore)
-   var telemetryEnabled: Bool = false
-   /// Highest telemetry consent prompt version the user has answered. Compared to
-   /// `TelemetryConsentService.currentConsentVersion` so a scope change can re-ask.
-   @AppStorage("telemetryConsentPromptVersion", store: SettingsStoreRuntime.appStorageStore)
-   var telemetryConsentPromptVersion: Int = 0
-   /// Opt-in local collection of before/after transcript pairs for future model
-   /// training (Settings → Privacy). Off by default; rows never leave this Mac
-   /// (see ContributionUploader).
-   @AppStorage("trainingDataContributionEnabled", store: SettingsStoreRuntime.appStorageStore)
-   var trainingDataContributionEnabled: Bool = false
-
-   // MARK: - MCP Server
-
-   @AppStorage("mcpServerEnabled", store: SettingsStoreRuntime.appStorageStore)
-   var mcpServerEnabled: Bool = false
-   @AppStorage("mcpServerPort", store: SettingsStoreRuntime.appStorageStore)
-   var mcpServerPort: Int = 46337
 
    // MARK: - Keychain Properties
 
@@ -1235,10 +1210,6 @@ final class SettingsStore: ObservableObject {
       vibeRuntimeDetail = "Vibe mode is disabled."
       hasCompletedOnboarding = false
       currentOnboardingStep = 0
-      lastSeenAnnouncementID = ""
-      telemetryEnabled = false
-      telemetryConsentPromptVersion = 0
-      trainingDataContributionEnabled = false
 
       try? deleteAPIEndpoint()
       for provider in AIProvider.allCases {
@@ -1608,22 +1579,6 @@ final class SettingsStore: ObservableObject {
       guard status == errSecSuccess || status == errSecItemNotFound else {
          throw SettingsError.keychainError("Failed to delete from keychain: \(status)")
       }
-   }
-
-   // MARK: - MCP Token
-
-   private let mcpServerTokenAccount = "mcp-server-token"
-
-   func loadMCPToken() -> String? {
-      try? loadFromKeychain(account: mcpServerTokenAccount)
-   }
-
-   func saveMCPToken(_ token: String) throws {
-      try saveToKeychain(value: token, account: mcpServerTokenAccount)
-   }
-
-   func deleteMCPToken() throws {
-      try deleteFromKeychain(account: mcpServerTokenAccount)
    }
 
    func isFeatureEnabled(_ type: FeatureModelType) -> Bool {
