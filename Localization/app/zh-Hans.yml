@@ -1579,6 +1579,7 @@ tokens:
   in_out: "输入 %@ / 输出 %@ 个 Token"
   in_out_thinking: "输入 %@ / 输出 %@ / 思考 %@ 个 Token"
 start_sound_cue:
+  insert_original_field: "Insert into original field"
   volume: "Volume"
   title: "Start Sound"
   subtitle: "Plays when dictation starts"

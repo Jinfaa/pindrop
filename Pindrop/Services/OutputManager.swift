@@ -353,6 +353,8 @@ final class OutputManager {
     private let accessibilityPermissionChecker: () -> Bool
     private let frontmostApplicationProvider: () -> NSRunningApplication?
     private let virtualMachineHostChecker: (String?) -> Bool
+    /// Where the user was typing when dictation started; consumed by the next `output(_:)`.
+    private var insertionTarget: InsertionTarget?
 
     init(
         outputMode: OutputMode = .clipboard,
@@ -374,6 +376,22 @@ final class OutputManager {
         self.outputMode = mode
     }
 
+    /// Remembers the frontmost app and its focused element so the transcript lands there
+    /// even if the user switches away while it is being processed.
+    func rememberInsertionTarget(enabled: Bool = true) {
+        guard enabled,
+              let app = frontmostApplicationProvider(),
+              app.processIdentifier != ProcessInfo.processInfo.processIdentifier else {
+            insertionTarget = nil
+            return
+        }
+        let element = AXInsertion.focusedElement().flatMap { element -> AXUIElement? in
+            var pid: pid_t = 0
+            return AXUIElementGetPid(element, &pid) == .success && pid == app.processIdentifier ? element : nil
+        }
+        insertionTarget = InsertionTarget(app: app, element: element)
+    }
+
     @discardableResult
     func output(_ text: String) async throws -> OutputResult {
         guard !text.isEmpty else {
@@ -381,6 +399,13 @@ final class OutputManager {
         }
 
         Log.output.debug("Output called, mode: \(String(describing: self.outputMode)), length: \(text.count)")
+
+        let target = insertionTarget
+        insertionTarget = nil
+
+        if outputMode == .directInsert, let target, target.userMovedAway(frontmost: frontmostApplicationProvider()) {
+            return try await outputToRememberedTarget(text, target: target)
+        }
 
         // Capture insert/copy-time frontmost app unconditionally before any paste or copy.
         let destination = captureDestinationApp()
@@ -484,6 +509,55 @@ final class OutputManager {
         }
     }
 
+    /// Tries a silent Accessibility write into the remembered field first (no focus change).
+    /// Apps that ignore it (Chromium/Electron, terminals) get a hop: activate the target,
+    /// refocus the field, paste, then return the user to the app they moved to.
+    private func outputToRememberedTarget(_ text: String, target: InsertionTarget) async throws -> OutputResult {
+        let name = target.app.localizedName
+        let bundleID = target.app.bundleIdentifier
+        guard checkAccessibilityPermission(), !target.app.isTerminated else {
+            let snapshot = try copyReplacingClipboard(text)
+            return .copiedToClipboard(
+                reason: checkAccessibilityPermission() ? .pasteFailed : .accessibilityUnavailable,
+                previousClipboardSnapshot: snapshot,
+                destinationAppName: name,
+                destinationAppBundleID: bundleID
+            )
+        }
+
+        if let element = target.element, await AXInsertion.insert(text, into: element) {
+            Log.output.info("Inserted into remembered field via Accessibility in \(bundleID ?? "unknown")")
+            return .pasted(destinationAppName: name, destinationAppBundleID: bundleID)
+        }
+
+        let returnTo = frontmostApplicationProvider()
+        target.app.activate(options: [.activateIgnoringOtherApps])
+        if let element = target.element {
+            AXInsertion.focus(element)
+        }
+        try await Task.sleep(nanoseconds: 150_000_000)
+
+        do {
+            try await pasteViaClipboard(
+                text,
+                restoreClipboard: true,
+                allowSystemEventsFallback: !isVirtualMachineDestination(bundleID)
+            )
+        } catch is CancellationError {
+            throw CancellationError()
+        } catch {
+            Log.output.error("Paste into remembered target failed; leaving text on clipboard: \(error.localizedDescription)")
+            try copyToClipboard(text)
+            return .copiedToClipboard(reason: .pasteFailed, destinationAppName: name, destinationAppBundleID: bundleID)
+        }
+
+        if let returnTo, returnTo.processIdentifier != target.app.processIdentifier {
+            returnTo.activate(options: [.activateIgnoringOtherApps])
+        }
+        Log.output.info("Pasted into remembered target \(bundleID ?? "unknown") via focus hop")
+        return .pasted(destinationAppName: name, destinationAppBundleID: bundleID)
+    }
+
     private func isVirtualMachineDestination(_ bundleIdentifier: String?) -> Bool {
         virtualMachineHostChecker(bundleIdentifier)
     }
@@ -579,4 +653,57 @@ final class OutputManager {
             || clipboard.currentStringContent() == insertedText
     }
 
+}
+
+// MARK: - Remembered insertion target
+
+struct InsertionTarget {
+    let app: NSRunningApplication
+    let element: AXUIElement?
+
+    func userMovedAway(frontmost: NSRunningApplication?) -> Bool {
+        guard frontmost?.processIdentifier == app.processIdentifier else { return true }
+        guard let element, let focused = AXInsertion.focusedElement() else { return false }
+        return !CFEqual(element, focused)
+    }
+}
+
+enum AXInsertion {
+    static func focusedElement() -> AXUIElement? {
+        var value: CFTypeRef?
+        let status = AXUIElementCopyAttributeValue(
+            AXUIElementCreateSystemWide(),
+            kAXFocusedUIElementAttribute as CFString,
+            &value
+        )
+        guard status == .success, let value, CFGetTypeID(value) == AXUIElementGetTypeID() else { return nil }
+        return (value as! AXUIElement)
+    }
+
+    /// Replaces the field's selection with `text`. Many apps report success without
+    /// changing anything, so success means the field's value actually changed.
+    static func insert(_ text: String, into element: AXUIElement) async -> Bool {
+        guard let before = stringValue(element) else { return false }
+        let status = AXUIElementSetAttributeValue(element, kAXSelectedTextAttribute as CFString, text as CFString)
+        guard status == .success else { return false }
+        try? await Task.sleep(nanoseconds: 50_000_000)
+        return stringValue(element) != before
+    }
+
+    static func focus(_ element: AXUIElement) {
+        var window: CFTypeRef?
+        if AXUIElementCopyAttributeValue(element, kAXWindowAttribute as CFString, &window) == .success,
+           let window, CFGetTypeID(window) == AXUIElementGetTypeID() {
+            let windowElement = window as! AXUIElement
+            AXUIElementSetAttributeValue(windowElement, kAXMainAttribute as CFString, kCFBooleanTrue)
+            AXUIElementPerformAction(windowElement, kAXRaiseAction as CFString)
+        }
+        AXUIElementSetAttributeValue(element, kAXFocusedAttribute as CFString, kCFBooleanTrue)
+    }
+
+    private static func stringValue(_ element: AXUIElement) -> String? {
+        var value: CFTypeRef?
+        guard AXUIElementCopyAttributeValue(element, kAXValueAttribute as CFString, &value) == .success else { return nil }
+        return value as? String
+    }
 }

@@ -1658,6 +1658,7 @@ enum LocalizationMetadata {
         "Include clipboard text": "include_clipboard_text",
         "Info": "u8_settings_info",
         "Input Device": "input_device",
+        "Insert into original field": "start_sound_cue_insert_original_field",
         "Insert paragraph breaks": "insert_paragraph_breaks",
         "Inserted into %@": "u10_floating_inserted_into",
         "Inserted into %@ · %d words": "inserted_into_d_words",

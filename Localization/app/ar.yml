@@ -1579,6 +1579,7 @@ tokens:
   in_out: "%@ إدخال / %@ إخراج من الرموز"
   in_out_thinking: "%@ إدخال / %@ إخراج / %@ تفكير من الرموز"
 start_sound_cue:
+  insert_original_field: "Insert into original field"
   volume: "Volume"
   title: "Start Sound"
   subtitle: "Plays when dictation starts"

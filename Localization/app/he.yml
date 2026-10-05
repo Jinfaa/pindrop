@@ -1579,6 +1579,7 @@ tokens:
   in_out: "%@ קלט / %@ פלט אסימונים"
   in_out_thinking: "%@ קלט / %@ פלט / %@ חשיבה אסימונים"
 start_sound_cue:
+  insert_original_field: "Insert into original field"
   volume: "Volume"
   title: "Start Sound"
   subtitle: "Plays when dictation starts"

@@ -1579,6 +1579,7 @@ tokens:
   in_out: "%@ इनपुट / %@ आउटपुट टोकन"
   in_out_thinking: "%@ इनपुट / %@ आउटपुट / %@ चिंतन टोकन"
 start_sound_cue:
+  insert_original_field: "Insert into original field"
   volume: "Volume"
   title: "Start Sound"
   subtitle: "Plays when dictation starts"

@@ -1579,6 +1579,7 @@ tokens:
   in_out: "%@ bemeneti / %@ kimeneti token"
   in_out_thinking: "%@ bemeneti / %@ kimeneti / %@ gondolkodási token"
 start_sound_cue:
+  insert_original_field: "Insert into original field"
   volume: "Volume"
   title: "Start Sound"
   subtitle: "Plays when dictation starts"

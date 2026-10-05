@@ -89,7 +89,7 @@ struct DictationSettingsView: View {
                     Menu {
                         ForEach(StartSound.allCases) { sound in
                             Button(localized(sound.title, locale: locale)) {
-                                settings.startSoundRawValue = sound.rawValue
+                                settings.startSound = sound
                                 previewStartSound(sound)
                             }
                         }
@@ -442,7 +442,7 @@ struct DictationSettingsView: View {
     }
 
     private var selectedStartSound: StartSound {
-        StartSound(rawValue: settings.startSoundRawValue) ?? .none
+        settings.startSound
     }
 
     private var selectedOutputLabel: String {

@@ -430,6 +430,21 @@ final class SettingsStore: ObservableObject {
    var startSoundOutputDeviceUID: String = ""
    @AppStorage("startSoundVolume", store: SettingsStoreRuntime.appStorageStore)
    var startSoundVolume: Double = 0.5
+   @AppStorage("lastStartSound", store: SettingsStoreRuntime.appStorageStore)
+   var lastStartSoundRawValue: String = StartSound.softChime.rawValue
+
+   var startSound: StartSound {
+      get { StartSound(rawValue: startSoundRawValue) ?? .none }
+      set {
+         startSoundRawValue = newValue.rawValue
+         if newValue != .none { lastStartSoundRawValue = newValue.rawValue }
+      }
+   }
+
+   /// Off ↔ the last sound the user picked.
+   func toggleStartSound() {
+      startSound = startSound == .none ? (StartSound(rawValue: lastStartSoundRawValue) ?? .softChime) : .none
+   }
    @AppStorage("aiEnhancementEnabled", store: SettingsStoreRuntime.appStorageStore)
    var aiEnhancementEnabled: Bool = false
    @AppStorage("aiProvider", store: SettingsStoreRuntime.appStorageStore)
@@ -470,6 +485,8 @@ final class SettingsStore: ObservableObject {
       false
    @AppStorage("addTrailingSpace", store: SettingsStoreRuntime.appStorageStore)
    var addTrailingSpace: Bool = true
+   @AppStorage("insertIntoOriginalField", store: SettingsStoreRuntime.appStorageStore)
+   var insertIntoOriginalField: Bool = true
    /// When enabled, long dictation gets blank-line paragraph breaks via a local
    /// deterministic formatter before paste/persist. Default OFF preserves prior behavior.
    @AppStorage("programmaticFormattingEnabled", store: SettingsStoreRuntime.appStorageStore)
@@ -1183,6 +1200,8 @@ final class SettingsStore: ObservableObject {
       startSoundRawValue = StartSound.none.rawValue
       startSoundOutputDeviceUID = ""
       startSoundVolume = 0.5
+      insertIntoOriginalField = true
+      lastStartSoundRawValue = StartSound.softChime.rawValue
       aiEnhancementEnabled = false
       aiEnhancementPrompt = Defaults.aiEnhancementPrompt
       noteEnhancementPrompt = Defaults.noteEnhancementPrompt

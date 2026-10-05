@@ -3295,6 +3295,8 @@ final class AppCoordinator {
 
         await beginStreamingSessionIfAvailable()
 
+        outputManager.rememberInsertionTarget(enabled: settingsStore.insertIntoOriginalField)
+
         // Retention encodes a native-rate copy so kept audio isn't the 16 kHz ASR feed.
         audioRecorder.retainNativeAudioForSession =
             settingsStore.dictationAudioRetention != .off

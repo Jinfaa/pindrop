@@ -1579,6 +1579,7 @@ tokens:
   in_out: "%@ syöte- / %@ tulostokenia"
   in_out_thinking: "%@ syöte- / %@ tulos- / %@ ajattelutokenia"
 start_sound_cue:
+  insert_original_field: "Insert into original field"
   volume: "Volume"
   title: "Start Sound"
   subtitle: "Plays when dictation starts"

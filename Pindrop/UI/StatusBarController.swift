@@ -38,6 +38,8 @@ final class StatusBarController: NSObject, NSMenuDelegate {
     private var exportLastTranscriptItem: NSMenuItem?
 
     private var openHistoryItem: NSMenuItem?
+    private var startSoundItem: NSMenuItem?
+    private var insertIntoOriginalFieldItem: NSMenuItem?
 
     private var promptPresetMenuItem: NSMenuItem?
     private var promptPresetMenu: NSMenu?
@@ -283,6 +285,26 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         showAppItem.target = self
         showAppItem.image = NSImage(systemSymbolName: "macwindow", accessibilityDescription: nil)
         menu.addItem(showAppItem)
+
+        startSoundItem = NSMenuItem(
+            title: localized("Start Sound", locale: locale),
+            action: #selector(toggleStartSound),
+            keyEquivalent: ""
+        )
+        startSoundItem?.target = self
+        startSoundItem?.image = NSImage(systemSymbolName: "bell", accessibilityDescription: nil)
+        startSoundItem?.state = settingsStore.startSound == .none ? .off : .on
+        menu.addItem(startSoundItem!)
+
+        insertIntoOriginalFieldItem = NSMenuItem(
+            title: localized("Insert into original field", locale: locale),
+            action: #selector(toggleInsertIntoOriginalField),
+            keyEquivalent: ""
+        )
+        insertIntoOriginalFieldItem?.target = self
+        insertIntoOriginalFieldItem?.image = NSImage(systemSymbolName: "text.cursor", accessibilityDescription: nil)
+        insertIntoOriginalFieldItem?.state = settingsStore.insertIntoOriginalField ? .on : .off
+        menu.addItem(insertIntoOriginalFieldItem!)
 
         menu.addItem(NSMenuItem.separator())
 
@@ -581,6 +603,16 @@ final class StatusBarController: NSObject, NSMenuDelegate {
         showSettings(tab: .general)
     }
 
+    @objc private func toggleStartSound() {
+        settingsStore.toggleStartSound()
+        startSoundItem?.state = settingsStore.startSound == .none ? .off : .on
+    }
+
+    @objc private func toggleInsertIntoOriginalField() {
+        settingsStore.insertIntoOriginalField.toggle()
+        insertIntoOriginalFieldItem?.state = settingsStore.insertIntoOriginalField ? .on : .off
+    }
+
     @objc private func quit() {
         NSApplication.shared.terminate(nil)
     }
@@ -590,6 +622,8 @@ final class StatusBarController: NSObject, NSMenuDelegate {
 
         onMenuWillOpen?()
         updateDynamicItems()
+        startSoundItem?.state = settingsStore.startSound == .none ? .off : .on
+        insertIntoOriginalFieldItem?.state = settingsStore.insertIntoOriginalField ? .on : .off
     }
 
     private var cachedBaseIcon: NSImage?
